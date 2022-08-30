@@ -9,22 +9,27 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 const theme = createTheme({
-  components: {
-    Button: {
-      raised: true,
-    },
+  colors: {
+    primary: 'rgb(220, 53, 69)',
+  },
+  lightColors: {
+    primary: 'rgb(220, 53, 69)',
+  },
+  darkColors: {
+    primary: 'rgb(220, 53, 69)',
   },
 });
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator>
+      <NavigationContainer theme={theme}>
+        <Stack.Navigator
+        >
           <Stack.Screen
-            name="Login"
+            name="login"
             component={LogIn}
-            options={{ title: 'Login' }}
+            options={{ title: 'Ribbon Receipts' }}
           />
         </Stack.Navigator>
       </NavigationContainer>
