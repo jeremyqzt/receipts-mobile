@@ -1,5 +1,5 @@
 import { Input, Button } from "@rneui/themed";
-import { View, Image } from "react-native";
+import { View, Image, Text } from "react-native";
 import Logo from "../../assets/logo.png";
 
 export const SignUp = () => {
@@ -39,8 +39,19 @@ export const SignUp = () => {
           leftIcon={{ type: "font-awesome", name: "key" }}
         />
       </View>
-      <View style={{ paddingHorizontal: "10%", marginTop: "5%" }}>
+      <View style={{ paddingHorizontal: "10%", marginTop: "2%" }}>
+        <Button title={"Privacy Policy"} buttonStyle={{ borderRadius: 5, }} type="outline"/>
+      </View>
+      <View style={{ paddingHorizontal: "10%", marginTop: "2%" }}>
+        <Button title={"Terms of Use"} buttonStyle={{ borderRadius: 5 }} type="outline"/>
+      </View>
+      <View style={{ paddingHorizontal: "10%", marginTop: "15%" }}>
         <Button title={"Sign Up"} buttonStyle={{ borderRadius: 5 }} />
+      </View>
+      <View style={{ paddingHorizontal: "10%", marginTop: "1%" }}>
+        <Text style={{fontSize: 14, color: "grey", textAlign: "center"}}>
+            Signing up implies agreement to the privacy policy and the terms of use.
+        </Text>
       </View>
     </View>
   );
