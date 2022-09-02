@@ -2,7 +2,7 @@ import { Input, Button } from "@rneui/themed";
 import { View, Image, Text, Linking } from "react-native";
 import Logo from "../../assets/logo.png";
 
-export const SignUp = () => {
+export const Home = () => {
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
       <View
