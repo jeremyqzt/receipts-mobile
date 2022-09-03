@@ -3,6 +3,7 @@ import { View, Image } from "react-native";
 import Logo from "../../assets/logo.png";
 
 export const LogIn = ({ navigation }) => {
+
   return (
     <>
       <View
@@ -35,7 +36,12 @@ export const LogIn = ({ navigation }) => {
         />
       </View>
       <View style={{ paddingHorizontal: "10%", marginTop: "5%" }}>
-        <Button title={"Login"} buttonStyle={{ borderRadius: 5 }} />
+        <Button title={"Login"} buttonStyle={{ borderRadius: 5 }} onPress={() => {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'homepage' }] 
+          })
+        }} />
       </View>
       <View style={{ paddingHorizontal: 15, marginTop: "30%" }}>
         <Button

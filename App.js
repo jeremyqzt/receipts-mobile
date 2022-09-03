@@ -5,7 +5,7 @@ import { ThemeProvider, Button, createTheme } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 import { LogIn } from "./src/pages/login";
 import { SignUp } from "./src/pages/signup";
-
+import { Home } from './src/pages/home';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
@@ -43,6 +43,13 @@ const App = () => {
             options={{
               title: "Sign Up",
               
+            }}
+          />
+          <Stack.Screen
+            name="homepage"
+            component={Home}
+            options={{
+              title: "Ribbon Receipts",
             }}
           />
         </Stack.Navigator>
