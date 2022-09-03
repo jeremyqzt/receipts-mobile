@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 
-import { ThemeProvider, Button, createTheme } from "@rneui/themed";
+import { ThemeProvider, createTheme } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 import { LogIn } from "./src/pages/login";
 import { SignUp } from "./src/pages/signup";
@@ -25,6 +24,7 @@ const theme = createTheme({
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
+      <StatusBar backgroundColor={'transparent'} translucent/>
       <NavigationContainer theme={theme}>
         <Stack.Navigator
           screenOptions={{
