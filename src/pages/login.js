@@ -1,8 +1,20 @@
+import React, { useState } from "react";
+
 import { Input, Button } from "@rneui/themed";
 import { View, Image } from "react-native";
 import Logo from "../../assets/logo.png";
 
 export const LogIn = ({ navigation }) => {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+
+  const loginNow = () => {
+    loginFetch({ username, password })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+      });
+  };
 
   return (
     <>
@@ -28,20 +40,26 @@ export const LogIn = ({ navigation }) => {
         <Input
           placeholder="Email"
           leftIcon={{ type: "font-awesome", name: "at" }}
+          onChangeText={(value) => setUsername(value)}
         />
         <Input
           placeholder="Password"
           secureTextEntry={true}
           leftIcon={{ type: "font-awesome", name: "key" }}
+          onChangeText={(value) => setPassword(value)}
         />
       </View>
       <View style={{ paddingHorizontal: "10%", marginTop: "5%" }}>
-        <Button title={"Login"} buttonStyle={{ borderRadius: 5 }} onPress={() => {
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'homepage' }] 
-          })
-        }} />
+        <Button
+          title={"Login"}
+          buttonStyle={{ borderRadius: 5 }}
+          onPress={() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "homepage" }],
+            });
+          }}
+        />
       </View>
       <View style={{ paddingHorizontal: 15, marginTop: "30%" }}>
         <Button
@@ -50,6 +68,7 @@ export const LogIn = ({ navigation }) => {
           title="Signup Here!"
           titleStyle={{ color: "rgb(0, 99, 191)" }}
           onPress={() => {
+            loginNow();
             navigation.navigate("signup");
           }}
         />
