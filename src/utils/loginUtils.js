@@ -14,3 +14,20 @@ const loginFetch = ({ username, password }) => {
     body: JSON.stringify(data),
   });
 };
+
+const SINGUP_URL = "https://api.ribbonreceipts.com/user/create/";
+
+const singupFetch = ({ username, password }) => {
+  const data = { username, password };
+  return fetch(SINGUP_URL, {
+    method: "POST",
+    mode: "cors",
+    cache: "no-cache",
+    credentials: "same-origin",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+};
