@@ -1,6 +1,6 @@
 const LOGIN_URL = "https://api.ribbonreceipts.com/auth/token/";
 
-const loginFetch = ({ username, password }) => {
+export const loginFetch = ({ username, password }) => {
   const data = { username, password };
   return fetch(LOGIN_URL, {
     method: "POST",
@@ -17,7 +17,7 @@ const loginFetch = ({ username, password }) => {
 
 const SINGUP_URL = "https://api.ribbonreceipts.com/user/create/";
 
-const singupFetch = ({ username, password }) => {
+export const singupFetch = ({ username, password }) => {
   const data = { username, password };
   return fetch(SINGUP_URL, {
     method: "POST",

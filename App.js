@@ -6,6 +6,7 @@ import { LogIn } from "./src/pages/login";
 import { SignUp } from "./src/pages/signup";
 import { Home } from './src/pages/home';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Toast from 'react-native-toast-message';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const theme = createTheme({
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
+      <Toast />
       <StatusBar backgroundColor={'transparent'} translucent/>
       <NavigationContainer theme={theme}>
         <Stack.Navigator
