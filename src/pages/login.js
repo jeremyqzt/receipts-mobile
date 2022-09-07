@@ -26,10 +26,10 @@ export const LogIn = ({ navigation }) => {
         await SecureStore.setItemAsync("access_token", res.access);
         await SecureStore.setItemAsync("refresh_token", res.refresh);
 
-        //navigation.reset({
-        //  index: 0,
-        //  routes: [{ name: "homepage" }],
-        //});
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "homepage" }],
+        });
       })
       .catch(() => {
         Toast.show({
