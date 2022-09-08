@@ -35,7 +35,7 @@ export const LogIn = ({ navigation }) => {
         Toast.show({
           type: "error",
           text1: "🛑 Login Failed!",
-          text2: "Incorrect Email-Password Pair. Please Try Again!",
+          text2: "Incorrect E-mail and password pair. Please try again!",
           position: "bottom",
         });
       })

@@ -59,7 +59,7 @@ export const SignUp = () => {
             Toast.show({
               type: "error",
               text1: "🛑 Login Failed!",
-              text2: "Incorrect Email-Password Pair. Please Try Again!",
+              text2: "Your account has been created but an network occurred logging in!",
               position: "bottom",
             });
           });
