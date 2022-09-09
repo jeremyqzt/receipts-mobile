@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Input, Button } from "@rneui/themed";
 import { View, Image } from "react-native";
@@ -6,12 +6,26 @@ import Logo from "../../assets/logo.png";
 import { loginFetch } from "../utils/loginUtils";
 import * as SecureStore from "expo-secure-store";
 import Toast from "react-native-toast-message";
-
+import { parseJwt } from "../utils/tools";
 export const LogIn = ({ navigation }) => {
+
   const [loading, setLoading] = useState(false);
 
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+
+  useEffect(() => {
+    SecureStore.getItemAsync("access_token").then((token
+      ) => {
+      const decodedJwt = parseJwt(token);
+      if (decodedJwt.exp * 1000 > Date.now()) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "homepage" }],
+        });
+      }
+    });
+  });
 
   const loginNow = () => {
     setLoading(true);
