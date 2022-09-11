@@ -7,6 +7,7 @@ import { loginFetch } from "../utils/loginUtils";
 import * as SecureStore from "expo-secure-store";
 import Toast from "react-native-toast-message";
 import { parseJwt } from "../utils/tools";
+
 export const LogIn = ({ navigation }) => {
 
   const [loading, setLoading] = useState(false);
