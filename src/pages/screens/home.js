@@ -3,6 +3,7 @@ import * as SecureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
 import { View, Image, Text, Linking, ActivityIndicator } from "react-native";
 import { getReceipts } from "../../utils/fetchUtils";
+import { MainTable } from "../../components/mainTable/mainTable";
 
 export const HomeScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -33,18 +34,22 @@ export const HomeScreen = ({ navigation }) => {
       }}
     >
       {!loading ? (
-        <Button
-          title={"Logout!"}
-          onPress={async () => {
-            await SecureStore.deleteItemAsync("access_token");
-            await SecureStore.deleteItemAsync("refresh_token");
+        <>
+          <MainTable />
+          <Button
+            title={"Logout!"}
+            onPress={async () => {
+              await SecureStore.deleteItemAsync("access_token");
+              await SecureStore.deleteItemAsync("refresh_token");
 
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "login" }],
-            });
-          }}
-        />
+              navigation.reset({
+                index: 0,
+                routes: [{ name: "login" }],
+              });
+            }}
+          />
+          
+        </>
       ) : (
         <>
           <ActivityIndicator size="large" color="red" />
