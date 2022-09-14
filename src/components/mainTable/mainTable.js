@@ -1,4 +1,5 @@
 import { ListItem, Avatar } from "@rneui/themed";
+import { View, Image, Text, Linking, ActivityIndicator } from "react-native";
 
 const list = [
   {
@@ -30,12 +31,20 @@ renderItem = ({ item }) => (
 );
 
 export const MainTable = (props) => {
-  const { receipts } = props;
+  const { receipts, loading } = props;
+
+  if (!receipts && loading) {
+    return <ActivityIndicator size="large" color="red" />;
+  }
+
   return (
-    <FlatList
-      keyExtractor={this.keyExtractor}
-      data={receipts}
-      renderItem={this.renderItem}
-    />
+    <>
+      <FlatList
+        keyExtractor={this.keyExtractor}
+        data={receipts}
+        renderItem={this.renderItem}
+      />
+      {loading ? <ActivityIndicator size="large" color="red" /> : null}
+    </>
   );
 };

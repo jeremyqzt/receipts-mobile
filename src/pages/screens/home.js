@@ -15,7 +15,7 @@ export const HomeScreen = ({ navigation }) => {
       .then((res) => res.json())
       .then((res) => {
         const { pages, receipts: r, total } = res;
-        setReceipts(r);
+        setReceipts([...receipts,...r]);
         setPaging({ pages, total });
         console.log(r);
       })
@@ -33,9 +33,8 @@ export const HomeScreen = ({ navigation }) => {
         backgroundColor: "white",
       }}
     >
-      {!loading ? (
         <>
-          <MainTable />
+          <MainTable loading={loading}/>
           <Button
             title={"Logout!"}
             onPress={async () => {
@@ -50,11 +49,6 @@ export const HomeScreen = ({ navigation }) => {
           />
           
         </>
-      ) : (
-        <>
-          <ActivityIndicator size="large" color="red" />
-        </>
-      )}
     </View>
   );
 };
