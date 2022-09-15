@@ -1,5 +1,12 @@
 import { ListItem, Avatar } from "@rneui/themed";
-import { View, Image, Text, Linking, ActivityIndicator } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  Linking,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
 
 const list = [
   {
@@ -14,22 +21,6 @@ const list = [
   },
 ];
 
-keyExtractor = (_, index) => index.toString();
-
-renderItem = ({ item }) => (
-  <ListItem bottomDivider>
-    <Avatar
-      title={item.name[0]}
-      source={item.avatar_url && { uri: item.avatar_url }}
-    />
-    <ListItem.Content>
-      <ListItem.Title>{item.name}</ListItem.Title>
-      <ListItem.Subtitle>{item.subtitle}</ListItem.Subtitle>
-    </ListItem.Content>
-    <ListItem.Chevron />
-  </ListItem>
-);
-
 export const MainTable = (props) => {
   const { receipts, loading } = props;
 
@@ -38,13 +29,38 @@ export const MainTable = (props) => {
   }
 
   return (
-    <>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "white",
+        width: "100%",
+      }}
+    >
       <FlatList
-        keyExtractor={this.keyExtractor}
+      style={{
+        width: '100%'
+      }}
+        keyExtractor={(_, index) => index.toString()}
         data={receipts}
-        renderItem={this.renderItem}
+        renderItem={({ item, index }) => {
+          return (
+            <ListItem bottomDivider>
+              <Avatar
+                title={item.alive}
+                source={item.image_url && { uri: item.image_url }}
+              />
+              <ListItem.Content>
+                <ListItem.Title>{item.description}</ListItem.Title>
+                <ListItem.Subtitle>{item.receipt_date}</ListItem.Subtitle>
+              </ListItem.Content>
+              <ListItem.Chevron />
+            </ListItem>
+          );
+        }}
       />
       {loading ? <ActivityIndicator size="large" color="red" /> : null}
-    </>
+    </View>
   );
 };

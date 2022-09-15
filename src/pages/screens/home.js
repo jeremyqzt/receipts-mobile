@@ -15,9 +15,8 @@ export const HomeScreen = ({ navigation }) => {
       .then((res) => res.json())
       .then((res) => {
         const { pages, receipts: r, total } = res;
-        setReceipts([...receipts,...r]);
+        setReceipts([...receipts, ...r]);
         setPaging({ pages, total });
-        console.log(r);
       })
       .finally(() => {
         setLoading(false);
@@ -25,30 +24,30 @@ export const HomeScreen = ({ navigation }) => {
   }, [setReceipts, setPaging, setLoading]);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "white",
-      }}
-    >
-        <>
-          <MainTable loading={loading}/>
-          <Button
-            title={"Logout!"}
-            onPress={async () => {
-              await SecureStore.deleteItemAsync("access_token");
-              await SecureStore.deleteItemAsync("refresh_token");
+    <>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+          width: '100%'
+        }}
+      >
+        <MainTable loading={loading} receipts={receipts} />
+      </View>
+      <Button
+        title={"Logout!"}
+        onPress={async () => {
+          await SecureStore.deleteItemAsync("access_token");
+          await SecureStore.deleteItemAsync("refresh_token");
 
-              navigation.reset({
-                index: 0,
-                routes: [{ name: "login" }],
-              });
-            }}
-          />
-          
-        </>
-    </View>
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "login" }],
+          });
+        }}
+      />
+    </>
   );
 };
