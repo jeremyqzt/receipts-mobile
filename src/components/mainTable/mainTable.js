@@ -1,25 +1,6 @@
 import { ListItem, Avatar } from "@rneui/themed";
-import {
-  View,
-  Image,
-  Text,
-  Linking,
-  ActivityIndicator,
-  FlatList,
-} from "react-native";
-
-const list = [
-  {
-    name: "Amy Farha",
-    subtitle: "Vice President",
-  },
-  {
-    name: "Chris Jackson",
-    avatar_url:
-      "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
-    subtitle: "Vice Chairman",
-  },
-];
+import { View, Text, ActivityIndicator, FlatList } from "react-native";
+import { categories } from "../../constants/categoryConstants";
 
 export const MainTable = (props) => {
   const { receipts, loading } = props;
@@ -39,9 +20,9 @@ export const MainTable = (props) => {
       }}
     >
       <FlatList
-      style={{
-        width: '100%'
-      }}
+        style={{
+          width: "100%",
+        }}
         keyExtractor={(_, index) => index.toString()}
         data={receipts}
         renderItem={({ item, index }) => {
@@ -52,8 +33,16 @@ export const MainTable = (props) => {
                 source={item.image_url && { uri: item.image_url }}
               />
               <ListItem.Content>
-                <ListItem.Title>{item.description}</ListItem.Title>
-                <ListItem.Subtitle>{item.receipt_date}</ListItem.Subtitle>
+                <ListItem.Title>
+                  <Text
+                    style={{ fontWeight: "bold" }}
+                  >{`${item.vendor} `}</Text>
+                </ListItem.Title>
+                <ListItem.Subtitle>{`Receipt Total: $${item.total_amount} `}</ListItem.Subtitle>
+                <ListItem.Subtitle>{`Purchase Date: ${item.receipt_date} `}</ListItem.Subtitle>
+                <ListItem.Subtitle>{`Purchase Category: ${
+                  categories[item.category - 1]?.name
+                } `}</ListItem.Subtitle>
               </ListItem.Content>
               <ListItem.Chevron />
             </ListItem>
