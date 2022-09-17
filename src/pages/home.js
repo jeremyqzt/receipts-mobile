@@ -17,6 +17,11 @@ export const Home = () => {
         name="Settings"
         component={SettingsScreen}
       />
+      <Tab.Screen
+        options={{ headerShown: false }}
+        name="Upload"
+        component={SettingsScreen}
+      />
     </Tab.Navigator>
   );
 };
