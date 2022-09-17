@@ -3,7 +3,8 @@ import { Dialog, Image } from "@rneui/themed";
 import { Text, ActivityIndicator, StyleSheet } from "react-native";
 
 export const ImageModal = (props) => {
-  const { image_url, visible, close } = props;
+  const { receipt, visible, close } = props;
+  const {image_url} = receipt;
   return (
     <Dialog isVisible={visible} onBackdropPress={close}>
       <Dialog.Title title="Dialog Title" />

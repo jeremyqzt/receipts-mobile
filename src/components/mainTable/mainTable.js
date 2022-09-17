@@ -1,9 +1,21 @@
+import React, { useState } from "react";
+
 import { ListItem, Avatar } from "@rneui/themed";
-import { View, Text, ActivityIndicator, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { categories } from "../../constants/categoryConstants";
+import { ImageModal } from "./imageModal";
 
 export const MainTable = (props) => {
   const { receipts, loading } = props;
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [activeReceipt, setActiveReceipt] = useState();
 
   if (!receipts && loading) {
     return <ActivityIndicator size="large" color="red" />;
@@ -28,10 +40,17 @@ export const MainTable = (props) => {
         renderItem={({ item, index }) => {
           return (
             <ListItem bottomDivider>
-              <Avatar
-                title={item.alive}
-                source={item.image_url && { uri: item.image_url }}
-              />
+              <TouchableOpacity
+                onPress={(item) => {
+                  setActiveReceipt(item);
+                  setModalOpen(true);
+                }}
+              >
+                <Avatar
+                  title={item.alive}
+                  source={item.image_url && { uri: item.image_url }}
+                />
+              </TouchableOpacity>
               <ListItem.Content>
                 <ListItem.Title>
                   <Text
@@ -47,6 +66,13 @@ export const MainTable = (props) => {
               <ListItem.Chevron />
             </ListItem>
           );
+        }}
+      />
+      <ImageModal
+        visible={modalOpen}
+        receipt={activeReceipt}
+        close={() => {
+          setModalOpen(false);
         }}
       />
       {loading ? <ActivityIndicator size="large" color="red" /> : null}
