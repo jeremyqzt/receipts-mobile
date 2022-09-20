@@ -41,7 +41,7 @@ export const MainTable = (props) => {
           return (
             <ListItem bottomDivider>
               <TouchableOpacity
-                onPress={(item) => {
+                onPress={() => {
                   setActiveReceipt(item);
                   setModalOpen(true);
                 }}
