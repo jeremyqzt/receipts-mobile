@@ -3,7 +3,39 @@ import { StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
 import React, { useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
+import DatePicker from "react-native-datepicker";
 
+const DatePickerLocal = (props) => {
+  return (
+    <DatePicker
+      style={{ width: "100%" }}
+      date={props.date}
+      mode="date"
+      placeholder="Select Receipt Date"
+      format="YYYY-MM-DD"
+      minDate="2000-01-01"
+      maxDate="2100-01-01"
+      confirmBtnText="Confirm"
+      cancelBtnText="Cancel"
+      customStyles={{
+        dateIcon: {
+          position: "absolute",
+          left: 0,
+          top: 4,
+          marginLeft: 0,
+        },
+        dateInput: {
+          marginLeft: 36,
+          marginRight: 15,
+        },
+        // ... You can check the source to find the other keys.
+      }}
+      onDateChange={(date) => {
+        props.setDate(date);
+      }}
+    />
+  );
+};
 const data = [
   { label: "Item 1", value: "1" },
   { label: "Item 2", value: "2" },
@@ -23,7 +55,7 @@ const DropdownComponent = () => {
     if (value || isFocus) {
       return (
         <Text style={[styles.label, isFocus && { color: "blue" }]}>
-          Dropdown label
+          Select Category
         </Text>
       );
     }
@@ -32,6 +64,7 @@ const DropdownComponent = () => {
 
   return (
     <View style={styles.container}>
+        <Text style={styles.inputIcon}>📊</Text>
       {renderLabel()}
       <Dropdown
         style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
@@ -44,7 +77,7 @@ const DropdownComponent = () => {
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder={!isFocus ? "Select item" : "..."}
+        placeholder={!isFocus ? "Select Category" : "..."}
         searchPlaceholder="Search..."
         value={value}
         onFocus={() => setIsFocus(true)}
@@ -61,46 +94,59 @@ const DropdownComponent = () => {
 
 export const EditModal = (props) => {
   const { receipt = {}, visible, close } = props;
+  const { total_amount, vendor, description, receipt_date } = receipt;
+  const [amount, setAmount] = useState(total_amount);
+  const [lVendor, setVendor] = useState(vendor);
+  const [lDescription, setDescription] = useState(description);
+  const date = new Date(receipt_date);
+
+  const [lDate, setDate] = useState(date);
+
   return (
     <Modal isVisible={visible} onBackdropPress={close}>
       <View style={styles.dialog}>
         <View style={styles.header}>
-          <Text h2>Edit Receipt</Text>
+          <Text h2>🧾 Edit Receipt</Text>
         </View>
         <View>
           <View style={styles.inputContainer}>
-            <Input
-              placeholder="Amount"
-              leftIcon={{ type: "font-awesome", name: "comment" }}
-              style={styles.input}
-              onChangeText={(value) => this.setState({ comment: value })}
-            />
+            <DatePickerLocal date={date} setDate={setDate} />
           </View>
+
           <View style={styles.inputContainer}>
+            <Text style={styles.inputIcon}>💲</Text>
+
             <Input
-              placeholder="Amount"
-              leftIcon={{ type: "font-awesome", name: "comment" }}
+              containerStyle={{ width: "85%" }}
+              placeholder={`$${total_amount}`}
               style={styles.input}
-              onChangeText={(value) => this.setState({ comment: value })}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Input
-              placeholder="Vendor"
-              leftIcon={{ type: "font-awesome", name: "comment" }}
-              style={styles.input}
-              onChangeText={(value) => this.setState({ comment: value })}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Input
-              placeholder="Description"
-              leftIcon={{ type: "font-awesome", name: "comment" }}
-              style={styles.input}
-              onChangeText={(value) => this.setState({ comment: value })}
+              onChangeText={(value) => {
+                setAmount(value);
+              }}
             />
           </View>
           <DropdownComponent />
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputIcon}>🏬</Text>
+
+            <Input
+              containerStyle={{ width: "85%" }}
+              placeholder={vendor}
+              style={styles.input}
+              onChangeText={(value) => setVendor(value)}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputIcon}>📓</Text>
+
+            <Input
+              containerStyle={{ width: "85%" }}
+              placeholder={description}
+              style={styles.input}
+              onChangeText={(value) => setDescription(value)}
+            />
+          </View>
+
           <Button title="Save" onPress={close} />
         </View>
       </View>
@@ -109,15 +155,19 @@ export const EditModal = (props) => {
 };
 
 const styles = StyleSheet.create({
+  inputIcon: {
+    marginTop: 5,
+    fontSize: 35,
+  },
   header: {
     marginHorizontal: 15,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   inputContainer: {
+    display: "flex",
+    flexDirection: "row",
     marginHorizontal: 10,
-  },
-  input: {
-    padding: 10,
+    marginVertical: 5,
   },
   buttomBar: {
     flex: 1,
@@ -134,15 +184,18 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   container: {
+    display: "flex",
+    flexDirection: "row",
     backgroundColor: "white",
-    padding: 16,
+    padding: 10,
   },
   dropdown: {
-    height: 50,
+    height: 45,
+    width: "85%",
     borderColor: "gray",
     borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
+    borderRadius: 0,
+    paddingLeft: 10,
   },
   icon: {
     marginRight: 5,
