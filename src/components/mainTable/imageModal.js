@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Image } from "@rneui/themed";
-import { Text, ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
 
 export const ImageModal = (props) => {
