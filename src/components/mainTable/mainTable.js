@@ -40,7 +40,7 @@ export const MainTable = (props) => {
         }}
         keyExtractor={(_, index) => index.toString()}
         data={receipts}
-        renderItem={({ item, index }) => {
+        renderItem={({ item }) => {
           return (
             <ListItem bottomDivider>
               <TouchableOpacity
