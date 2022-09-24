@@ -26,7 +26,7 @@ export const postReceipt = async ({
   formData.append("crop", JSONcrop);
   const path = `${domainRoot}${receiptCreateUrl}`;
 
-  return postFormData(path, formData, true).then((res) => {
+  return postFormData(path, formData).then((res) => {
     if (!res.ok) {
       throw new Error();
     }
@@ -39,7 +39,7 @@ export const updateReceipts = async (update) => {
     ...update,
   };
   const path = `${domainRoot}${receiptUpdateUrl}`;
-  return postData(path, data, true).then((res) => {
+  return postData(path, data).then((res) => {
     if (!res.ok) {
       throw new Error();
     }

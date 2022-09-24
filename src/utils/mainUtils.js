@@ -1,15 +1,15 @@
 import * as SecureStore from "expo-secure-store";
 
 export const postData = async (url = "", data = {}) => {
-  return serverCommContent(url, data, auth, "POST", "application/json");
+  return serverCommContent(url, data, "POST", "application/json");
 };
 
 export const postFormData = async (url = "", data = {}) => {
-  return serverComm(url, data, auth, "POST", "multipart/form-data");
+  return serverComm(url, data, "POST", "multipart/form-data");
 };
 
 export const getData = async (url = "", data = {}) => {
-  return serverCommContent(url, data, auth, "GET", "application/json");
+  return serverCommContent(url, data, "GET", "application/json");
 };
 
 export const serverCommContent = async (

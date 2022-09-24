@@ -11,6 +11,7 @@ import {
 import { categories } from "../../constants/categoryConstants";
 import { ImageModal } from "./imageModal";
 import { EditModal } from "./editModal";
+import Toast from "react-native-toast-message";
 
 export const MainTable = (props) => {
   const { receipts, loading } = props;
@@ -34,6 +35,7 @@ export const MainTable = (props) => {
         width: "100%",
       }}
     >
+      <Toast />
       <FlatList
         style={{
           width: "100%",

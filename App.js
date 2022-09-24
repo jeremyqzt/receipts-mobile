@@ -4,9 +4,9 @@ import { ThemeProvider, createTheme } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 import { LogIn } from "./src/pages/login";
 import { SignUp } from "./src/pages/signup";
-import { Home } from './src/pages/home';
+import { Home } from "./src/pages/home";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Toast from 'react-native-toast-message';
+import Toast from "react-native-toast-message";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,12 +26,12 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Toast />
-      <StatusBar backgroundColor={'transparent'} translucent/>
+      <StatusBar backgroundColor={"transparent"} translucent />
       <NavigationContainer theme={theme}>
         <Stack.Navigator
           screenOptions={{
-            cardStyle: {  opacity: 1, backgroundColor: "white" },
-            cardOverlayEnabled: true
+            cardStyle: { opacity: 1, backgroundColor: "white" },
+            cardOverlayEnabled: true,
           }}
         >
           <Stack.Screen
@@ -44,7 +44,6 @@ const App = () => {
             component={SignUp}
             options={{
               title: "Sign Up",
-              
             }}
           />
           <Stack.Screen

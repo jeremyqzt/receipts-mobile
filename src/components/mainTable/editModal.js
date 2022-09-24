@@ -5,6 +5,8 @@ import React, { useState, useEffect } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import DatePicker from "react-native-datepicker";
 import { categories } from "../../constants/categoryConstants";
+import { updateReceipts } from "../../utils/receiptUtils";
+import Toast from "react-native-toast-message";
 
 const DatePickerLocal = (props) => {
   return (
@@ -85,7 +87,8 @@ const DropdownComponent = (props) => {
 
 export const EditModal = (props) => {
   const { receipt = {}, visible, close } = props;
-  const { total_amount, vendor, description, receipt_date, category } = receipt;
+  const { total_amount, vendor, description, receipt_date, category, pk } =
+    receipt;
   const [receiptCat, setReceiptCat] = useState(category);
   const [amount, setAmount] = useState(total_amount);
   const [lVendor, setVendor] = useState(vendor);
@@ -94,6 +97,18 @@ export const EditModal = (props) => {
   const [lDate, setDate] = useState(date);
   const [needLoad, setNeedLoad] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [loading, setIsLoading] = useState(false);
+
+  const postData = {
+    update_data: {
+      category: receiptCat,
+      vendor: lVendor,
+      total_amount: amount,
+      receipt_date_datetime: lDate,
+      receipt_date: lDate,
+    },
+    uid: pk,
+  };
 
   useEffect(() => {
     if (needLoad && receipt_date) {
@@ -120,8 +135,10 @@ export const EditModal = (props) => {
   ]);
 
   const closeModal = () => {
-    setNeedLoad(true);
-    close();
+    if (!loading) {
+      setNeedLoad(true);
+      close();
+    }
   };
 
   const errorPlaceholder = isError
@@ -130,6 +147,23 @@ export const EditModal = (props) => {
         errorMessage: "Please enter a valid amount!",
       }
     : {};
+
+  const save = () => {
+    setIsLoading(true);
+    updateReceipts(postData)
+      .then(() => {
+        Toast.show({
+          type: "success",
+          text1: "✅ Success!",
+          text2: "Your receipt information has been updated!",
+          position: "bottom",
+        });
+        closeModal();
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   return (
     <Modal isVisible={visible} onBackdropPress={closeModal}>
@@ -188,7 +222,7 @@ export const EditModal = (props) => {
             />
           </View>
 
-          <Button title="Save" onPress={close} />
+          <Button loading={loading} title="Save" onPress={save} />
         </View>
       </View>
     </Modal>
