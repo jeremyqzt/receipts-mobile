@@ -181,6 +181,8 @@ export const EditModal = (props) => {
 
             <Input
               placeholder="Total Amount"
+              keyboardType="numeric"
+              returnKeyType={"Done"}
               containerStyle={{ width: "85%" }}
               value={`${amount}`}
               style={styles.input}
@@ -205,6 +207,7 @@ export const EditModal = (props) => {
             <Text style={styles.inputIcon}>🏬</Text>
 
             <Input
+              returnKeyType={"Done"}
               containerStyle={{ width: "85%" }}
               value={lVendor}
               style={styles.input}
@@ -215,6 +218,7 @@ export const EditModal = (props) => {
             <Text style={styles.inputIcon}>📓</Text>
 
             <Input
+              returnKeyType={"Done"}
               containerStyle={{ width: "85%" }}
               value={lDescription}
               style={styles.input}
