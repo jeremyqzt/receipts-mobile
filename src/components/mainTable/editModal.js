@@ -86,7 +86,7 @@ const DropdownComponent = (props) => {
 };
 
 export const EditModal = (props) => {
-  const { receipt = {}, visible, close } = props;
+  const { receipt = {}, visible, close, updateLocalReceipt, arrayIdx } = props;
   const { total_amount, vendor, description, receipt_date, category, pk } =
     receipt;
   const [receiptCat, setReceiptCat] = useState(category);
@@ -159,6 +159,13 @@ export const EditModal = (props) => {
           position: "bottom",
         });
         closeModal();
+        updateLocalReceipt({
+          category: receiptCat,
+          vendor: lVendor,
+          total_amount: amount,
+          receipt_date_datetime: lDate,
+          receipt_date: lDate,
+        }, arrayIdx);
       })
       .finally(() => {
         setIsLoading(false);

@@ -23,6 +23,18 @@ export const HomeScreen = ({ navigation }) => {
       });
   }, [setReceipts, setPaging, setLoading]);
 
+  const updateLocalReceipt = (update, updateIdx) => {
+    const newReceipts = [...receipts];
+    if (!isNaN(updateIdx) && updateIdx >= 0 && updateIdx < receipts.length) {
+      newReceipts[updateIdx] = {
+        ...newReceipts[updateIdx],
+        ...update,
+      };
+    }
+
+    setReceipts(newReceipts);
+  };
+
   return (
     <>
       <View
@@ -31,10 +43,14 @@ export const HomeScreen = ({ navigation }) => {
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: "white",
-          width: '100%'
+          width: "100%",
         }}
       >
-        <MainTable loading={loading} receipts={receipts} />
+        <MainTable
+          loading={loading}
+          receipts={receipts}
+          updateLocalReceipt={updateLocalReceipt}
+        />
       </View>
       <Button
         title={"Logout!"}

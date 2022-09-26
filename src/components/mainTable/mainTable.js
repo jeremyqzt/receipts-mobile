@@ -14,12 +14,13 @@ import { EditModal } from "./editModal";
 import Toast from "react-native-toast-message";
 
 export const MainTable = (props) => {
-  const { receipts, loading } = props;
+  const { receipts, loading, updateLocalReceipt } = props;
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
   const [activeReceipt, setActiveReceipt] = useState();
+  const [activeReceiptIdx, setActiveReceiptIdx] = useState();
 
   if (!receipts && loading) {
     return <ActivityIndicator size="large" color="red" />;
@@ -42,7 +43,7 @@ export const MainTable = (props) => {
         }}
         keyExtractor={(_, index) => index.toString()}
         data={receipts}
-        renderItem={({ item }) => {
+        renderItem={({ item, idx }) => {
           return (
             <ListItem bottomDivider>
               <TouchableOpacity
@@ -58,6 +59,7 @@ export const MainTable = (props) => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
+                  setActiveReceiptIdx(idx);
                   setActiveReceipt(item);
                   setEditModalOpen(true);
                 }}
@@ -77,6 +79,7 @@ export const MainTable = (props) => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
+                  setActiveReceiptIdx(idx);
                   setActiveReceipt(item);
                   setEditModalOpen(true);
                 }}
@@ -97,6 +100,8 @@ export const MainTable = (props) => {
       <EditModal
         visible={editModalOpen}
         receipt={activeReceipt}
+        arrayIdx={activeReceiptIdx}
+        updateLocalReceipt={updateLocalReceipt}
         close={() => {
           setEditModalOpen(false);
         }}
