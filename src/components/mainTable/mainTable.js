@@ -43,7 +43,7 @@ export const MainTable = (props) => {
         }}
         keyExtractor={(_, index) => index.toString()}
         data={receipts}
-        renderItem={({ item, idx }) => {
+        renderItem={({ item, index }) => {
           return (
             <ListItem bottomDivider>
               <TouchableOpacity
@@ -59,7 +59,7 @@ export const MainTable = (props) => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  setActiveReceiptIdx(idx);
+                  setActiveReceiptIdx(index);
                   setActiveReceipt(item);
                   setEditModalOpen(true);
                 }}

@@ -158,7 +158,7 @@ export const EditModal = (props) => {
           text2: "Your receipt information has been updated!",
           position: "bottom",
         });
-        closeModal();
+        
         updateLocalReceipt({
           category: receiptCat,
           vendor: lVendor,
@@ -166,9 +166,12 @@ export const EditModal = (props) => {
           receipt_date_datetime: lDate,
           receipt_date: lDate,
         }, arrayIdx);
+
+        console.log(arrayIdx)
       })
       .finally(() => {
         setIsLoading(false);
+        closeModal();
       });
   };
 
