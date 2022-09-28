@@ -166,8 +166,6 @@ export const EditModal = (props) => {
           receipt_date_datetime: lDate,
           receipt_date: lDate,
         }, arrayIdx);
-
-        console.log(arrayIdx)
       })
       .finally(() => {
         setIsLoading(false);
