@@ -3,6 +3,7 @@ import * as SecureStore from "expo-secure-store";
 import { View, Image, Text, Linking } from "react-native";
 import { listBuckets, getActiveBucket } from "../../utils/bucketUtils";
 import { useEffect, useState } from "react";
+import {BucketsSelect} from '../../components/settings/buckets';
 
 export const SettingsScreen = () => {
 
@@ -24,6 +25,10 @@ export const SettingsScreen = () => {
   }, [setActiveBucket, setBuckets, setLoading]);    
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", width: "100%" }}>
+        <BucketsSelect buckets={buckets} activeBucket={activeBucket}/>
+
+        </View>
         <Button 
             title={"Logout!"}
             

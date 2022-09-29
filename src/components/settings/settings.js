@@ -11,6 +11,7 @@ import {
 import { categories } from "../../constants/categoryConstants";
 import { ImageModal } from "./imageModal";
 import { EditModal } from "./editModal";
+import {BucketsSelect} from '../../components/settings/buckets';
 import Toast from "react-native-toast-message";
 
 export const Settings = (props) => {
