@@ -52,18 +52,6 @@ export const HomeScreen = ({ navigation }) => {
           updateLocalReceipt={updateLocalReceipt}
         />
       </View>
-      <Button
-        title={"Logout!"}
-        onPress={async () => {
-          await SecureStore.deleteItemAsync("access_token");
-          await SecureStore.deleteItemAsync("refresh_token");
-
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "login" }],
-          });
-        }}
-      />
     </>
   );
 };
