@@ -40,92 +40,9 @@ const DatePickerLocal = (props) => {
   );
 };
 
-export const createBucketModal = () => {
-  const { total_amount, vendor, description, receipt_date, category, pk } =
-    receipt;
-  const [receiptCat, setReceiptCat] = useState(category);
-  const [amount, setAmount] = useState(total_amount);
-  const [lVendor, setVendor] = useState(vendor);
-  const [lDescription, setDescription] = useState(description);
-  const date = new Date(receipt_date);
-  const [lDate, setDate] = useState(date);
-  const [needLoad, setNeedLoad] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [loading, setIsLoading] = useState(false);
+export const createBucketModal = (props) => {
 
-  const postData = {
-    update_data: {
-      category: receiptCat,
-      vendor: lVendor,
-      total_amount: amount,
-      receipt_date_datetime: lDate,
-      receipt_date: lDate,
-    },
-    uid: pk,
-  };
-
-  useEffect(() => {
-    if (needLoad && receipt_date) {
-      setReceiptCat(category);
-      setAmount(total_amount);
-      setVendor(vendor);
-      setDescription(description);
-      setNeedLoad(false);
-      setDate(receipt_date);
-    }
-  }, [
-    needLoad,
-    setNeedLoad,
-    setDescription,
-    setVendor,
-    setAmount,
-    setReceiptCat,
-    category,
-    total_amount,
-    vendor,
-    description,
-    receipt_date,
-    receipt,
-  ]);
-
-  const closeModal = () => {
-    if (!loading) {
-      setNeedLoad(true);
-      close();
-    }
-  };
-
-  const errorPlaceholder = isError
-    ? {
-        errorStyle: { color: "red" },
-        errorMessage: "Please enter a valid amount!",
-      }
-    : {};
-
-  const save = () => {
-    setIsLoading(true);
-    updateReceipts(postData)
-      .then(() => {
-        Toast.show({
-          type: "success",
-          text1: "✅ Success!",
-          text2: "Your receipt information has been updated!",
-          position: "bottom",
-        });
-        
-        updateLocalReceipt({
-          category: receiptCat,
-          vendor: lVendor,
-          total_amount: amount,
-          receipt_date_datetime: lDate,
-          receipt_date: lDate,
-        }, arrayIdx);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        closeModal();
-      });
-  };
+    const {visible, closeModal} = props;
 
   return (
     <Modal isVisible={visible} onBackdropPress={closeModal}>
