@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SettingsScreen } from "./screens/settings";
 import { HomeScreen } from "./screens/home";
+import { UploadScreen } from "./screens/upload";
 import { Icon } from "@rneui/themed";
 
 const Tab = createBottomTabNavigator();
@@ -25,7 +26,7 @@ export const Home = () => {
           ),
         }}
         name="Upload"
-        component={SettingsScreen}
+        component={UploadScreen}
       />
       <Tab.Screen
         options={{
