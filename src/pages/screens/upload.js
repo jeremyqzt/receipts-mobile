@@ -8,20 +8,20 @@ import Logo from "../../../assets/logo.png";
 
 export const UploadScreen = () => {
   const [showCamera, setShowCamera] = useState(false);
-  const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [camera, setCamera] = useState(null);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     requestPermission();
   });
 
-  function toggleCameraType() {
-    setType((current) =>
-      current === CameraType.back ? CameraType.front : CameraType.back
-    );
-  }
-
-  const [image, setImage] = useState(null);
+  const toggleCameraType = async () => {
+    const options = { quality: 1, base64: true };
+    const data = await camera.takePictureAsync(options);
+    setImage(data.uri);
+    setShowCamera(false);
+  };
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -59,7 +59,11 @@ export const UploadScreen = () => {
         }}
       >
         {showCamera ? (
-          <Camera style={styles.camera} type={type}>
+          <Camera
+            style={styles.camera}
+            type={CameraType.back}
+            ref={(ref) => setCamera(ref)}
+          >
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.button}
@@ -73,25 +77,38 @@ export const UploadScreen = () => {
           <>
             <View
               style={{
-                marginTop: "1%",
+                marginTop: 0,
                 width: "100%",
-                height: "30%",
-                margin: "auto",
+                height: "70%",
               }}
             >
-              <Image
-                style={{
-                  width: null,
-                  height: "50%",
-                  resizeMode: "contain",
-                  marginTop: "1%",
-                }}
-                source={Logo}
-              />
+              {image ? (
+                <Image
+                  style={{
+                    width: null,
+                    height: "100%",
+                    resizeMode: "contain",
+                    marginTop: "1%",
+                  }}
+                  source={{ uri: image }}
+                />
+              ) : (
+                <Image
+                  style={{
+                    width: null,
+                    height: "50%",
+                    resizeMode: "contain",
+                    marginTop: "1%",
+                  }}
+                  source={Logo}
+                />
+              )}
             </View>
-            <Text style={{ fontSize: 24 }}>
-              Take an image to create a receipt record!
-            </Text>
+            {!image ? (
+              <Text style={{ fontSize: 24 }}>
+                Take an image to create a receipt record!
+              </Text>
+            ) : null}
           </>
         )}
       </View>
