@@ -26,7 +26,7 @@ export const UploadScreen = () => {
 
   const triggerUpload = (data) => {
     console.log("Uploading");
-    postReceipt({image: Platform.OS === 'android' ? data: data.replace('file://', ''), bucket: activeBucket.uid}).then((res) => {
+    postReceipt({image: data, bucket: activeBucket.uid}).then((res) => {
         console.log(JSON.stringify(res));
     }).catch((err)=>console.log("ERROR" + JSON.stringify(err)))
   }
@@ -34,8 +34,15 @@ export const UploadScreen = () => {
   const takePicture = async () => {
     const options = { quality: 0, base64: true };
     const data = await camera.takePictureAsync(options);
+      // Infer the type of the image
+    const fileName = data.uri.split('/').pop()
+    const match = /\.(\w+)$/.exec(fileName);
+    const type = match ? `image/${match[1]}` : `image`;
+    //Platform.OS === 'android' ? data: data.replace('file://', '')
+    console.log(fileName, type)
     setImage(data.uri);
-    triggerUpload(data.uri);
+    const file = { uri: data.uri, name: fileName, type}
+    triggerUpload(file);
 
     setShowCamera(false);
   };
