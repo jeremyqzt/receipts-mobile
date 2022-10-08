@@ -23,7 +23,6 @@ export const HomeScreen = ({ navigation }) => {
         const { pages, receipts: r, total } = res;
         setReceipts([...receipts, ...r]);
         setPaging({ pages, total });
-        console.log("Done")
       })
       .finally(() => {
         setLoading(false);

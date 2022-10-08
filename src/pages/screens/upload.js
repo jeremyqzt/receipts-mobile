@@ -1,5 +1,11 @@
 import { Button } from "@rneui/themed";
-import { View, Image, Text, StyleSheet, TouchableOpacity, Platform } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import * as ImagePicker from "expo-image-picker";
@@ -7,6 +13,7 @@ import { Camera, CameraType } from "expo-camera";
 import Logo from "../../../assets/logo.png";
 import { getActiveBucket } from "../../utils/bucketUtils";
 import { postReceipt } from "../../utils/receiptUtils";
+import Toast from "react-native-toast-message";
 
 export const UploadScreen = () => {
   const [showCamera, setShowCamera] = useState(false);
@@ -16,32 +23,45 @@ export const UploadScreen = () => {
 
   const [activeBucket, setActiveBucket] = useState({});
 
-
   useEffect(() => {
-    getActiveBucket().then((res) => {
+    getActiveBucket()
+      .then((res) => {
         setActiveBucket(res);
-      }).catch(() => console.log(err));
+      })
+      .catch(() => console.log(err));
     // requestPermission();
   });
 
   const triggerUpload = (data) => {
     console.log("Uploading");
-    postReceipt({image: data, bucket: activeBucket.uid}).then((res) => {
-        console.log(JSON.stringify(res));
-    }).catch((err)=>console.log("ERROR" + JSON.stringify(err)))
-  }
+    postReceipt({ image: data, bucket: activeBucket.uid })
+      .then(() => {
+        Toast.show({
+          type: "success",
+          text1: "✅ Success!",
+          text2: "Your receipt has been uploaded!",
+          position: "bottom",
+        });
+      })
+      .catch(() => {
+        Toast.show({
+          type: "error",
+          text1: "🛑 Error!",
+          text2: "Upload could not be completed, please try again!",
+          position: "bottom",
+        });
+      });
+  };
 
   const takePicture = async () => {
     const options = { quality: 0, base64: true };
     const data = await camera.takePictureAsync(options);
-      // Infer the type of the image
-    const fileName = data.uri.split('/').pop()
+    // Infer the type of the image
+    const fileName = data.uri.split("/").pop();
     const match = /\.(\w+)$/.exec(fileName);
     const type = match ? `image/${match[1]}` : `image`;
-    //Platform.OS === 'android' ? data: data.replace('file://', '')
-    console.log(fileName, type)
     setImage(data.uri);
-    const file = { uri: data.uri, name: fileName, type}
+    const file = { uri: data.uri, name: fileName, type };
     triggerUpload(file);
 
     setShowCamera(false);
@@ -56,8 +76,13 @@ export const UploadScreen = () => {
     });
 
     if (!result.cancelled) {
+      const fileName = data.uri.split("/").pop();
+      const match = /\.(\w+)$/.exec(fileName);
+      const type = match ? `image/${match[1]}` : `image`;
+      const file = { uri: data.uri, name: fileName, type };
+
       setImage(result.uri);
-      //triggerUpload(result.uri);
+      triggerUpload(file);
     }
   };
 
@@ -87,10 +112,7 @@ export const UploadScreen = () => {
             ref={(ref) => setCamera(ref)}
           >
             <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={takePicture}
-              >
+              <TouchableOpacity style={styles.button} onPress={takePicture}>
                 <Text style={styles.text}>Take Picture And Upload!</Text>
               </TouchableOpacity>
             </View>
@@ -193,14 +215,14 @@ const styles = StyleSheet.create({
     fontSize: 35,
   },
   buttonContainer: {
-    width: "100%"
+    width: "100%",
   },
   button: {
     elevation: 8,
     backgroundColor: "#009688",
     borderRadius: 10,
     paddingVertical: 10,
-    paddingHorizontal: 12
+    paddingHorizontal: 12,
   },
   header: {
     marginHorizontal: 15,
