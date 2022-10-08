@@ -8,22 +8,14 @@ import { postData, postFormData } from "./mainUtils";
 export const postReceipt = async ({
   image,
   bucket,
-  description,
-  total,
-  vendor,
-  subtotal,
-  setFields,
-  JSONcrop,
 }) => {
   const formData = new FormData();
   formData.append("file", image);
   formData.append("bucket", bucket);
-  formData.append("subtotal", subtotal);
-  formData.append("total", total);
-  formData.append("vendor", vendor);
-  formData.append("description", description);
-  formData.append("setFields", setFields);
-  formData.append("crop", JSONcrop);
+
+  const crop = {"x":null,"y":null,"width":null,"height":null};
+  formData.append("crop", JSON.stringify(crop));
+  formData.append("setFields", JSON.stringify({}));
   const path = `${domainRoot}${receiptCreateUrl}`;
 
   return postFormData(path, formData).then((res) => {

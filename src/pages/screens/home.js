@@ -7,19 +7,27 @@ import { MainTable } from "../../components/mainTable/mainTable";
 
 export const HomeScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
+  const [fetched, setFetched] = useState(false);
+
   const [receipts, setReceipts] = useState([]);
   const [paging, setPaging] = useState({});
 
+
   useEffect(() => {
+    if (fetched) {
+      return;
+    }
     getReceipts()
       .then((res) => res.json())
       .then((res) => {
         const { pages, receipts: r, total } = res;
         setReceipts([...receipts, ...r]);
         setPaging({ pages, total });
+        console.log("Done")
       })
       .finally(() => {
         setLoading(false);
+        setFetched(true);
       });
   }, [setReceipts, setPaging, setLoading]);
 
