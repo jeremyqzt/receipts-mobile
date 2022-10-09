@@ -1,11 +1,5 @@
 import { Button } from "@rneui/themed";
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import * as ImagePicker from "expo-image-picker";
@@ -13,7 +7,6 @@ import { Camera, CameraType } from "expo-camera";
 import Logo from "../../../assets/logo.png";
 import { getActiveBucket } from "../../utils/bucketUtils";
 import { postReceipt } from "../../utils/receiptUtils";
-import Toast from "react-native-toast-message";
 
 export const UploadScreen = () => {
   const [showCamera, setShowCamera] = useState(false);
@@ -33,6 +26,7 @@ export const UploadScreen = () => {
   });
 
   const triggerUpload = (data) => {
+    return;
     console.log("Uploading");
     postReceipt({ image: data, bucket: activeBucket.uid })
       .then(() => {
@@ -111,10 +105,10 @@ export const UploadScreen = () => {
             type={CameraType.back}
             ref={(ref) => setCamera(ref)}
           >
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={takePicture}>
-                <Text style={styles.text}>Take Picture And Upload!</Text>
-              </TouchableOpacity>
+            <View style={styles.buttonContainerOutter}>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={takePicture} />
+              </View>
             </View>
           </Camera>
         ) : (
@@ -214,15 +208,28 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 35,
   },
-  buttonContainer: {
+  buttonContainerOutter: {
     width: "100%",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  buttonContainer: {
+    elevation: 8,
+    marginBottom: 32,
+    backgroundColor: "grey",
+    borderRadius: 50,
+    paddingVertical: 3,
+    paddingHorizontal: 3,
   },
   button: {
     elevation: 8,
-    backgroundColor: "#009688",
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+    backgroundColor: "white",
+    borderRadius: 50,
+    paddingVertical: 30,
+    paddingHorizontal: 30,
   },
   header: {
     marginHorizontal: 15,
