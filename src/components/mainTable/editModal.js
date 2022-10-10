@@ -111,7 +111,7 @@ export const EditModal = (props) => {
   };
 
   useEffect(() => {
-    if (needLoad && receipt_date) {
+    if (needLoad && visible && pk) {
       setReceiptCat(category);
       setAmount(total_amount);
       setVendor(vendor);
@@ -132,6 +132,7 @@ export const EditModal = (props) => {
     description,
     receipt_date,
     receipt,
+    pk,
   ]);
 
   const closeModal = () => {
