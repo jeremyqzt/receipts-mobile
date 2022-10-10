@@ -13,6 +13,7 @@ export const UploadScreen = () => {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState(null);
   const [image, setImage] = useState(null);
+  const [uploadFile, setUploadFile] = useState({});
 
   const [activeBucket, setActiveBucket] = useState({});
 
@@ -25,10 +26,8 @@ export const UploadScreen = () => {
     // requestPermission();
   });
 
-  const triggerUpload = (data) => {
-    return;
-    console.log("Uploading");
-    postReceipt({ image: data, bucket: activeBucket.uid })
+  const triggerUpload = () => {
+    postReceipt({ image: uploadFile, bucket: activeBucket.uid })
       .then(() => {
         Toast.show({
           type: "success",
@@ -56,8 +55,7 @@ export const UploadScreen = () => {
     const type = match ? `image/${match[1]}` : `image`;
     setImage(data.uri);
     const file = { uri: data.uri, name: fileName, type };
-    triggerUpload(file);
-
+    setUploadFile(file)
     setShowCamera(false);
   };
 
@@ -70,13 +68,13 @@ export const UploadScreen = () => {
     });
 
     if (!result.cancelled) {
-      const fileName = data.uri.split("/").pop();
+      const fileName = result.uri.split("/").pop();
       const match = /\.(\w+)$/.exec(fileName);
       const type = match ? `image/${match[1]}` : `image`;
-      const file = { uri: data.uri, name: fileName, type };
+      const file = { uri: result.uri, name: fileName, type };
 
       setImage(result.uri);
-      triggerUpload(file);
+      setUploadFile(file)
     }
   };
 
@@ -117,34 +115,54 @@ export const UploadScreen = () => {
               style={{
                 marginTop: 0,
                 width: "100%",
-                height: "70%",
+                height: "60%",
               }}
             >
               {image ? (
-                <Image
-                  style={{
-                    width: null,
-                    height: "100%",
-                    resizeMode: "contain",
-                    marginTop: "1%",
-                  }}
-                  source={{ uri: image }}
-                />
+                <>
+                  <Image
+                    style={{
+                      width: null,
+                      height: "100%",
+                      resizeMode: "contain",
+                      marginTop: "1%",
+                    }}
+                    source={{ uri: image }}
+                  />
+                  <View style={{ width: "100%", display: "flex", alignItems:"center", marginTop: 0 }}>
+                    <Button
+                      style={{
+                        width: 200,
+                        marginHorizontal: "auto",
+                        marginBottom: 16,
+                      }}
+                      title={"Upload Image!"}
+                      onPress={async () => {
+                        triggerUpload();
+                      }}
+                    />
+                    <Text>
+                        Or try again.
+                    </Text>
+                  </View>
+                </>
               ) : (
-                <Image
-                  style={{
-                    width: null,
-                    height: "50%",
-                    resizeMode: "contain",
-                    marginTop: "1%",
-                  }}
-                  source={Logo}
-                />
+                <>
+                  <Image
+                    style={{
+                      width: null,
+                      height: "50%",
+                      resizeMode: "contain",
+                      marginTop: "1%",
+                    }}
+                    source={Logo}
+                  />
+                </>
               )}
             </View>
             {!image ? (
-              <Text style={{ fontSize: 24 }}>
-                Take an image to create a receipt record!
+              <Text style={{ fontSize: 20 }}>
+                Take or upload an image to create a record!
               </Text>
             ) : null}
           </>
