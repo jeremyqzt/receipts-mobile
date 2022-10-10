@@ -23,7 +23,7 @@ export const UploadScreen = () => {
         setActiveBucket(res);
       })
       .catch(() => console.log(err));
-    // requestPermission();
+    requestPermission();
   });
 
   const triggerUpload = () => {
@@ -55,7 +55,7 @@ export const UploadScreen = () => {
     const type = match ? `image/${match[1]}` : `image`;
     setImage(data.uri);
     const file = { uri: data.uri, name: fileName, type };
-    setUploadFile(file)
+    setUploadFile(file);
     setShowCamera(false);
   };
 
@@ -74,7 +74,7 @@ export const UploadScreen = () => {
       const file = { uri: result.uri, name: fileName, type };
 
       setImage(result.uri);
-      setUploadFile(file)
+      setUploadFile(file);
     }
   };
 
@@ -129,7 +129,14 @@ export const UploadScreen = () => {
                     }}
                     source={{ uri: image }}
                   />
-                  <View style={{ width: "100%", display: "flex", alignItems:"center", marginTop: 0 }}>
+                  <View
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      marginTop: 0,
+                    }}
+                  >
                     <Button
                       style={{
                         width: 200,
@@ -141,9 +148,7 @@ export const UploadScreen = () => {
                         triggerUpload();
                       }}
                     />
-                    <Text>
-                        Or try again.
-                    </Text>
+                    <Text>Or try again.</Text>
                   </View>
                 </>
               ) : (
