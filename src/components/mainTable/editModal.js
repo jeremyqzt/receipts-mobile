@@ -106,6 +106,7 @@ export const EditModal = (props) => {
       total_amount: amount,
       receipt_date_datetime: lDate,
       receipt_date: lDate,
+      description,
     },
     uid: pk,
   };
