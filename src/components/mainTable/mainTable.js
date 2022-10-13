@@ -1,17 +1,37 @@
 import React, { useState } from "react";
 
-import { ListItem, Avatar } from "@rneui/themed";
+import { ListItem, Avatar, Button } from "@rneui/themed";
 import {
   View,
   Text,
   ActivityIndicator,
   FlatList,
-  TouchableOpacity,
+  StyleSheet,
+  Animated,
+  TouchableOpacity
 } from "react-native";
 import { categories } from "../../constants/categoryConstants";
 import { ImageModal } from "./imageModal";
 import { EditModal } from "./editModal";
 import Toast from "react-native-toast-message";
+
+const renderRightActions = (_, dragX) => {
+  const opacity = dragX.interpolate({
+    inputRange: [-150, 0],
+    outputRange: [1, 0],
+    extrapolate: "clamp",
+  });
+
+  return (
+    <View style={styles.swipedRow}>
+      <Animated.View style={[styles.deleteButton, { opacity }]}>
+        <TouchableOpacity>
+          <Text style={styles.deleteButtonText}>Delete</Text>
+        </TouchableOpacity>
+      </Animated.View>
+    </View>
+  );
+};
 
 export const MainTable = (props) => {
   const { receipts, loading, updateLocalReceipt } = props;
@@ -45,7 +65,18 @@ export const MainTable = (props) => {
         data={receipts}
         renderItem={({ item, index }) => {
           return (
-            <ListItem bottomDivider>
+            <ListItem.Swipeable
+              style={{ backgroundColor: "white" }}
+              rightContent={(reset) => (
+                <Button
+                  title="Delete"
+                  onPress={() => reset()}
+                  icon={{ name: "delete", color: "white" }}
+                  buttonStyle={{ minHeight: "100%", backgroundColor: "red" }}
+                />
+              )}
+              bottomDivider
+            >
               <View
                 style={{
                   width: "100%",
@@ -104,7 +135,7 @@ export const MainTable = (props) => {
                   <ListItem.Chevron />
                 </TouchableOpacity>
               </View>
-            </ListItem>
+            </ListItem.Swipeable>
           );
         }}
       />
@@ -128,3 +159,10 @@ export const MainTable = (props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  inputIcon: {
+    marginTop: 5,
+    fontSize: 35,
+  },
+});
