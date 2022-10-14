@@ -94,6 +94,10 @@ export const MainTable = (props) => {
                   }}
                 >
                   <TouchableOpacity
+                    style={{
+                      marginRight: 10,
+                      marginVertical: "5%",
+                    }}
                     onPress={() => {
                       setActiveReceipt(item);
                       setModalOpen(true);
@@ -126,6 +130,10 @@ export const MainTable = (props) => {
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity
+                style={{
+                  marginTop: "5%",
+                  width: "30%"
+                }}
                   onPress={() => {
                     setActiveReceiptIdx(index);
                     setActiveReceipt(item);
