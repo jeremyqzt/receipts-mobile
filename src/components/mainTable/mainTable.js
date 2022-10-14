@@ -8,33 +8,15 @@ import {
   FlatList,
   StyleSheet,
   Animated,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { categories } from "../../constants/categoryConstants";
 import { ImageModal } from "./imageModal";
 import { EditModal } from "./editModal";
 import Toast from "react-native-toast-message";
 
-const renderRightActions = (_, dragX) => {
-  const opacity = dragX.interpolate({
-    inputRange: [-150, 0],
-    outputRange: [1, 0],
-    extrapolate: "clamp",
-  });
-
-  return (
-    <View style={styles.swipedRow}>
-      <Animated.View style={[styles.deleteButton, { opacity }]}>
-        <TouchableOpacity>
-          <Text style={styles.deleteButtonText}>Delete</Text>
-        </TouchableOpacity>
-      </Animated.View>
-    </View>
-  );
-};
-
 export const MainTable = (props) => {
-  const { receipts, loading, updateLocalReceipt } = props;
+  const { receipts, loading, updateLocalReceipt, deleteReceipt } = props;
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -70,7 +52,10 @@ export const MainTable = (props) => {
               rightContent={(reset) => (
                 <Button
                   title="Delete"
-                  onPress={() => reset()}
+                  onPress={() => {
+                    reset();
+                    deleteReceipt(index);
+                  }}
                   icon={{ name: "delete", color: "white" }}
                   buttonStyle={{ minHeight: "100%", backgroundColor: "red" }}
                 />
@@ -130,10 +115,10 @@ export const MainTable = (props) => {
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity
-                style={{
-                  marginTop: "5%",
-                  width: "30%"
-                }}
+                  style={{
+                    marginTop: "5%",
+                    width: "30%",
+                  }}
                   onPress={() => {
                     setActiveReceiptIdx(index);
                     setActiveReceipt(item);

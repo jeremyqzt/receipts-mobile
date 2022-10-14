@@ -3,6 +3,7 @@ import * as SecureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
 import { View, Image, Text, Linking, ActivityIndicator } from "react-native";
 import { getReceipts } from "../../utils/fetchUtils";
+import { deactivateReceipt } from "../../utils/receiptUtils";
 import { MainTable } from "../../components/mainTable/mainTable";
 
 export const HomeScreen = ({ navigation }) => {
@@ -11,7 +12,6 @@ export const HomeScreen = ({ navigation }) => {
 
   const [receipts, setReceipts] = useState([]);
   const [paging, setPaging] = useState({});
-
 
   useEffect(() => {
     if (fetched) {
@@ -42,6 +42,14 @@ export const HomeScreen = ({ navigation }) => {
     setReceipts(newReceipts);
   };
 
+  const deleteReceipt = (idx) => {
+    deactivateReceipt(receipts[idx].pk).then((res) => {
+      const newReceipts = [...receipts];
+      newReceipts.splice(idx, 1);
+      setReceipts(newReceipts);
+    });
+  };
+
   return (
     <>
       <View
@@ -56,6 +64,7 @@ export const HomeScreen = ({ navigation }) => {
         <MainTable
           loading={loading}
           receipts={receipts}
+          deleteReceipt={deleteReceipt}
           updateLocalReceipt={updateLocalReceipt}
         />
       </View>

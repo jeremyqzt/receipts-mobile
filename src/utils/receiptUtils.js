@@ -16,7 +16,7 @@ export const postReceipt = async ({ image, bucket }) => {
   const path = `${domainRoot}${receiptCreateUrl}`;
 
   return postFormData(path, formData).then((res) => {
-    console.log(JSON.stringify(res))
+    console.log(JSON.stringify(res));
     if (!res.ok) {
       throw new Error();
     }
@@ -29,6 +29,17 @@ export const updateReceipts = async (update) => {
     ...update,
   };
   const path = `${domainRoot}${receiptUpdateUrl}`;
+  return postData(path, data).then((res) => {
+    if (!res.ok) {
+      throw new Error();
+    }
+    return res.json();
+  });
+};
+
+export const deactivateReceipt = (rid) => {
+  const data = { uid: rid };
+  const path = `${domainRoot}${receiptCreateUrl}delete/`;
   return postData(path, data).then((res) => {
     if (!res.ok) {
       throw new Error();
