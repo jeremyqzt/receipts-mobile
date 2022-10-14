@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Animated,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 import { categories } from "../../constants/categoryConstants";
 import { ImageModal } from "./imageModal";
@@ -16,7 +17,8 @@ import { EditModal } from "./editModal";
 import Toast from "react-native-toast-message";
 
 export const MainTable = (props) => {
-  const { receipts, loading, updateLocalReceipt, deleteReceipt } = props;
+  const { receipts, loading, updateLocalReceipt, deleteReceipt, refetch } =
+    props;
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -45,6 +47,15 @@ export const MainTable = (props) => {
         }}
         keyExtractor={(_, index) => index.toString()}
         data={receipts}
+        refreshControl={
+          <RefreshControl
+            colors={["#9Bd35A", "#689F38"]}
+            refreshing={loading}
+            onRefresh={() => {
+              refetch();
+            }}
+          />
+        }
         renderItem={({ item, index }) => {
           return (
             <ListItem.Swipeable

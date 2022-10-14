@@ -1,7 +1,5 @@
-import { Input, Button } from "@rneui/themed";
-import * as SecureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
-import { View, Image, Text, Linking, ActivityIndicator } from "react-native";
+import { View } from "react-native";
 import { getReceipts } from "../../utils/fetchUtils";
 import { deactivateReceipt } from "../../utils/receiptUtils";
 import { MainTable } from "../../components/mainTable/mainTable";
@@ -28,7 +26,7 @@ export const HomeScreen = ({ navigation }) => {
         setLoading(false);
         setFetched(true);
       });
-  }, [setReceipts, setPaging, setLoading]);
+  }, [setReceipts, setPaging, setLoading, setFetched, fetched]);
 
   const updateLocalReceipt = (update, updateIdx) => {
     const newReceipts = [...receipts];
@@ -66,6 +64,9 @@ export const HomeScreen = ({ navigation }) => {
           receipts={receipts}
           deleteReceipt={deleteReceipt}
           updateLocalReceipt={updateLocalReceipt}
+          refetch={() => {
+            setFetched(false);
+          }}
         />
       </View>
     </>
