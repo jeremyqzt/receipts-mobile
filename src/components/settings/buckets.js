@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Button, Image } from "@rneui/themed";
-import { ActivityIndicator, StyleSheet, View, Text } from "react-native";
-import Modal from "react-native-modal";
+import {  StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { setActiveBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";

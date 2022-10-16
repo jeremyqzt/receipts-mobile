@@ -21,31 +21,76 @@ export const SettingsScreen = () => {
     });
   }, [setActiveBucket, setBuckets, setLoading]);
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
       <Toast />
 
       <View
         style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
           width: "100%",
         }}
       >
+        <View>
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: "bold",
+              marginLeft: 10,
+              marginTop: 12,
+            }}
+          >
+            Bucket Selection
+          </Text>
+          <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4 }}>
+            Update your active bucket below, receipts will automatically, load
+            from, and upload to this bucket.
+          </Text>
+        </View>
         <BucketsSelect buckets={buckets} activeBucket={activeBucket} />
       </View>
-      <Button
-        title={"Logout!"}
-        onPress={async () => {
-          await SecureStore.deleteItemAsync("access_token");
-          await SecureStore.deleteItemAsync("refresh_token");
-
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "login" }],
-          });
+      <View
+        style={{
+          width: "100%",
         }}
-      />
+      >
+        <View>
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: "bold",
+              marginLeft: 10,
+              marginTop: 12,
+            }}
+          >
+            Logout
+          </Text>
+          <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4 }}>
+            Click the logout button to end the current session.
+          </Text>
+        </View>
+        <Button
+          title={"Logout!"}
+          style={{
+            width: "100%",
+            paddingHorizontal: 10,
+          }}
+          onPress={async () => {
+            await SecureStore.deleteItemAsync("access_token");
+            await SecureStore.deleteItemAsync("refresh_token");
+
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "login" }],
+            });
+          }}
+        />
+      </View>
     </View>
   );
 };
