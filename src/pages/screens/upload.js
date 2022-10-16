@@ -16,6 +16,16 @@ export const UploadScreen = () => {
   const [uploadFile, setUploadFile] = useState({});
 
   const [activeBucket, setActiveBucket] = useState({});
+  useEffect(() => {
+    console.log("WTF")
+    if (permission && permission?.granted) {
+      return;
+    }
+  
+    (async () => {
+      await requestPermission();
+    })();
+  }, []);
 
   useEffect(() => {
     getActiveBucket()
@@ -23,8 +33,7 @@ export const UploadScreen = () => {
         setActiveBucket(res);
       })
       .catch(() => console.log(err));
-    requestPermission();
-  });
+  }, []);
 
   const triggerUpload = () => {
     postReceipt({ image: uploadFile, bucket: activeBucket.uid })
