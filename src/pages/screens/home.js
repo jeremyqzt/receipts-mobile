@@ -7,26 +7,35 @@ import { MainTable } from "../../components/mainTable/mainTable";
 export const HomeScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [fetched, setFetched] = useState(false);
+  const [refetch, setReFetch] = useState(false);
 
   const [receipts, setReceipts] = useState([]);
-  const [paging, setPaging] = useState({});
 
   useEffect(() => {
     if (fetched) {
       return;
     }
-    getReceipts()
-      .then((res) => res.json())
+    getReceipts(receipts.length)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error();
+        }
+        return res.json();
+      })
       .then((res) => {
         const { pages, receipts: r, total } = res;
-        setReceipts([...receipts, ...r]);
-        setPaging({ pages, total });
+        const receiptsArr = !refetch ? [...r] : [...receipts, ...r];
+        setReceipts(receiptsArr);
+      })
+      .catch((res) => {
+        console.log(res);
       })
       .finally(() => {
         setLoading(false);
         setFetched(true);
+        setReFetch(false);
       });
-  }, [setReceipts, setPaging, setLoading, setFetched, fetched]);
+  }, [setReceipts, setLoading, setFetched, setReFetch, fetched, refetch]);
 
   const updateLocalReceipt = (update, updateIdx) => {
     const newReceipts = [...receipts];
@@ -65,6 +74,7 @@ export const HomeScreen = ({ navigation }) => {
           deleteReceipt={deleteReceipt}
           updateLocalReceipt={updateLocalReceipt}
           refetch={() => {
+            setReFetch(false);
             setFetched(false);
           }}
         />
