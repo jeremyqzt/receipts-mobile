@@ -15,7 +15,7 @@ export const HomeScreen = ({ navigation }) => {
     if (fetched) {
       return;
     }
-    getReceipts(receipts.length)
+    getReceipts(2000)
       .then((res) => {
         if (!res.ok) {
           throw new Error();

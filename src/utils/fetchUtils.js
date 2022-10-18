@@ -3,8 +3,8 @@ import * as SecureStore from "expo-secure-store";
 
 const fetchReceiptsUrl = `${domainRoot}${receiptCreateUrl}`;
 
-export const getReceipts = async (off) => {
-  return fetch(`${fetchReceiptsUrl}?sort=0&offset=${off}`, {
+export const getReceipts = async (amount) => {
+  return fetch(`${fetchReceiptsUrl}?sort=0&offset=0&limit=${amount}`, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
