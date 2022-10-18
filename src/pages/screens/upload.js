@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import * as ImagePicker from "expo-image-picker";
 import { Camera, CameraType } from "expo-camera";
-import Logo from "../../../assets/logo.png";
+import Logo from "../../../assets/image-regular.svg";
 import { getActiveBucket } from "../../utils/bucketUtils";
 import { postReceipt } from "../../utils/receiptUtils";
+import { Icon } from "../../components/upload/icon";
 
 export const UploadScreen = () => {
   const [showCamera, setShowCamera] = useState(false);
@@ -17,11 +18,10 @@ export const UploadScreen = () => {
 
   const [activeBucket, setActiveBucket] = useState({});
   useEffect(() => {
-    console.log("WTF")
     if (permission && permission?.granted) {
       return;
     }
-  
+
     (async () => {
       await requestPermission();
     })();
@@ -100,6 +100,7 @@ export const UploadScreen = () => {
       <Toast />
       <View
         style={{
+          
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
@@ -122,7 +123,7 @@ export const UploadScreen = () => {
           <>
             <View
               style={{
-                marginTop: 0,
+                marginTop: -100,
                 width: "100%",
                 height: "60%",
               }}
@@ -150,7 +151,7 @@ export const UploadScreen = () => {
                       style={{
                         width: 200,
                         marginHorizontal: "auto",
-                        marginBottom: 16,
+                        marginVertical: 16,
                       }}
                       title={"Upload Image!"}
                       onPress={async () => {
@@ -161,17 +162,24 @@ export const UploadScreen = () => {
                   </View>
                 </>
               ) : (
-                <>
-                  <Image
-                    style={{
-                      width: null,
-                      height: "50%",
-                      resizeMode: "contain",
-                      marginTop: "1%",
-                    }}
-                    source={Logo}
+                <View
+                  style={{
+                    width: null,
+                    height: "75%",
+                    resizeMode: "contain",
+                    marginVertical: "1%",
+                    marginHorizontal: 50,
+                    borderRadius: 25,
+                    backgroundColor: "#F5F5F5",
+                  }}
+                >
+                  <Icon
+                    width="100%"
+                    height="100%"
+                    strokeWidth={15}
+                    stroke="black"
                   />
-                </>
+                </View>
               )}
             </View>
             {!image ? (
