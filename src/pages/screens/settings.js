@@ -54,6 +54,7 @@ export const SettingsScreen = () => {
         </View>
         <BucketsSelect buckets={buckets} activeBucket={activeBucket} />
       </View>
+
       <View
         style={{
           width: "100%",
@@ -65,13 +66,37 @@ export const SettingsScreen = () => {
               fontSize: 24,
               fontWeight: "bold",
               marginLeft: 10,
-              marginTop: 12,
+              marginTop: 24,
+            }}
+          >
+            Bucket Creation
+          </Text>
+          <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4 }}>
+            Create a new bucket to upload receipts into below, this will open a modal.
+            The active bucket will not change when a new bucket is created.
+          </Text>
+        </View>
+        <BucketsSelect buckets={buckets} activeBucket={activeBucket} />
+      </View>
+      <View
+        style={{
+          width: "100%",
+        }}
+      >
+        <View>
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: "bold",
+              marginLeft: 10,
+              marginTop: 24,
             }}
           >
             Logout
           </Text>
-          <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4 }}>
+          <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4, marginBottom: 8 }}>
             Click the logout button to end the current session.
+            You will need to re-enter your credentials.
           </Text>
         </View>
         <Button
