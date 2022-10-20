@@ -14,7 +14,7 @@ const DatePickerLocal = (props) => {
       style={{ width: "100%" }}
       date={props.date}
       mode="date"
-      placeholder="Select Receipt Date"
+      placeholder="Effective Date"
       format="YYYY-MM-DD"
       minDate="2000-01-01"
       maxDate="2100-01-01"
@@ -23,13 +23,13 @@ const DatePickerLocal = (props) => {
       customStyles={{
         dateIcon: {
           position: "absolute",
-          left: 0,
+          left: 10,
           top: 4,
           marginLeft: 0,
         },
         dateInput: {
-          marginLeft: 36,
-          marginRight: 15,
+          marginLeft: 54,
+          marginRight: 28,
         },
         // ... You can check the source to find the other keys.
       }}
@@ -40,73 +40,32 @@ const DatePickerLocal = (props) => {
   );
 };
 
-export const createBucketModal = (props) => {
+export const CreateBucketModal = (props) => {
+  const { visible, closeModal } = props;
 
-    const {visible, closeModal} = props;
-
+  const [modalName, setModalName] = useState("");
+  const [date, setDate] = useState(new Date());
   return (
     <Modal isVisible={visible} onBackdropPress={closeModal}>
       <View style={styles.dialog}>
         <View style={styles.header}>
-          <Text h2>🧾 Edit Receipt</Text>
+          <Text h2>🆕 Create Bucket</Text>
         </View>
         <View>
           <View style={styles.inputContainer}>
-            <DatePickerLocal date={lDate} setDate={setDate} />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>💲</Text>
-
+            <Text style={styles.inputIcon}>🪣</Text>
             <Input
-              placeholder="Total Amount"
-              keyboardType="numeric"
-              returnKeyType='done'
+              returnKeyType="done"
               containerStyle={{ width: "85%" }}
-              value={`${amount}`}
+              placeholder={"Bucket Name"}
+              value={modalName}
               style={styles.input}
-              {...errorPlaceholder}
-              onChangeText={(value) => {
-                setAmount(value);
-              }}
-              onBlur={() => {
-                if (isNaN(amount)) {
-                  setAmount(total_amount);
-                  setIsError(true);
-                  setTimeout(() => setIsError(false), 3000);
-                }
-              }}
+              onChangeText={(value) => setModalName(value)}
             />
           </View>
-          <DropdownComponent
-            category={receiptCat}
-            setCategory={setReceiptCat}
-          />
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>🏬</Text>
-
-            <Input
-              returnKeyType='done'
-              containerStyle={{ width: "85%" }}
-              value={lVendor}
-              style={styles.input}
-              onChangeText={(value) => setVendor(value)}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>📓</Text>
-
-            <Input
-              returnKeyType='done'
-              containerStyle={{ width: "85%" }}
-              value={lDescription}
-              style={styles.input}
-              onChangeText={(value) => setDescription(value)}
-            />
-          </View>
-
-          <Button loading={loading} title="Save" onPress={save} />
+          <DatePickerLocal setDate={setDate} date={date} />
         </View>
+        <Button  style={{marginTop: 24}}loading={false} title="Create" onPress={() => {}} />
       </View>
     </Modal>
   );

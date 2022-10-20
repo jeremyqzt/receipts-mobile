@@ -4,12 +4,14 @@ import { View, Image, Text, Linking } from "react-native";
 import { listBuckets, getActiveBucket } from "../../utils/bucketUtils";
 import { useEffect, useState } from "react";
 import { BucketsSelect } from "../../components/settings/buckets";
+import { CreateBucketModal } from "../../components/settings/bucketModal";
 import Toast from "react-native-toast-message";
 
 export const SettingsScreen = () => {
   const [buckets, setBuckets] = useState([]);
   const [activeBucket, setActiveBucket] = useState({});
   const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     listBuckets().then((res) => {
@@ -20,6 +22,7 @@ export const SettingsScreen = () => {
       setActiveBucket(res);
     });
   }, [setActiveBucket, setBuckets, setLoading]);
+
   return (
     <View
       style={{
@@ -29,6 +32,9 @@ export const SettingsScreen = () => {
         flexDirection: "column",
       }}
     >
+      <CreateBucketModal visible={visible} closeModal={() => {
+        setVisible(false)
+      }}/>
       <Toast />
 
       <View
@@ -76,7 +82,16 @@ export const SettingsScreen = () => {
             The active bucket will not change when a new bucket is created.
           </Text>
         </View>
-        <BucketsSelect buckets={buckets} activeBucket={activeBucket} />
+        <Button
+          title={"Create Bucket"}
+          style={{
+            width: "100%",
+            paddingHorizontal: 10,
+          }}
+          onPress={async () => {
+            setVisible(true);
+          }}
+        />
       </View>
       <View
         style={{
