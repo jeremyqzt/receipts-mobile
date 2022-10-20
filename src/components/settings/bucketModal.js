@@ -1,11 +1,9 @@
 import { Button, Input, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
-import React, { useState, useEffect } from "react";
-import { Dropdown } from "react-native-element-dropdown";
+import React, { useState } from "react";
 import DatePicker from "react-native-datepicker";
-import { categories } from "../../constants/categoryConstants";
-import { updateReceipts } from "../../utils/receiptUtils";
+import { createBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";
 
 const DatePickerLocal = (props) => {
@@ -44,6 +42,9 @@ export const CreateBucketModal = (props) => {
   const { visible, closeModal } = props;
 
   const [modalName, setModalName] = useState("");
+  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [date, setDate] = useState(new Date());
   return (
     <Modal isVisible={visible} onBackdropPress={closeModal}>
@@ -63,9 +64,52 @@ export const CreateBucketModal = (props) => {
               onChangeText={(value) => setModalName(value)}
             />
           </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputIcon}>📃</Text>
+            <Input
+              returnKeyType="done"
+              containerStyle={{ width: "85%" }}
+              placeholder={"Bucket Description"}
+              value={description}
+              style={styles.input}
+              onChangeText={(value) => setDescription(value)}
+            />
+          </View>
           <DatePickerLocal setDate={setDate} date={date} />
         </View>
-        <Button  style={{marginTop: 24}}loading={false} title="Create" onPress={() => {}} />
+        <Button
+          style={{ marginTop: 24 }}
+          loading={loading}
+          title="Create"
+          onPress={() => {
+            setLoading(true);
+            createBucket(
+              modalName,
+              description,
+              date.toISOString().split("T")[0],
+            )
+              .then(() => {
+                Toast.show({
+                  type: "success",
+                  text1: "✅ Success!",
+                  text2: "Your bucket has been created!",
+                  position: "bottom",
+                });
+              })
+              .catch(() => {
+                Toast.show({
+                  type: "error",
+                  text1: "🛑 Error!",
+                  text2: "Bucket could not be created, please try again!",
+                  position: "bottom",
+                });
+              })
+              .finally(() => {
+                closeModal();
+                setLoading(false);
+              });
+          }}
+        />
       </View>
     </Modal>
   );

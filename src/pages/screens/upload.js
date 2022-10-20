@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import * as ImagePicker from "expo-image-picker";
 import { Camera, CameraType } from "expo-camera";
-import Logo from "../../../assets/image-regular.svg";
 import { getActiveBucket } from "../../utils/bucketUtils";
 import { postReceipt } from "../../utils/receiptUtils";
 import { Icon } from "../../components/upload/icon";
