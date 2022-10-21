@@ -16,7 +16,6 @@ export const postReceipt = async ({ image, bucket }) => {
   const path = `${domainRoot}${receiptCreateUrl}`;
 
   return postFormData(path, formData).then((res) => {
-    console.log(JSON.stringify(res));
     if (!res.ok) {
       throw new Error();
     }

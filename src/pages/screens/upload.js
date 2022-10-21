@@ -7,6 +7,8 @@ import { Camera, CameraType } from "expo-camera";
 import { getActiveBucket } from "../../utils/bucketUtils";
 import { postReceipt } from "../../utils/receiptUtils";
 import { Icon } from "../../components/upload/icon";
+import { useAtom } from "jotai";
+import { receiptAtom } from "../../atom/atom";
 
 export const UploadScreen = () => {
   const [showCamera, setShowCamera] = useState(false);
@@ -14,6 +16,7 @@ export const UploadScreen = () => {
   const [camera, setCamera] = useState(null);
   const [image, setImage] = useState(null);
   const [uploadFile, setUploadFile] = useState({});
+  const [rAtom, setReceiptAtom] = useAtom(receiptAtom);
 
   const [activeBucket, setActiveBucket] = useState({});
   useEffect(() => {
@@ -43,6 +46,7 @@ export const UploadScreen = () => {
           text2: "Your receipt has been uploaded!",
           position: "bottom",
         });
+        setReceiptAtom(rAtom + 1);
       })
       .catch(() => {
         Toast.show({
@@ -99,7 +103,6 @@ export const UploadScreen = () => {
       <Toast />
       <View
         style={{
-          
           flex: 1,
           justifyContent: "center",
           alignItems: "center",

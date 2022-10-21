@@ -3,18 +3,18 @@ import { View } from "react-native";
 import { getReceipts } from "../../utils/fetchUtils";
 import { deactivateReceipt } from "../../utils/receiptUtils";
 import { MainTable } from "../../components/mainTable/mainTable";
+import { useAtom } from "jotai";
+import { receiptAtom } from "../../atom/atom";
 
 export const HomeScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [fetched, setFetched] = useState(false);
   const [refetch, setReFetch] = useState(false);
 
+  const [rAtom] = useAtom(receiptAtom);
   const [receipts, setReceipts] = useState([]);
 
   useEffect(() => {
-    if (fetched) {
-      return;
-    }
     getReceipts(2000)
       .then((res) => {
         if (!res.ok) {
@@ -23,7 +23,8 @@ export const HomeScreen = ({ navigation }) => {
         return res.json();
       })
       .then((res) => {
-        const { pages, receipts: r, total } = res;
+        const { receipts: r } = res;
+        /// const { pages, receipts: r, total } = res;
         const receiptsArr = !refetch ? [...r] : [...receipts, ...r];
         setReceipts(receiptsArr);
       })
@@ -35,7 +36,15 @@ export const HomeScreen = ({ navigation }) => {
         setFetched(true);
         setReFetch(false);
       });
-  }, [setReceipts, setLoading, setFetched, setReFetch, fetched, refetch]);
+  }, [
+    setReceipts,
+    setLoading,
+    setFetched,
+    setReFetch,
+    fetched,
+    refetch,
+    rAtom,
+  ]);
 
   const updateLocalReceipt = (update, updateIdx) => {
     const newReceipts = [...receipts];

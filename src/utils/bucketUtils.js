@@ -59,7 +59,6 @@ export const createBucket = async (
   const path = `${domainRoot}${bucketsUrl}`;
   return postFormData(path, formData)
     .then((res) => {
-      console.log(JSON.stringify(res))
       if (!res.ok) {
         throw new Error();
       }
