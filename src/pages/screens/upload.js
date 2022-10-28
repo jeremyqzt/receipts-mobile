@@ -17,6 +17,7 @@ export const UploadScreen = () => {
   const [image, setImage] = useState(null);
   const [uploadFile, setUploadFile] = useState({});
   const [rAtom, setReceiptAtom] = useAtom(receiptAtom);
+  const [loading, setLoading] = useState(false);
 
   const [activeBucket, setActiveBucket] = useState({});
   useEffect(() => {
@@ -32,12 +33,23 @@ export const UploadScreen = () => {
   useEffect(() => {
     getActiveBucket()
       .then((res) => {
+        console.log("Getting");
+
         setActiveBucket(res);
       })
-      .catch(() => console.log(err));
+      .catch(() => {
+        Toast.show({
+          type: "error",
+          text1: "🛑 Error!",
+          text2:
+            "Sorry! Our servers aren't responding right now, please try again in a minute.",
+          position: "bottom",
+        });
+      });
   }, []);
 
   const triggerUpload = () => {
+    setLoading(true);
     postReceipt({ image: uploadFile, bucket: activeBucket.uid })
       .then(() => {
         Toast.show({
@@ -55,7 +67,8 @@ export const UploadScreen = () => {
           text2: "Upload could not be completed, please try again!",
           position: "bottom",
         });
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   const takePicture = async () => {
@@ -150,6 +163,7 @@ export const UploadScreen = () => {
                     }}
                   >
                     <Button
+                      loading={loading}
                       style={{
                         width: 200,
                         marginHorizontal: "auto",
@@ -209,6 +223,7 @@ export const UploadScreen = () => {
           }}
         >
           <Button
+            loading={loading}
             style={{
               width: 200,
             }}
@@ -230,6 +245,7 @@ export const UploadScreen = () => {
             style={{
               width: 200,
             }}
+            loading={loading}
             title={showCamera ? "Hide Camera!" : "Show Camera!"}
             onPress={async () => {
               setShowCamera(!showCamera);

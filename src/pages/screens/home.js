@@ -5,6 +5,7 @@ import { deactivateReceipt } from "../../utils/receiptUtils";
 import { MainTable } from "../../components/mainTable/mainTable";
 import { useAtom } from "jotai";
 import { receiptAtom } from "../../atom/atom";
+import Toast from "react-native-toast-message";
 
 export const HomeScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -17,6 +18,7 @@ export const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     getReceipts(2000)
       .then((res) => {
+        console.log("Getting")
         if (!res.ok) {
           throw new Error();
         }
@@ -28,8 +30,14 @@ export const HomeScreen = ({ navigation }) => {
         const receiptsArr = !refetch ? [...r] : [...receipts, ...r];
         setReceipts(receiptsArr);
       })
-      .catch((res) => {
-        console.log(res);
+      .catch(() => {
+        Toast.show({
+          type: "error",
+          text1: "🛑 Error!",
+          text2:
+            "Sorry! Our servers aren't responding right now, please try again in a minute.",
+          position: "bottom",
+        });
       })
       .finally(() => {
         setLoading(false);
@@ -68,6 +76,8 @@ export const HomeScreen = ({ navigation }) => {
 
   return (
     <>
+      <Toast />
+
       <View
         style={{
           flex: 1,
