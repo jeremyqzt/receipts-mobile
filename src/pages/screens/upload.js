@@ -33,8 +33,6 @@ export const UploadScreen = () => {
   useEffect(() => {
     getActiveBucket()
       .then((res) => {
-        console.log("Getting");
-
         setActiveBucket(res);
       })
       .catch(() => {

@@ -5,6 +5,8 @@ import { listBuckets, getActiveBucket } from "../../utils/bucketUtils";
 import { useEffect, useState } from "react";
 import { BucketsSelect } from "../../components/settings/buckets";
 import { CreateBucketModal } from "../../components/settings/bucketModal";
+import { DeleteBucketModal } from "../../components/settings/deleteBucketModal";
+
 import Toast from "react-native-toast-message";
 
 export const SettingsScreen = () => {
@@ -12,6 +14,7 @@ export const SettingsScreen = () => {
   const [activeBucket, setActiveBucket] = useState({});
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [deleteVis, setDeleteVis] = useState(false);
 
   useEffect(() => {
     listBuckets().then((res) => {
@@ -32,9 +35,20 @@ export const SettingsScreen = () => {
         flexDirection: "column",
       }}
     >
-      <CreateBucketModal visible={visible} closeModal={() => {
-        setVisible(false)
-      }}/>
+      <DeleteBucketModal
+        buckets={buckets}
+        activeBucket={activeBucket}
+        visible={deleteVis}
+        closeModal={() => {
+          setDeleteVis(false);
+        }}
+      />
+      <CreateBucketModal
+        visible={visible}
+        closeModal={() => {
+          setVisible(false);
+        }}
+      />
       <Toast />
 
       <View
@@ -78,12 +92,13 @@ export const SettingsScreen = () => {
             Bucket Creation
           </Text>
           <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4 }}>
-            Create a new bucket to upload receipts into below, this will open a modal.
-            The active bucket will not change when a new bucket is created.
+            Create a new bucket to upload receipts into below, this will open a
+            modal. The active bucket will not change when a new bucket is
+            created.
           </Text>
         </View>
         <Button
-          title={"Create Bucket"}
+          title={"Create A Bucket"}
           style={{
             width: "100%",
             paddingHorizontal: 10,
@@ -107,11 +122,50 @@ export const SettingsScreen = () => {
               marginTop: 24,
             }}
           >
+            Bucket Deletion
+          </Text>
+          <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4 }}>
+            Delete a bucket, this deletes all receipts associated with the
+            bucket. Active buckets cannot be deleted.
+          </Text>
+        </View>
+        <Button
+          title={"Delete A Bucket"}
+          style={{
+            width: "100%",
+            paddingHorizontal: 10,
+          }}
+          onPress={async () => {
+            setDeleteVis(true);
+          }}
+        />
+      </View>
+      <View
+        style={{
+          width: "100%",
+        }}
+      >
+        <View>
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: "bold",
+              marginLeft: 10,
+              marginTop: 24,
+            }}
+          >
             Logout
           </Text>
-          <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4, marginBottom: 8 }}>
-            Click the logout button to end the current session.
-            You will need to re-enter your credentials.
+          <Text
+            style={{
+              fontSize: 15,
+              marginLeft: 10,
+              marginTop: 4,
+              marginBottom: 8,
+            }}
+          >
+            Click the logout button to end the current session. You will need to
+            re-enter your credentials.
           </Text>
         </View>
         <Button
