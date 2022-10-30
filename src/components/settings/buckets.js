@@ -3,10 +3,13 @@ import {  StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { setActiveBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";
+import { receiptAtom } from "../../atom/atom";
+import { useAtom } from "jotai";
 
 const BucketDropdown = (props) => {
   const { buckets, setBuckets, activeBucket } = props;
   const [isFocus, setIsFocus] = useState(false);
+  const [rAtom, setReceiptAtom] = useAtom(receiptAtom);
 
   const renderLabel = () => {
     if (isFocus) {
@@ -42,6 +45,8 @@ const BucketDropdown = (props) => {
         onChange={(item) => {
           setActiveBucket(item.id)
             .then(() => {
+              setBuckets(item)
+              setReceiptAtom(rAtom + 1);
               Toast.show({
                 type: "success",
                 text1: "✅ Success!",
@@ -74,7 +79,7 @@ export const BucketsSelect = (props) => {
   return (
     <BucketDropdown
       buckets={buckets}
-      setBuckets={() => {}}
+      setBuckets={(a) => {setSelectedBucket(a)}}
       activeBucket={selectedBucket ?? activeBucket.id}
     />
   );

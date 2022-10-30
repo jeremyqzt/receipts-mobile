@@ -1,11 +1,13 @@
-import { Input, Button } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import * as SecureStore from "expo-secure-store";
-import { View, Image, Text, Linking } from "react-native";
+import { View, Text } from "react-native";
 import { listBuckets, getActiveBucket } from "../../utils/bucketUtils";
 import { useEffect, useState } from "react";
 import { BucketsSelect } from "../../components/settings/buckets";
 import { CreateBucketModal } from "../../components/settings/bucketModal";
 import { DeleteBucketModal } from "../../components/settings/deleteBucketModal";
+import { useAtom } from "jotai";
+import { bucketAtom } from "../../atom/atom";
 
 import Toast from "react-native-toast-message";
 
@@ -15,6 +17,7 @@ export const SettingsScreen = () => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [deleteVis, setDeleteVis] = useState(false);
+  const [bAtom] = useAtom(bucketAtom);
 
   useEffect(() => {
     listBuckets().then((res) => {
@@ -24,7 +27,7 @@ export const SettingsScreen = () => {
     getActiveBucket().then((res) => {
       setActiveBucket(res);
     });
-  }, [setActiveBucket, setBuckets, setLoading]);
+  }, [setActiveBucket, setBuckets, setLoading, bAtom]);
 
   return (
     <View
@@ -99,6 +102,7 @@ export const SettingsScreen = () => {
         </View>
         <Button
           title={"Create A Bucket"}
+          disabled={loading}
           style={{
             width: "100%",
             paddingHorizontal: 10,
@@ -131,6 +135,7 @@ export const SettingsScreen = () => {
         </View>
         <Button
           title={"Delete A Bucket"}
+          disabled={loading}
           style={{
             width: "100%",
             paddingHorizontal: 10,

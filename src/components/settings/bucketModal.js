@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import DatePicker from "react-native-datepicker";
 import { createBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";
+import { useAtom } from "jotai";
+import { bucketAtom } from "../../atom/atom";
 
 const DatePickerLocal = (props) => {
   return (
@@ -46,6 +48,7 @@ export const CreateBucketModal = (props) => {
   const [loading, setLoading] = useState(false);
 
   const [date, setDate] = useState(new Date());
+  const [bAtom, setBucketAtom] = useAtom(bucketAtom);
   return (
     <Modal isVisible={visible} onBackdropPress={closeModal}>
       <View style={styles.dialog}>
@@ -89,6 +92,7 @@ export const CreateBucketModal = (props) => {
               date.toISOString().split("T")[0],
             )
               .then(() => {
+                setBucketAtom(bAtom + 1);
                 Toast.show({
                   type: "success",
                   text1: "✅ Success!",

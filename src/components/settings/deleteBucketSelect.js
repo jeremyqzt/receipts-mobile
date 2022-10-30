@@ -32,7 +32,7 @@ const DeleteBucketDropdown = (props) => {
         maxHeight={300}
         labelField="name"
         valueField="id"
-        placeholder={!isFocus ? "Buckets" : "..."}
+        placeholder={!isFocus ? "Select A Bucket" : "..."}
         searchPlaceholder="Search..."
         value={activeBucket}
         onFocus={() => setIsFocus(true)}
@@ -62,6 +62,7 @@ export const BucketsSelect = (props) => {
 const styles = StyleSheet.create({
   inputIcon: {
     marginTop: 5,
+    marginRight: 10,
     fontSize: 35,
   },
   header: {

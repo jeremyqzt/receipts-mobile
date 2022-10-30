@@ -1,15 +1,18 @@
-import { Button, Input, Text } from "@rneui/themed";
+import { Button, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
 import React, { useState } from "react";
 import { deactivateBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";
 import { BucketsSelect } from "./deleteBucketSelect";
+import { bucketAtom } from "../../atom/atom";
+import { useAtom } from "jotai";
 
 export const DeleteBucketModal = (props) => {
   const { visible, closeModal, activeBucket, buckets } = props;
   const [loading, setLoading] = useState(false);
   const [selectedBucket, setSelectedBucket] = useState();
+  const [bAtom, setBucketAtom] = useAtom(bucketAtom);
 
   return (
     <Modal isVisible={visible} onBackdropPress={closeModal}>
@@ -17,6 +20,7 @@ export const DeleteBucketModal = (props) => {
         <View style={styles.header}>
           <Text h2>❌ Delete Bucket</Text>
         </View>
+
         <View>
           <View style={styles.inputContainer}>
             <BucketsSelect
@@ -59,6 +63,7 @@ export const DeleteBucketModal = (props) => {
                       text2: "Your bucket has been deleted!",
                       position: "bottom",
                     });
+                    setBucketAtom(bAtom + 1);
                   })
                   .catch(() => {
                     Toast.show({
