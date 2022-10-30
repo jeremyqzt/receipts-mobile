@@ -16,9 +16,13 @@ export const HomeScreen = ({ navigation }) => {
   const [receipts, setReceipts] = useState([]);
 
   useEffect(() => {
+    setReceipts([]);
+  }, [rAtom]);
+
+  useEffect(() => {
+    setLoading(true);
     getReceipts(2000)
       .then((res) => {
-        console.log("Getting")
         if (!res.ok) {
           throw new Error();
         }
