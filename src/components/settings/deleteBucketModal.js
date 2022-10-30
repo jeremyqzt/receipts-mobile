@@ -2,17 +2,15 @@ import { Button, Input, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
 import React, { useState } from "react";
-import { createBucket } from "../../utils/bucketUtils";
+import { deactivateBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";
+import { BucketsSelect } from "./deleteBucketSelect";
 
 export const DeleteBucketModal = (props) => {
-  const { visible, closeModal } = props;
-
-  const [modalName, setModalName] = useState("");
-  const [description, setDescription] = useState("");
+  const { visible, closeModal, activeBucket, buckets } = props;
   const [loading, setLoading] = useState(false);
+  const [selectedBucket, setSelectedBucket] = useState();
 
-  const [date, setDate] = useState(new Date());
   return (
     <Modal isVisible={visible} onBackdropPress={closeModal}>
       <View style={styles.dialog}>
@@ -21,14 +19,11 @@ export const DeleteBucketModal = (props) => {
         </View>
         <View>
           <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>📃</Text>
-            <Input
-              returnKeyType="done"
-              containerStyle={{ width: "85%" }}
-              placeholder={"Bucket Description"}
-              value={description}
-              style={styles.input}
-              onChangeText={(value) => setDescription(value)}
+            <BucketsSelect
+              buckets={buckets}
+              activeBucket={activeBucket}
+              toDelete={selectedBucket}
+              setToDelete={(a) => {setSelectedBucket(a)}}
             />
           </View>
         </View>
@@ -39,32 +34,29 @@ export const DeleteBucketModal = (props) => {
             flexDirection: "row",
           }}
         >
-          <View style={{ marginTop: 24, width: "40%"}}>
+          <View style={{ marginTop: 24, width: "40%" }}>
             <Button
-              style={{ width: "100%"}}
-              color='#cccccc'
+              style={{ width: "100%" }}
+              color="#cccccc"
               loading={loading}
               title="Cancel"
               onPress={() => closeModal()}
             />
           </View>
-          <View style={{ marginTop: 24, width: "40%"}}>
+          <View style={{ marginTop: 24, width: "40%" }}>
             <Button
               style={{ width: "100%" }}
               loading={loading}
               title="Delete"
+              disabled={!selectedBucket}
               onPress={() => {
                 setLoading(true);
-                createBucket(
-                  modalName,
-                  description,
-                  date.toISOString().split("T")[0]
-                )
+                deactivateBucket(selectedBucket.id)
                   .then(() => {
                     Toast.show({
                       type: "success",
                       text1: "✅ Success!",
-                      text2: "Your bucket has been created!",
+                      text2: "Your bucket has been deleted!",
                       position: "bottom",
                     });
                   })
@@ -72,7 +64,7 @@ export const DeleteBucketModal = (props) => {
                     Toast.show({
                       type: "error",
                       text1: "🛑 Error!",
-                      text2: "Bucket could not be created, please try again!",
+                      text2: "Bucket could not be deleted, please try again!",
                       position: "bottom",
                     });
                   })

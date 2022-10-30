@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import {  StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import { setActiveBucket } from "../../utils/bucketUtils";
-import Toast from "react-native-toast-message";
 
 const DeleteBucketDropdown = (props) => {
-  const { buckets, setBuckets, activeBucket } = props;
+  const { buckets, activeBucket, setBuckets } = props;
   const [isFocus, setIsFocus] = useState(false);
 
   const renderLabel = () => {
@@ -40,26 +38,7 @@ const DeleteBucketDropdown = (props) => {
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={(item) => {
-          setActiveBucket(item.id)
-            .then(() => {
-              Toast.show({
-                type: "success",
-                text1: "✅ Success!",
-                text2: "Your active bucket has been updated!",
-                position: "bottom",
-              });
-            })
-            .catch(() => {
-              Toast.show({
-                type: "error",
-                text1: "🛑 Error!",
-                text2:
-                  "Your active bucket could not be updated, please try again!",
-                position: "bottom",
-              });
-            });
-
-          setIsFocus(false);
+          setBuckets(item);
         }}
         renderLeftIcon={() => <View />}
       />
@@ -68,14 +47,14 @@ const DeleteBucketDropdown = (props) => {
 };
 
 export const BucketsSelect = (props) => {
-  const { buckets = [], activeBucket } = props;
-  const [selectedBucket, setSelectedBucket] = useState();
+  const { buckets = [], activeBucket, setToDelete, toDelete } = props;
+  const deletableBuckets = buckets.filter(bucket => bucket.id !== activeBucket.id);
 
   return (
-    <BucketDropdown
-      buckets={buckets}
-      setBuckets={() => {}}
-      activeBucket={selectedBucket ?? activeBucket.id}
+    <DeleteBucketDropdown
+      buckets={deletableBuckets}
+      setBuckets={(a) => { setToDelete(a)}}
+      activeBucket={toDelete}
     />
   );
 };
