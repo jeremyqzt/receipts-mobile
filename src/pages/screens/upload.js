@@ -110,148 +110,154 @@ export const UploadScreen = () => {
   }
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Toast />
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
-        {showCamera ? (
-          <Camera
-            style={styles.camera}
-            type={CameraType.back}
-            ref={(ref) => setCamera(ref)}
-          >
-            <View style={styles.buttonContainerOutter}>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={takePicture} />
-              </View>
-            </View>
-          </Camera>
-        ) : (
-          <>
-            <View
-              style={{
-                marginTop: -100,
-                width: "100%",
-                height: "60%",
-              }}
+    <>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          {showCamera ? (
+            <Camera
+              style={styles.camera}
+              type={CameraType.back}
+              ref={(ref) => setCamera(ref)}
             >
-              {image ? (
-                <>
-                  <Image
-                    style={{
-                      width: null,
-                      height: "100%",
-                      resizeMode: "contain",
-                      marginTop: "1%",
-                    }}
-                    source={{ uri: image }}
-                  />
-                  <View
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      marginTop: 0,
-                    }}
-                  >
-                    <Button
-                      loading={loading}
-                      style={{
-                        width: 200,
-                        marginHorizontal: "auto",
-                        marginVertical: 16,
-                      }}
-                      title={"Upload Image!"}
-                      onPress={async () => {
-                        triggerUpload();
-                      }}
-                    />
-                    <Text>Or try again.</Text>
-                  </View>
-                </>
-              ) : (
-                <View
-                  style={{
-                    width: null,
-                    height: "75%",
-                    resizeMode: "contain",
-                    marginVertical: "1%",
-                    marginHorizontal: 50,
-                    borderRadius: 25,
-                    backgroundColor: "#F5F5F5",
-                  }}
-                >
-                  <Icon
-                    width="100%"
-                    height="100%"
-                    strokeWidth={15}
-                    stroke="black"
+              <View style={styles.buttonContainerOutter}>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={takePicture}
                   />
                 </View>
-              )}
-            </View>
-            {!image ? (
-              <Text style={{ fontSize: 20 }}>
-                Take or upload an image to create a record!
-              </Text>
-            ) : null}
-          </>
-        )}
-      </View>
-
-      <View
-        style={{
-          marginTop: "3%",
-
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-around",
-          marginBottom: "3%",
-        }}
-      >
-        <View
-          style={{
-            width: "100%",
-          }}
-        >
-          <Button
-            loading={loading}
-            style={{
-              width: 200,
-            }}
-            title={"Select Image!"}
-            onPress={async () => {
-              pickImage();
-            }}
-          />
+              </View>
+            </Camera>
+          ) : (
+            <>
+              <View
+                style={{
+                  marginTop: -100,
+                  width: "100%",
+                  height: "60%",
+                }}
+              >
+                {image ? (
+                  <>
+                    <Image
+                      style={{
+                        width: null,
+                        height: "100%",
+                        resizeMode: "contain",
+                        marginTop: "1%",
+                      }}
+                      source={{ uri: image }}
+                    />
+                    <View
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        marginTop: 0,
+                      }}
+                    >
+                      <Button
+                        loading={loading}
+                        style={{
+                          width: 200,
+                          marginHorizontal: "auto",
+                          marginVertical: 16,
+                        }}
+                        title={"Upload Image!"}
+                        onPress={async () => {
+                          triggerUpload();
+                        }}
+                      />
+                      <Text>Or try again.</Text>
+                    </View>
+                  </>
+                ) : (
+                  <View
+                    style={{
+                      width: null,
+                      height: "75%",
+                      resizeMode: "contain",
+                      marginVertical: "1%",
+                      marginHorizontal: 50,
+                      borderRadius: 25,
+                      backgroundColor: "#F5F5F5",
+                    }}
+                  >
+                    <Icon
+                      width="100%"
+                      height="100%"
+                      strokeWidth={15}
+                      stroke="black"
+                    />
+                  </View>
+                )}
+              </View>
+              {!image ? (
+                <Text style={{ fontSize: 20 }}>
+                  Take or upload an image to create a record!
+                </Text>
+              ) : null}
+            </>
+          )}
         </View>
+
         <View
           style={{
-            marginTop: 20,
-            width: "100%",
+            marginTop: "3%",
+
             display: "flex",
-            justifyContent: "center",
+            flexDirection: "column",
+            justifyContent: "space-around",
+            marginBottom: "3%",
           }}
         >
-          <Button
+          <View
             style={{
-              width: 200,
+              width: "100%",
             }}
-            loading={loading}
-            title={showCamera ? "Hide Camera!" : "Show Camera!"}
-            onPress={async () => {
-              setShowCamera(!showCamera);
+          >
+            <Button
+              loading={loading}
+              style={{
+                width: 200,
+              }}
+              title={"Select Image!"}
+              onPress={async () => {
+                pickImage();
+              }}
+            />
+          </View>
+          <View
+            style={{
+              marginTop: 20,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
             }}
-          />
+          >
+            <Button
+              style={{
+                width: 200,
+              }}
+              loading={loading}
+              title={showCamera ? "Hide Camera!" : "Show Camera!"}
+              onPress={async () => {
+                setShowCamera(!showCamera);
+              }}
+            />
+          </View>
         </View>
       </View>
-    </View>
+      <Toast />
+
+    </>
   );
 };
 

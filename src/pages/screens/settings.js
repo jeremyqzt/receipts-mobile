@@ -1,6 +1,6 @@
 import { Button } from "@rneui/themed";
 import * as SecureStore from "expo-secure-store";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { listBuckets, getActiveBucket } from "../../utils/bucketUtils";
 import { useEffect, useState } from "react";
 import { BucketsSelect } from "../../components/settings/buckets";
@@ -30,8 +30,8 @@ export const SettingsScreen = () => {
   }, [setActiveBucket, setBuckets, setLoading, bAtom]);
 
   return (
-    <View
-      style={{
+    <ScrollView
+      contentContainerStyle={{
         flex: 1,
         justifyContent: "flex-start",
         alignItems: "center",
@@ -156,7 +156,7 @@ export const SettingsScreen = () => {
               fontSize: 24,
               fontWeight: "bold",
               marginLeft: 10,
-              marginTop: 24,
+              marginTop: 150,
             }}
           >
             Logout
@@ -190,6 +190,6 @@ export const SettingsScreen = () => {
           }}
         />
       </View>
-    </View>
+    </ScrollView>
   );
 };
