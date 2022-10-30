@@ -14,6 +14,7 @@ const HOUSEHOLD = 13;
 const CELLPHONE_INTERNET = 14;
 const NON_GROCERY_FOOD = 15;
 const DISCRETIONARY = 16;
+const GIFTS = 17;
 
 export const categories = [
   {
@@ -79,5 +80,9 @@ export const categories = [
   {
     name: "Discretionary",
     value: DISCRETIONARY,
+  },
+  {
+    name: "Gifts",
+    value: GIFTS,
   },
 ];
