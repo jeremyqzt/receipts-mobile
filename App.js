@@ -51,6 +51,7 @@ const App = () => {
             component={Home}
             options={{
               title: "Ribbon Receipts",
+              headerShown: false,
             }}
           />
         </Stack.Navigator>
