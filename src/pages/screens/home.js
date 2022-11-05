@@ -57,7 +57,6 @@ export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
     setLoading,
     setFetched,
     setReFetch,
-    fetched,
     refetch,
     rAtom,
     pageMeta,
