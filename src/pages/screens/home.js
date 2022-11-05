@@ -6,8 +6,10 @@ import { MainTable } from "../../components/mainTable/mainTable";
 import { useAtom } from "jotai";
 import { receiptAtom } from "../../atom/atom";
 import Toast from "react-native-toast-message";
+import {PageModal} from "../../components/mainTable/pageModal";
 
-export const HomeScreen = ({ navigation }) => {
+export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
+  console.log(settingsModalOpen)
   const [loading, setLoading] = useState(true);
   const [fetched, setFetched] = useState(false);
   const [refetch, setReFetch] = useState(false);
@@ -81,7 +83,7 @@ export const HomeScreen = ({ navigation }) => {
   return (
     <>
       <Toast />
-
+      <PageModal visible={settingsModalOpen} close={() => setSettingsModalOpen(false)} />
       <View
         style={{
           flex: 1,

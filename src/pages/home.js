@@ -4,9 +4,11 @@ import { HomeScreen } from "./screens/home";
 import { UploadScreen } from "./screens/upload";
 import { Icon, Button } from "@rneui/themed";
 import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useState } from "react";
 
 const Tab = createBottomTabNavigator();
 export const Home = () => {
+  const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   return (
     <>
       <Tab.Navigator>
@@ -38,7 +40,11 @@ export const Home = () => {
                       <Text>Receipts</Text>
                     </View>
                     <View>
-                      <TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setSettingsModalOpen(true);
+                        }}
+                      >
                         <Icon name="cog" type="font-awesome-5" />
                       </TouchableOpacity>
                     </View>
@@ -50,7 +56,12 @@ export const Home = () => {
               <Icon name="receipt" type="font-awesome-5" color={color} />
             ),
           }}
-          component={HomeScreen}
+          children={() => (
+            <HomeScreen
+              settingsModalOpen={settingsModalOpen}
+              setSettingsModalOpen={(e) => setSettingsModalOpen(e)}
+            />
+          )}
         />
         <Tab.Screen
           options={{
