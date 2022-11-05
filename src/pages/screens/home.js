@@ -6,13 +6,14 @@ import { MainTable } from "../../components/mainTable/mainTable";
 import { useAtom } from "jotai";
 import { receiptAtom } from "../../atom/atom";
 import Toast from "react-native-toast-message";
-import {PageModal} from "../../components/mainTable/pageModal";
+import { PageModal } from "../../components/mainTable/pageModal";
 
 export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
-  console.log(settingsModalOpen)
   const [loading, setLoading] = useState(true);
   const [fetched, setFetched] = useState(false);
   const [refetch, setReFetch] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
+  const [pageMeta, setPageMeta] = useState({ offset: 0, limit: 20 });
 
   const [rAtom] = useAtom(receiptAtom);
   const [receipts, setReceipts] = useState([]);
@@ -23,7 +24,7 @@ export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
 
   useEffect(() => {
     setLoading(true);
-    getReceipts(2000)
+    getReceipts(pageMeta)
       .then((res) => {
         if (!res.ok) {
           throw new Error();
@@ -31,10 +32,11 @@ export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
         return res.json();
       })
       .then((res) => {
-        const { receipts: r } = res;
+        const { receipts: r, total } = res;
         /// const { pages, receipts: r, total } = res;
         const receiptsArr = !refetch ? [...r] : [...receipts, ...r];
         setReceipts(receiptsArr);
+        setTotalCount(total);
       })
       .catch(() => {
         Toast.show({
@@ -58,6 +60,7 @@ export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
     fetched,
     refetch,
     rAtom,
+    pageMeta,
   ]);
 
   const updateLocalReceipt = (update, updateIdx) => {
@@ -83,7 +86,14 @@ export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
   return (
     <>
       <Toast />
-      <PageModal visible={settingsModalOpen} close={() => setSettingsModalOpen(false)} />
+      <PageModal
+        visible={settingsModalOpen}
+        close={() => setSettingsModalOpen(false)}
+        totalCount={totalCount}
+        setPaging={(v) => {
+          setPageMeta(v);
+        }}
+      />
       <View
         style={{
           flex: 1,
