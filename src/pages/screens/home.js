@@ -10,7 +10,6 @@ import { PageModal } from "../../components/mainTable/pageModal";
 
 export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
   const [loading, setLoading] = useState(true);
-  const [fetched, setFetched] = useState(false);
   const [refetch, setReFetch] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [pageMeta, setPageMeta] = useState({ offset: 0, limit: 20 });
@@ -49,18 +48,9 @@ export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
       })
       .finally(() => {
         setLoading(false);
-        setFetched(true);
         setReFetch(false);
       });
-  }, [
-    setReceipts,
-    setLoading,
-    setFetched,
-    setReFetch,
-    refetch,
-    rAtom,
-    pageMeta,
-  ]);
+  }, [setReceipts, setLoading, setReFetch, refetch, rAtom, pageMeta]);
 
   const updateLocalReceipt = (update, updateIdx) => {
     const newReceipts = [...receipts];
@@ -108,8 +98,8 @@ export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
           deleteReceipt={deleteReceipt}
           updateLocalReceipt={updateLocalReceipt}
           refetch={() => {
-            setReFetch(false);
-            setFetched(false);
+            setReFetch(!refetch);
+            setReceipts([]);
           }}
         />
       </View>
