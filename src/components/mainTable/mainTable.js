@@ -13,10 +13,17 @@ import {
 import { categories } from "../../constants/categoryConstants";
 import { ImageModal } from "./imageModal";
 import { EditModal } from "./editModal";
+import { EmptyState } from "./emptyState";
 
 export const MainTable = (props) => {
-  const { receipts, loading, updateLocalReceipt, deleteReceipt, refetch } =
-    props;
+  const {
+    receipts,
+    loading,
+    updateLocalReceipt,
+    deleteReceipt,
+    refetch,
+    navigation,
+  } = props;
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -41,7 +48,9 @@ export const MainTable = (props) => {
           <ActivityIndicator size="large" color="red" />
         </View>
       ) : null}
-
+      {!loading && (receipts.length ?? []) === 0 ? (
+        <EmptyState navigation={navigation} />
+      ) : null}
       {!loading ? (
         <FlatList
           style={{

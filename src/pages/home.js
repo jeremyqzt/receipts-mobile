@@ -17,8 +17,6 @@ export const Home = () => {
           options={{
             headerShown: true,
             header: () => {
-              const title = "Home";
-
               return (
                 <View
                   style={{
@@ -60,10 +58,11 @@ export const Home = () => {
               <Icon name="receipt" type="font-awesome-5" color={color} />
             ),
           }}
-          children={() => (
+          children={({navigation}) => (
             <HomeScreen
               settingsModalOpen={settingsModalOpen}
               setSettingsModalOpen={(e) => setSettingsModalOpen(e)}
+              navigation={navigation}
             />
           )}
         />
@@ -71,8 +70,6 @@ export const Home = () => {
           options={{
             headerShown: true,
             header: () => {
-              const title = "Home";
-
               return (
                 <View
                   style={{

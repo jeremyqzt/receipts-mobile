@@ -8,7 +8,11 @@ import { receiptAtom } from "../../atom/atom";
 import Toast from "react-native-toast-message";
 import { PageModal } from "../../components/mainTable/pageModal";
 
-export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
+export const HomeScreen = ({
+  settingsModalOpen,
+  setSettingsModalOpen,
+  navigation,
+}) => {
   const [loading, setLoading] = useState(true);
   const [refetch, setReFetch] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
@@ -92,6 +96,7 @@ export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
         }}
       >
         <MainTable
+          navigation={navigation}
           loading={loading}
           receipts={receipts}
           deleteReceipt={deleteReceipt}
