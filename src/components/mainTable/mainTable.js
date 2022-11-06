@@ -21,6 +21,8 @@ export const MainTable = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
+  const [editModaReload, setEditModalReload] = useState(false);
+
   const [activeReceipt, setActiveReceipt] = useState();
   const [activeReceiptIdx, setActiveReceiptIdx] = useState();
 
@@ -96,6 +98,7 @@ export const MainTable = (props) => {
                       }}
                       onPress={() => {
                         setActiveReceipt(item);
+                        setEditModalReload(!editModaReload);
                         setModalOpen(true);
                       }}
                     >
@@ -108,6 +111,7 @@ export const MainTable = (props) => {
                       onPress={() => {
                         setActiveReceiptIdx(index);
                         setActiveReceipt(item);
+                        setEditModalReload(!editModaReload);
                         setEditModalOpen(true);
                       }}
                     >
@@ -156,6 +160,7 @@ export const MainTable = (props) => {
         receipt={activeReceipt}
         arrayIdx={activeReceiptIdx}
         updateLocalReceipt={updateLocalReceipt}
+        parentReload={editModaReload}
         close={() => {
           setEditModalOpen(false);
         }}

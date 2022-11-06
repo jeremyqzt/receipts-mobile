@@ -1,59 +1,52 @@
 import React, { useState } from "react";
-import {  StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
 const DeleteBucketDropdown = (props) => {
   const { buckets, activeBucket, setBuckets } = props;
   const [isFocus, setIsFocus] = useState(false);
 
-  const renderLabel = () => {
-    if (isFocus) {
-      return (
-        <Text style={[styles.label, isFocus && { color: "blue" }]}>
-          Select a bucket to delete
-        </Text>
-      );
-    }
-    return null;
-  };
-
   return (
     <View style={styles.container}>
-      <Text style={styles.inputIcon}>🪣</Text>
-      {renderLabel()}
-      <Dropdown
-        style={[styles.dropdown, isFocus && { borderColor: "red" }]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={buckets}
-        search
-        maxHeight={300}
-        labelField="name"
-        valueField="id"
-        placeholder={!isFocus ? "Select A Bucket" : "..."}
-        searchPlaceholder="Search..."
-        value={activeBucket}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={(item) => {
-          setBuckets(item);
-        }}
-        renderLeftIcon={() => <View />}
-      />
+      <Text style={styles.inputIcon}>To Delete: </Text>
+      <View style={{ width: "60%", marginBottom: 0, marginLeft: 8 }}>
+        <Dropdown
+          style={[styles.dropdown, isFocus && { borderColor: "red" }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={buckets}
+          maxHeight={300}
+          labelField="name"
+          valueField="id"
+          placeholder={!isFocus ? "Select A Bucket" : "..."}
+          searchPlaceholder="Search..."
+          value={activeBucket}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={(item) => {
+            setBuckets(item);
+          }}
+          renderLeftIcon={() => <View />}
+        />
+      </View>
     </View>
   );
 };
 
 export const BucketsSelect = (props) => {
   const { buckets = [], activeBucket, setToDelete, toDelete } = props;
-  const deletableBuckets = buckets.filter(bucket => bucket.id !== activeBucket.id);
+  const deletableBuckets = buckets.filter(
+    (bucket) => bucket.id !== activeBucket.id
+  );
 
   return (
     <DeleteBucketDropdown
       buckets={deletableBuckets}
-      setBuckets={(a) => { setToDelete(a)}}
+      setBuckets={(a) => {
+        setToDelete(a);
+      }}
       activeBucket={toDelete}
     />
   );
@@ -61,9 +54,12 @@ export const BucketsSelect = (props) => {
 
 const styles = StyleSheet.create({
   inputIcon: {
+    width: "40%",
     marginTop: 5,
     marginRight: 10,
-    fontSize: 35,
+    fontSize: 16,
+    fontWeight: "bold",
+    lineHeight: 36,
   },
   header: {
     marginHorizontal: 15,

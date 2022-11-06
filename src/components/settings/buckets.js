@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import {  StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { setActiveBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";
-import { receiptAtom } from "../../atom/atom";
+import { receiptAtom, bucketAtom } from "../../atom/atom";
 import { useAtom } from "jotai";
 
 const BucketDropdown = (props) => {
-  const { buckets, setBuckets, activeBucket } = props;
+  const { buckets, setBuckets, activeBucket, setLoading } = props;
   const [isFocus, setIsFocus] = useState(false);
   const [rAtom, setReceiptAtom] = useAtom(receiptAtom);
+  const [bAtom, setBucketAtom] = useAtom(bucketAtom);
 
   const renderLabel = () => {
     if (isFocus) {
@@ -43,10 +44,12 @@ const BucketDropdown = (props) => {
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={(item) => {
+          setLoading(true);
           setActiveBucket(item.id)
             .then(() => {
-              setBuckets(item)
+              setBuckets(item);
               setReceiptAtom(rAtom + 1);
+              setBucketAtom(bAtom + 1);
               Toast.show({
                 type: "success",
                 text1: "✅ Success!",
@@ -62,7 +65,7 @@ const BucketDropdown = (props) => {
                   "Your active bucket could not be updated, please try again!",
                 position: "bottom",
               });
-            });
+            }).finally(() => setLoading(false));
 
           setIsFocus(false);
         }}
@@ -73,13 +76,16 @@ const BucketDropdown = (props) => {
 };
 
 export const BucketsSelect = (props) => {
-  const { buckets = [], activeBucket } = props;
+  const { buckets = [], activeBucket, setLoading } = props;
   const [selectedBucket, setSelectedBucket] = useState();
 
   return (
     <BucketDropdown
       buckets={buckets}
-      setBuckets={(a) => {setSelectedBucket(a)}}
+      setBuckets={(a) => {
+        setSelectedBucket(a);
+      }}
+      setLoading={setLoading}
       activeBucket={selectedBucket ?? activeBucket.id}
     />
   );

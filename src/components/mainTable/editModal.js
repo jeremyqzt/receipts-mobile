@@ -10,33 +10,29 @@ import Toast from "react-native-toast-message";
 
 const DatePickerLocal = (props) => {
   return (
-    <DatePicker
-      style={{ width: "100%" }}
-      date={props.date}
-      mode="date"
-      placeholder="Select Receipt Date"
-      format="YYYY-MM-DD"
-      minDate="2000-01-01"
-      maxDate="2100-01-01"
-      confirmBtnText="Confirm"
-      cancelBtnText="Cancel"
-      customStyles={{
-        dateIcon: {
-          position: "absolute",
-          left: 0,
-          top: 4,
-          marginLeft: 0,
-        },
-        dateInput: {
-          marginLeft: 36,
-          marginRight: 15,
-        },
-        // ... You can check the source to find the other keys.
-      }}
-      onDateChange={(date) => {
-        props.setDate(date);
-      }}
-    />
+    <View style={{ width: "60%", marginBottom: 16 }}>
+      <DatePicker
+        style={{ width: "100%" }}
+        date={props.date}
+        mode="date"
+        placeholder="Select Receipt Date"
+        format="YYYY-MM-DD"
+        minDate="2000-01-01"
+        maxDate="2100-01-01"
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+        showIcon={false}
+        customStyles={{
+          dateInput: {
+            marginLeft: 8,
+            marginRight: 8,
+          },
+        }}
+        onDateChange={(date) => {
+          props.setDate(date);
+        }}
+      />
+    </View>
   );
 };
 
@@ -44,56 +40,52 @@ const DropdownComponent = (props) => {
   const { category, setCategory } = props;
   const [isFocus, setIsFocus] = useState(false);
 
-  const renderLabel = () => {
-    if (category || isFocus) {
-      return (
-        <Text style={[styles.label, isFocus && { color: "blue" }]}>
-          Category
-        </Text>
-      );
-    }
-    return null;
-  };
-
   return (
     <View style={styles.container}>
-      <Text style={styles.inputIcon}>📊</Text>
-      {renderLabel()}
-      <Dropdown
-        style={[styles.dropdown, isFocus && { borderColor: "red" }]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={categories}
-        search
-        maxHeight={300}
-        labelField="name"
-        valueField="value"
-        placeholder={!isFocus ? "Category" : "..."}
-        searchPlaceholder="Search..."
-        value={category}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
-        onChange={(item) => {
-          setCategory(item.value);
-          setIsFocus(false);
-        }}
-        renderLeftIcon={() => <View />}
-      />
+      <Text style={styles.inputIcon}>Category: </Text>
+      <View style={{ width: "65%", marginBottom: 16, marginLeft: 8 }}>
+        <Dropdown
+          style={[styles.dropdown, isFocus && { borderColor: "red" }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={categories}
+          maxHeight={300}
+          labelField="name"
+          valueField="value"
+          placeholder={!isFocus ? "Category" : "..."}
+          searchPlaceholder="Search..."
+          value={category}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={(item) => {
+            setCategory(item.value);
+            setIsFocus(false);
+          }}
+          renderLeftIcon={() => <View />}
+        />
+      </View>
     </View>
   );
 };
 
 export const EditModal = (props) => {
-  const { receipt = {}, visible, close, updateLocalReceipt, arrayIdx } = props;
+  const {
+    receipt = {},
+    visible,
+    close,
+    updateLocalReceipt,
+    arrayIdx,
+    parentReload,
+  } = props;
   const { total_amount, vendor, description, receipt_date, category, pk } =
     receipt;
   const [receiptCat, setReceiptCat] = useState(category);
   const [amount, setAmount] = useState(total_amount);
   const [lVendor, setVendor] = useState(vendor);
   const [lDescription, setDescription] = useState(description);
-  const date = new Date(receipt_date);
+  const date = receipt_date ? new Date(receipt_date) : new Date();
   const [lDate, setDate] = useState(date);
   const [needLoad, setNeedLoad] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -106,13 +98,13 @@ export const EditModal = (props) => {
       total_amount: amount,
       receipt_date_datetime: lDate,
       receipt_date: lDate,
-      description,
+      description: lDescription,
     },
     uid: pk,
   };
 
   useEffect(() => {
-    if (needLoad && visible && pk) {
+    if (parentReload !== null || (needLoad && visible && pk)) {
       setReceiptCat(category);
       setAmount(total_amount);
       setVendor(vendor);
@@ -134,6 +126,7 @@ export const EditModal = (props) => {
     receipt_date,
     receipt,
     pk,
+    parentReload,
   ]);
 
   const closeModal = () => {
@@ -160,14 +153,18 @@ export const EditModal = (props) => {
           text2: "Your receipt information has been updated!",
           position: "bottom",
         });
-        
-        updateLocalReceipt({
-          category: receiptCat,
-          vendor: lVendor,
-          total_amount: amount,
-          receipt_date_datetime: lDate,
-          receipt_date: lDate,
-        }, arrayIdx);
+
+        updateLocalReceipt(
+          {
+            category: receiptCat,
+            vendor: lVendor,
+            total_amount: amount,
+            receipt_date_datetime: lDate,
+            receipt_date: lDate,
+            description: lDescription,
+          },
+          arrayIdx
+        );
       })
       .finally(() => {
         setIsLoading(false);
@@ -176,24 +173,20 @@ export const EditModal = (props) => {
   };
 
   return (
-    <Modal isVisible={visible} onBackdropPress={closeModal}>
+    <Modal isVisible={visible} onBackdropPress={closeModal} avoidKeyboard>
       <View style={styles.dialog}>
         <View style={styles.header}>
-          <Text h2>🧾 Edit Receipt</Text>
+          <Text h2>Edit Receipt</Text>
         </View>
         <View>
           <View style={styles.inputContainer}>
-            <DatePickerLocal date={lDate} setDate={setDate} />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>💲</Text>
+            <Text style={styles.inputIcon}>Amount:</Text>
 
             <Input
               placeholder="Total Amount"
               keyboardType="numeric"
-              returnKeyType='done'
-              containerStyle={{ width: "85%" }}
+              returnKeyType="done"
+              containerStyle={{ width: "60%" }}
               value={`${amount}`}
               style={styles.input}
               {...errorPlaceholder}
@@ -202,41 +195,69 @@ export const EditModal = (props) => {
               }}
               onBlur={() => {
                 if (isNaN(amount)) {
-                  setAmount(total_amount);
+                  setAmount(Number(total_amount).toFixed(2));
                   setIsError(true);
                   setTimeout(() => setIsError(false), 3000);
+                } else {
+                  setAmount(Number(amount).toFixed(2));
                 }
               }}
             />
           </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputIcon}>Date: </Text>
+
+            <DatePickerLocal date={lDate} setDate={setDate} />
+          </View>
+
           <DropdownComponent
             category={receiptCat}
             setCategory={setReceiptCat}
           />
           <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>🏬</Text>
+            <Text style={styles.inputIcon}>Vendor: </Text>
 
             <Input
-              returnKeyType='done'
-              containerStyle={{ width: "85%" }}
+              returnKeyType="done"
+              containerStyle={{ width: "60%" }}
+              placeholder={"Set a vendor..."}
               value={lVendor}
               style={styles.input}
               onChangeText={(value) => setVendor(value)}
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>📓</Text>
+            <Text style={styles.inputIcon}>Description: </Text>
 
             <Input
-              returnKeyType='done'
-              containerStyle={{ width: "85%" }}
+              returnKeyType="done"
+              containerStyle={{ width: "60%" }}
+              placeholder={"Enter a description..."}
               value={lDescription}
               style={styles.input}
               onChangeText={(value) => setDescription(value)}
             />
           </View>
-
-          <Button loading={loading} title="Save" onPress={save} />
+          <View
+            style={{
+              marginTop: 0,
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: "row",
+            }}
+          >
+            <View style={{ marginTop: 0, width: "48%" }}>
+              <Button
+                style={{ width: "100%" }}
+                color="#cccccc"
+                title="Cancel"
+                onPress={() => close()}
+              />
+            </View>
+            <View style={{ marginTop: 0, width: "47%" }}>
+              <Button loading={loading} title="Save" onPress={save} />
+            </View>
+          </View>
         </View>
       </View>
     </Modal>
@@ -245,8 +266,11 @@ export const EditModal = (props) => {
 
 const styles = StyleSheet.create({
   inputIcon: {
+    width: "40%",
     marginTop: 5,
-    fontSize: 35,
+    fontSize: 16,
+    lineHeight: 48,
+    fontWeight: "bold",
   },
   header: {
     marginHorizontal: 15,
@@ -271,6 +295,7 @@ const styles = StyleSheet.create({
   dialog: {
     backgroundColor: "white",
     padding: 15,
+    borderRadius: 15,
   },
   container: {
     display: "flex",

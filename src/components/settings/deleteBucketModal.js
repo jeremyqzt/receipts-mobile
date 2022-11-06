@@ -15,10 +15,10 @@ export const DeleteBucketModal = (props) => {
   const [bAtom, setBucketAtom] = useAtom(bucketAtom);
 
   return (
-    <Modal isVisible={visible} onBackdropPress={closeModal}>
+    <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
       <View style={styles.dialog}>
         <View style={styles.header}>
-          <Text h2>❌ Delete Bucket</Text>
+          <Text h2>Delete Bucket</Text>
         </View>
 
         <View>
@@ -38,7 +38,7 @@ export const DeleteBucketModal = (props) => {
             flexDirection: "row",
           }}
         >
-          <View style={{ marginTop: 24, width: "40%" }}>
+          <View style={{ marginTop: 24, width: "45%" }}>
             <Button
               style={{ width: "100%" }}
               color="#cccccc"
@@ -47,7 +47,7 @@ export const DeleteBucketModal = (props) => {
               onPress={() => closeModal()}
             />
           </View>
-          <View style={{ marginTop: 24, width: "40%" }}>
+          <View style={{ marginTop: 24, width: "45%" }}>
             <Button
               style={{ width: "100%" }}
               loading={loading}
@@ -114,6 +114,8 @@ const styles = StyleSheet.create({
   dialog: {
     backgroundColor: "white",
     padding: 15,
+    borderRadius: 15,
+
   },
   container: {
     display: "flex",

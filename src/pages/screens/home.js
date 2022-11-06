@@ -74,7 +74,6 @@ export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
 
   return (
     <>
-      <Toast />
       <PageModal
         visible={settingsModalOpen}
         close={() => setSettingsModalOpen(false)}
@@ -103,6 +102,7 @@ export const HomeScreen = ({ settingsModalOpen, setSettingsModalOpen }) => {
           }}
         />
       </View>
+      <Toast />
     </>
   );
 };

@@ -9,15 +9,13 @@ import Toast from "react-native-toast-message";
 import { parseJwt } from "../utils/tools";
 
 export const LogIn = ({ navigation }) => {
-
   const [loading, setLoading] = useState(false);
 
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
   useEffect(() => {
-    SecureStore.getItemAsync("access_token").then((token
-      ) => {
+    SecureStore.getItemAsync("access_token").then((token) => {
       const decodedJwt = parseJwt(token);
       if (decodedJwt.exp * 1000 > Date.now()) {
         navigation.reset({
@@ -33,7 +31,7 @@ export const LogIn = ({ navigation }) => {
     loginFetch({ username, password })
       .then((res) => {
         if (res.status >= 400) {
-          throw "WTF LOGIN";
+          throw "Login error";
         }
         return res.json();
       })
@@ -60,7 +58,7 @@ export const LogIn = ({ navigation }) => {
   };
 
   return (
-    <>
+    <View style={{ backgroundColor: "white", height: "100%" }}>
       <View
         style={{
           marginTop: "1%",
@@ -114,6 +112,6 @@ export const LogIn = ({ navigation }) => {
           }}
         />
       </View>
-    </>
+    </View>
   );
 };

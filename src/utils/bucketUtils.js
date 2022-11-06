@@ -54,7 +54,6 @@ export const createBucket = async (
   formData.append("name", name);
   formData.append("create_date", create_date);
   formData.append("description", description);
-  console.log(formData)
 
   const path = `${domainRoot}${bucketsUrl}`;
   return postFormData(path, formData)

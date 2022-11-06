@@ -1,5 +1,12 @@
 import { Button } from "@rneui/themed";
-import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import * as ImagePicker from "expo-image-picker";
@@ -8,7 +15,7 @@ import { getActiveBucket } from "../../utils/bucketUtils";
 import { postReceipt } from "../../utils/receiptUtils";
 import { Icon } from "../../components/upload/icon";
 import { useAtom } from "jotai";
-import { receiptAtom } from "../../atom/atom";
+import { receiptAtom, bucketAtom } from "../../atom/atom";
 
 export const UploadScreen = () => {
   const [showCamera, setShowCamera] = useState(false);
@@ -18,6 +25,7 @@ export const UploadScreen = () => {
   const [uploadFile, setUploadFile] = useState({});
   const [rAtom, setReceiptAtom] = useAtom(receiptAtom);
   const [loading, setLoading] = useState(false);
+  const [bAtom] = useAtom(bucketAtom);
 
   const [activeBucket, setActiveBucket] = useState({});
   useEffect(() => {
@@ -31,6 +39,8 @@ export const UploadScreen = () => {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
+
     getActiveBucket()
       .then((res) => {
         setActiveBucket(res);
@@ -43,8 +53,9 @@ export const UploadScreen = () => {
             "Sorry! Our servers aren't responding right now, please try again in a minute.",
           position: "bottom",
         });
-      });
-  }, []);
+      })
+      .finally(() => setLoading(false));
+  }, [bAtom]);
 
   const triggerUpload = () => {
     setLoading(true);
@@ -84,9 +95,8 @@ export const UploadScreen = () => {
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [16, 9],
       quality: 0,
     });
 
@@ -110,8 +120,22 @@ export const UploadScreen = () => {
   }
 
   return (
-    <>
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <ScrollView
+      contentContainerStyle={{
+        flex: 1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
         <View
           style={{
             flex: 1,
@@ -139,7 +163,7 @@ export const UploadScreen = () => {
             <>
               <View
                 style={{
-                  marginTop: -100,
+                  marginTop: -159,
                   width: "100%",
                   height: "60%",
                 }}
@@ -170,12 +194,18 @@ export const UploadScreen = () => {
                           marginHorizontal: "auto",
                           marginVertical: 16,
                         }}
-                        title={"Upload Image!"}
+                        title={`Upload to ${activeBucket.name}!`}
                         onPress={async () => {
                           triggerUpload();
                         }}
                       />
-                      <Text>Or try again.</Text>
+                      <Text>
+                        Hint: Change the active bucket by visiting the settings.
+                      </Text>
+                      <Text>
+                        If this image doesn't look right, you can always try
+                        again!
+                      </Text>
                     </View>
                   </>
                 ) : (
@@ -256,8 +286,7 @@ export const UploadScreen = () => {
         </View>
       </View>
       <Toast />
-
-    </>
+    </ScrollView>
   );
 };
 
