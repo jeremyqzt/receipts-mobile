@@ -11,7 +11,7 @@ import { bucketAtom } from "../../atom/atom";
 
 import Toast from "react-native-toast-message";
 
-export const SettingsScreen = () => {
+export const SettingsScreen = ({ navigation }) => {
   const [buckets, setBuckets] = useState([]);
   const [activeBucket, setActiveBucket] = useState({});
   const [loading, setLoading] = useState(false);

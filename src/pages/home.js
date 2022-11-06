@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SettingsScreen } from "./screens/settings";
 import { HomeScreen } from "./screens/home";
 import { UploadScreen } from "./screens/upload";
-import { Icon, Button } from "@rneui/themed";
-import { View, Image, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Icon, Text } from "@rneui/themed";
+import { View, TouchableOpacity } from "react-native";
 import { useState } from "react";
 
 const Tab = createBottomTabNavigator();
@@ -16,13 +16,13 @@ export const Home = () => {
           name="Home"
           options={{
             headerShown: true,
-            header: ({ navigation, route, options }) => {
+            header: () => {
               const title = "Home";
 
               return (
                 <View
                   style={{
-                    height: 80,
+                    height: 90,
                     display: "flex",
                     justifyContent: "flex-end",
                     flexDirection: "column",
@@ -34,10 +34,14 @@ export const Home = () => {
                       justifyContent: "space-between",
                       flexDirection: "row",
                       paddingHorizontal: 15,
+                      borderBottomWidth: 1,
+                      marginTop: 16,
+                      paddingBottom: 8,
+                      borderBottomColor: "black",
                     }}
                   >
                     <View>
-                      <Text>Receipts</Text>
+                      <Text h4>Receipts</Text>
                     </View>
                     <View>
                       <TouchableOpacity
@@ -66,6 +70,37 @@ export const Home = () => {
         <Tab.Screen
           options={{
             headerShown: true,
+            header: () => {
+              const title = "Home";
+
+              return (
+                <View
+                  style={{
+                    height: 90,
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    flexDirection: "column",
+                  }}
+                >
+                  <View
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      flexDirection: "row",
+                      paddingHorizontal: 15,
+                      borderBottomWidth: 1,
+                      marginTop: 16,
+                      paddingBottom: 8,
+                      borderBottomColor: "black",
+                    }}
+                  >
+                    <View>
+                      <Text h4>Upload Receipt</Text>
+                    </View>
+                  </View>
+                </View>
+              );
+            },
             tabBarIcon: ({ color }) => (
               <Icon name="upload" type="font-awesome-5" color={color} />
             ),
@@ -76,6 +111,37 @@ export const Home = () => {
         <Tab.Screen
           options={{
             headerShown: true,
+            header: () => {
+              const title = "Home";
+
+              return (
+                <View
+                  style={{
+                    height: 90,
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    flexDirection: "column",
+                  }}
+                >
+                  <View
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      flexDirection: "row",
+                      paddingHorizontal: 15,
+                      borderBottomWidth: 1,
+                      marginTop: 16,
+                      paddingBottom: 8,
+                      borderBottomColor: "black",
+                    }}
+                  >
+                    <View>
+                      <Text h4>Ribbon Receipts Settings</Text>
+                    </View>
+                  </View>
+                </View>
+              );
+            },
             tabBarIcon: ({ color }) => (
               <Icon name="cog" type="font-awesome-5" color={color} />
             ),
