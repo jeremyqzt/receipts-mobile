@@ -2,8 +2,15 @@ import React from "react";
 import { getReceiptCategoryCount } from "../../utils/chartUtils";
 import { useFetch } from "../../hooks/index";
 import { categories } from "../../constants/categoryConstants";
-import { Text, View } from "react-native";
-import { PieChart } from "react-native-svg-charts";
+import { Text, View, Dimensions } from "react-native";
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart,
+} from "react-native-chart-kit";
 
 export const CategoryFreqChart = () => {
   const { response: categoryDataRaw } = useFetch(getReceiptCategoryCount);
@@ -14,49 +21,51 @@ export const CategoryFreqChart = () => {
       7
     );
 
-    console.log(categoryDataRaw)
   const pieData = (categoryDataRaw || [])
     .filter((value) => value.total > 0)
     .map((value, index) => ({
       value: value.total,
-      name: value.name,
-      svg: {
-        fill: randomColor(),
-      },
+      name: categories[value.category].name,
       key: `pie-${index}`,
+      color: randomColor(),
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 12
     }));
 
-  const Labels = ({ slices, height, width }) => {
-    return slices.map((slice, index) => {
-      const { labelCentroid, pieCentroid, data } = slice;
-      return (
-        <Text
-          key={index}
-          x={pieCentroid[0]}
-          y={pieCentroid[1]}
-          fill={"white"}
-          textAnchor={"middle"}
-          alignmentBaseline={"middle"}
-          fontSize={24}
-          stroke={"black"}
-          strokeWidth={0.2}
-        >
-          {data.name}
-        </Text>
-      );
-    });
-  };
-
+  console.log(pieData);
   return (
-    <PieChart
-      style={{ height: "85%" }}
-      valueAccessor={({ item }) => item.value}
-      data={pieData}
-      spacing={0}
-      outerRadius={"95%"}
-    >
-      <Labels />
-    </PieChart>
+    <>
+      <Text
+        style={{
+          fontSize: 32,
+          fontWeight: "bold",
+          marginTop: "5%",
+          width: "100%",
+          textAlign: "center",
+        }}
+      >
+        Vendor Frequency Chart
+      </Text>
+      <View style={{height: 200}}>
+        <PieChart
+          data={pieData}
+          width={Dimensions.get("window").width}
+          height={200}
+          chartConfig={{
+            backgroundGradientFrom: "#1E2923",
+            backgroundGradientFromOpacity: 0,
+            backgroundGradientTo: "#08130D",
+            backgroundGradientToOpacity: 0.5,
+            color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+            barPercentage: 0.5,
+            useShadowColorFromDataset: false, // optional
+          }}
+          accessor={"value"}
+          paddingLeft={"0"}
+          center={[20, 10]}
+          absolute
+        />
+      </View>
+    </>
   );
-  //<PieChart style={{ height: 200 }} data={pieData} />;
 };
