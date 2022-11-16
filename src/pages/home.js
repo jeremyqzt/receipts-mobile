@@ -143,7 +143,7 @@ export const Home = () => {
               <Icon name="chart-bar" type="font-awesome-5" color={color} />
             ),
           }}
-          name="Charts"
+          name="Analytics"
           component={ChartsScreen}
         />
 
