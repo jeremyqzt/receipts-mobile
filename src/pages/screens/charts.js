@@ -16,12 +16,12 @@ import { postReceipt } from "../../utils/receiptUtils";
 import { Icon } from "../../components/upload/icon";
 import { useAtom } from "jotai";
 import { receiptAtom, bucketAtom } from "../../atom/atom";
-import { CategoryFreqChart } from "../../components/charts/monthlyTotal";
+import { CategoryFreqChart } from "../../components/charts/vendorFreq";
 
 export const ChartsScreen = () => {
   return (
     <View>
-      <CategoryFreqChart />
+      <VendorFreq />
     </View>
   );
 };

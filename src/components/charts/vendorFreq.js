@@ -3,16 +3,9 @@ import { getReceiptCategoryCount } from "../../utils/chartUtils";
 import { useFetch } from "../../hooks/index";
 import { categories } from "../../constants/categoryConstants";
 import { Text, View, Dimensions } from "react-native";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
+import { PieChart } from "react-native-chart-kit";
 
-export const CategoryFreqChart = () => {
+export const VendorFreq = () => {
   const { response: categoryDataRaw } = useFetch(getReceiptCategoryCount);
 
   const randomColor = () =>
@@ -29,10 +22,9 @@ export const CategoryFreqChart = () => {
       key: `pie-${index}`,
       color: randomColor(),
       legendFontColor: "#7F7F7F",
-      legendFontSize: 12
+      legendFontSize: 12,
     }));
 
-  console.log(pieData);
   return (
     <>
       <Text
@@ -46,7 +38,7 @@ export const CategoryFreqChart = () => {
       >
         Vendor Frequency Chart
       </Text>
-      <View style={{height: 200}}>
+      <View style={{ height: 200 }}>
         <PieChart
           data={pieData}
           width={Dimensions.get("window").width}
