@@ -17,11 +17,16 @@ import { Icon } from "../../components/upload/icon";
 import { useAtom } from "jotai";
 import { receiptAtom, bucketAtom } from "../../atom/atom";
 import { CategoryFreq } from "../../components/charts/categoryFreq";
-
+import { ChartSelect } from "../../components/charts/chartSelect";
 export const ChartsScreen = () => {
   return (
     <View>
       <CategoryFreq />
+      <ChartSelect
+        setChartValue={(a) => {
+          console.log(a);
+        }}
+      />
     </View>
   );
 };

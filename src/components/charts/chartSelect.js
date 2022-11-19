@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
-const DeleteBucketDropdown = (props) => {
-  const { buckets, activeBucket, setBuckets } = props;
+const ChartSelectDropdown = (props) => {
+  const { charts, activeChart, setChart } = props;
   const [isFocus, setIsFocus] = useState(false);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.inputIcon}>To Delete: </Text>
+      <Text style={styles.inputIcon}>Select Chart To View: </Text>
       <View style={{ width: "60%", marginBottom: 0, marginLeft: 8 }}>
         <Dropdown
           style={[styles.dropdown, isFocus && { borderColor: "red" }]}
@@ -16,17 +16,17 @@ const DeleteBucketDropdown = (props) => {
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
           iconStyle={styles.iconStyle}
-          data={buckets}
+          data={charts}
           maxHeight={300}
           labelField="name"
           valueField="id"
-          placeholder={!isFocus ? "Select A Bucket" : "..."}
+          placeholder={!isFocus ? "Select A Chart" : "..."}
           searchPlaceholder="Search..."
-          value={activeBucket}
+          value={activeChart}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           onChange={(item) => {
-            setBuckets(item);
+            setChart(item);
           }}
           renderLeftIcon={() => <View />}
         />
@@ -35,21 +35,17 @@ const DeleteBucketDropdown = (props) => {
   );
 };
 
-export const BucketsSelect = (props) => {
-  const { buckets = [], activeBucket, setToDelete, toDelete } = props;
-  const deletableBuckets = buckets.filter(
-    (bucket) => bucket.id !== activeBucket.id
-  );
-
-  console.log(deletableBuckets)
+export const ChartSelect = (props) => {
+  const { setChartValue } = props;
+  const validCharts = [{ id: 0, name: "Category Frequency" }];
 
   return (
-    <DeleteBucketDropdown
-      buckets={deletableBuckets}
-      setBuckets={(a) => {
-        setToDelete(a);
+    <ChartSelectDropdown
+      charts={validCharts}
+      setChart={(a) => {
+        setChartValue(a);
       }}
-      activeBucket={toDelete}
+      activeChart={validCharts[0]}
     />
   );
 };
