@@ -5,7 +5,7 @@ import { categories } from "../../constants/categoryConstants";
 import { Text, View, Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 
-export const VendorFreq = () => {
+export const CategoryFreq = () => {
   const { response: categoryDataRaw } = useFetch(getReceiptCategoryCount);
 
   const randomColor = () =>
