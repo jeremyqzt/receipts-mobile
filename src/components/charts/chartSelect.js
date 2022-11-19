@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
+import { VALID_CHARTS } from "../../constants/chartConstants";
 
 const ChartSelectDropdown = (props) => {
   const { charts, activeChart, setChart } = props;
@@ -36,16 +37,15 @@ const ChartSelectDropdown = (props) => {
 };
 
 export const ChartSelect = (props) => {
-  const { setChartValue } = props;
-  const validCharts = [{ id: 0, name: "Category Frequency" }];
+  const { setChartValue, activeSelect, opts } = props;
 
   return (
     <ChartSelectDropdown
-      charts={validCharts}
+      charts={opts}
       setChart={(a) => {
         setChartValue(a);
       }}
-      activeChart={validCharts[0]}
+      activeChart={activeSelect}
     />
   );
 };
