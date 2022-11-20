@@ -7,7 +7,6 @@ import { PieChart } from "react-native-chart-kit";
 
 export const VendorFreq = () => {
   const { response: vendorDataRaw } = useFetch(getVendorCount);
-  console.log(vendorDataRaw);
 
   const randomColor = () =>
     ("#" + ((Math.random() * 0xffffff) << 0).toString(16) + "000000").slice(
