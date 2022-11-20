@@ -7,7 +7,6 @@ import { BarChart } from "react-native-chart-kit";
 
 export const MonthlyAverage = () => {
   const { response: chartResp } = useFetch(getAverageCosts);
-  console.log(chartResp)
 
   const d = new Date();
   d.setDate(1);

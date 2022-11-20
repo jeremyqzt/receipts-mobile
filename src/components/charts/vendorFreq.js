@@ -1,7 +1,6 @@
 import React from "react";
 import { getVendorCount } from "../../utils/chartUtils";
 import { useFetch } from "../../hooks/index";
-import { categories } from "../../constants/categoryConstants";
 import { Text, View, Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 

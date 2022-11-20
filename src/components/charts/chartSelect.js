@@ -9,8 +9,7 @@ const ChartSelectDropdown = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.inputIcon}>Select Chart To View: </Text>
-      <View style={{ width: "60%", marginBottom: 0, marginLeft: 8 }}>
+      <View style={{ width: 250, marginRight: -16, marginLeft: 8, alignItems: "flex-end" }}>
         <Dropdown
           style={[styles.dropdown, isFocus && { borderColor: "red" }]}
           placeholderStyle={styles.placeholderStyle}

@@ -7,10 +7,14 @@ import { ChartsScreen } from "./screens/charts";
 import { Icon, Text } from "@rneui/themed";
 import { View, TouchableOpacity } from "react-native";
 import { useState } from "react";
+import { VALID_CHARTS } from "../constants/chartConstants";
+import { ChartSelect } from "../components/charts/chartSelect";
 
 const Tab = createBottomTabNavigator();
 export const Home = () => {
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
+  const [chartSelection, setChartSelection] = useState(VALID_CHARTS[0]);
+
   return (
     <>
       <Tab.Navigator>
@@ -114,7 +118,7 @@ export const Home = () => {
               return (
                 <View
                   style={{
-                    height: 90,
+                    height: 100,
                     display: "flex",
                     justifyContent: "flex-end",
                     flexDirection: "column",
@@ -128,12 +132,33 @@ export const Home = () => {
                       paddingHorizontal: 15,
                       borderBottomWidth: 1,
                       marginTop: 16,
-                      paddingBottom: 8,
+                      paddingBottom: 0,
                       borderBottomColor: "black",
+                      width: "100%",
                     }}
                   >
-                    <View>
-                      <Text h4>Analytics</Text>
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <View>
+                        <Text style={{ lineHeight: 72 }} h4>
+                          Analytics
+                        </Text>
+                      </View>
+                      <View>
+                        <ChartSelect
+                          activeSelect={chartSelection}
+                          opts={VALID_CHARTS}
+                          setChartValue={(a) => {
+                            setChartSelection(a);
+                          }}
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>
@@ -144,7 +169,12 @@ export const Home = () => {
             ),
           }}
           name="Analytics"
-          component={ChartsScreen}
+          children={({}) => (
+            <ChartsScreen
+              chartSelection={chartSelection}
+              setChartSelection={(e) => setChartSelection(e)}
+            />
+          )}
         />
 
         <Tab.Screen
