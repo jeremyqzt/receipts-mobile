@@ -3,7 +3,7 @@ export const VALID_CHARTS = [
   { id: 1, name: "Vendor Frequency" },
   { id: 2, name: "Monthly Total" },
   { id: 3, name: "Receipt Average" },
-  { id: 4, name: "Category Total" },
+  { id: 4, name: "Category Table " },
 ];
 
 export const monthName = [
