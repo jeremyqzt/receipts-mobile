@@ -4,6 +4,7 @@ import { VendorFreq } from "../../components/charts/vendorFreq";
 import { MonthlyTotal } from "../../components/charts/monthlyTotal";
 import { VALID_CHARTS } from "../../constants/chartConstants";
 import { MonthlyAverage } from "../../components/charts/monthlyAverage";
+import { CategoryTables } from "../../components/charts/categoryTable";
 
 export const ChartsScreen = ({ chartSelection, setChartSelection }) => {
   return (
@@ -12,6 +13,7 @@ export const ChartsScreen = ({ chartSelection, setChartSelection }) => {
       {chartSelection.id === VALID_CHARTS[1].id ? <VendorFreq /> : null}
       {chartSelection.id === VALID_CHARTS[2].id ? <MonthlyTotal /> : null}
       {chartSelection.id === VALID_CHARTS[3].id ? <MonthlyAverage /> : null}
+      {chartSelection.id === VALID_CHARTS[4].id ? <CategoryTables /> : null}
 
       <View style={{ marginTop: "50%" }} />
     </View>

@@ -31,6 +31,7 @@
     "react-native-image-picker": "^4.10.0",
     "react-native-modal": "^13.0.1",
     "react-native-svg": "12.3.0",
+    "react-native-table-component": "^1.2.2",
     "react-native-toast-message": "^2.1.5",
     "react-native-web": "~0.18.7"
   },
