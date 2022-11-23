@@ -50,7 +50,7 @@ export const MonthlyAverage = () => {
           textAlign: "center",
         }}
       >
-        Average Receipt Cost Chart
+        Average Receipt Cost
       </Text>
       <View style={{ height: 200 }}>
         <BarChart

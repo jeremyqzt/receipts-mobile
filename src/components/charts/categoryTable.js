@@ -76,7 +76,7 @@ export const CategoryTables = () => {
           textAlign: "center",
         }}
       >
-        Category Totals Table
+        Category Totals
       </Text>
       <View style={{ height: 800, marginTop: 20 }}>
         <ScrollView style={{height: 800}} horizontal={true} alwaysBounceHorizontal={false} bounces={false}>

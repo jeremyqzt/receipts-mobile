@@ -50,7 +50,7 @@ export const MonthlyTotal = () => {
           textAlign: "center",
         }}
       >
-        Monthly Total Chart
+        Monthly Total
       </Text>
       <View style={{ height: 200 }}>
         <BarChart

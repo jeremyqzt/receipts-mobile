@@ -36,7 +36,7 @@ export const CategoryFreq = () => {
           textAlign: "center",
         }}
       >
-        Category Frequency Chart
+        Category Frequency
       </Text>
       <View style={{ height: 200 }}>
         <PieChart
