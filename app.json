@@ -22,6 +22,11 @@
     },
     "ios": {
       "bundleIdentifier": "com.anonymous.receiptsmobile"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "25d4d755-369c-4d4d-b297-9370067503ce"
+      }
     }
   },
   "splash": {

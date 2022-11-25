@@ -73,7 +73,7 @@ export const HomeScreen = ({
       const newReceipts = [...receipts];
       newReceipts.splice(idx, 1);
       setReceipts(newReceipts);
-      setTotalCount( () => totalCount - 1)
+      setTotalCount(() => totalCount - 1);
     });
   };
 
