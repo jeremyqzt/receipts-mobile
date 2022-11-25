@@ -69,10 +69,11 @@ export const HomeScreen = ({
   };
 
   const deleteReceipt = (idx) => {
-    deactivateReceipt(receipts[idx].pk).then((res) => {
+    deactivateReceipt(receipts[idx].pk).then(() => {
       const newReceipts = [...receipts];
       newReceipts.splice(idx, 1);
       setReceipts(newReceipts);
+      setTotalCount( () => totalCount - 1)
     });
   };
 
