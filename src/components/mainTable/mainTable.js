@@ -36,7 +36,7 @@ export const MainTable = (props) => {
   const [activeReceiptIdx, setActiveReceiptIdx] = useState();
 
   const { response: vendors, loading: loadingVendors } = useFetch(getVendors);
-  const loading = loading || loadingVendors;
+  const loading = topLoading || loadingVendors;
   return (
     <View
       style={{
