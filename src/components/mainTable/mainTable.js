@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   RefreshControl,
 } from "react-native";
+import { getVendors } from "../../utils/receiptUtils";
+import { useFetch } from "../../hooks/";
 import { categories } from "../../constants/categoryConstants";
 import { ImageModal } from "./imageModal";
 import { EditModal } from "./editModal";
@@ -18,7 +20,7 @@ import { EmptyState } from "./emptyState";
 export const MainTable = (props) => {
   const {
     receipts,
-    loading,
+    loading: topLoading,
     updateLocalReceipt,
     deleteReceipt,
     refetch,
@@ -33,6 +35,8 @@ export const MainTable = (props) => {
   const [activeReceipt, setActiveReceipt] = useState();
   const [activeReceiptIdx, setActiveReceiptIdx] = useState();
 
+  const { response: vendors, loading: loadingVendors } = useFetch(getVendors);
+  const loading = loading || loadingVendors;
   return (
     <View
       style={{
@@ -165,6 +169,7 @@ export const MainTable = (props) => {
         }}
       />
       <EditModal
+        vendors={vendors}
         visible={editModalOpen}
         receipt={activeReceipt}
         arrayIdx={activeReceiptIdx}

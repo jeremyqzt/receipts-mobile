@@ -70,6 +70,56 @@ const DropdownComponent = (props) => {
   );
 };
 
+const VendorDropdownComponent = (props) => {
+  const { vendors = [], setVendor, vendor } = props;
+  const [isFocus, setIsFocus] = useState(false);
+
+  const [enteredVendor, setEnteredVendor] = useState(null);
+
+  const vendorsInList = vendors.some((v) => v.name === vendor);
+  const realValue = vendors.find((v) => v.name === vendor)?.id;
+
+  const realVendors = [
+    ...(enteredVendor ? [{ id: -2, name: enteredVendor }] : []),
+    ...(vendorsInList ? [] : [{ id: -1, name: vendor }]),
+    ...vendors,
+  ];
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.inputIcon}>Vendor: </Text>
+      <View style={{ width: "65%", marginBottom: 16, marginLeft: 8 }}>
+        <Dropdown
+          style={[styles.dropdown, isFocus && { borderColor: "red" }]}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={realVendors}
+          maxHeight={300}
+          labelField="name"
+          valueField="id"
+          placeholder={!isFocus ? vendor : "..."}
+          value={realValue}
+          keyboardAvoiding
+          onChangeText={(v) => setEnteredVendor(v)}
+          onBlur={() => {
+            setIsFocus(false)
+          }}
+          search
+          searchPlaceholder="Enter a Vendor..."
+          onFocus={() => setIsFocus(true)}
+          onChange={(item) => {
+            setVendor(item.name);
+            setIsFocus(false);
+          }}
+          renderLeftIcon={() => <View />}
+        />
+      </View>
+    </View>
+  );
+};
+
 export const EditModal = (props) => {
   const {
     receipt = {},
@@ -78,6 +128,7 @@ export const EditModal = (props) => {
     updateLocalReceipt,
     arrayIdx,
     parentReload,
+    vendors,
   } = props;
   const { total_amount, vendor, description, receipt_date, category, pk } =
     receipt;
@@ -214,18 +265,13 @@ export const EditModal = (props) => {
             category={receiptCat}
             setCategory={setReceiptCat}
           />
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>Vendor: </Text>
-
-            <Input
-              returnKeyType="done"
-              containerStyle={{ width: "60%" }}
-              placeholder={"Set a vendor..."}
-              value={lVendor}
-              style={styles.input}
-              onChangeText={(value) => setVendor(value)}
-            />
-          </View>
+          <VendorDropdownComponent
+            vendors={vendors}
+            vendor={lVendor}
+            setVendor={(value) => {
+              setVendor(value);
+            }}
+          />
           <View style={styles.inputContainer}>
             <Text style={styles.inputIcon}>Description: </Text>
 
