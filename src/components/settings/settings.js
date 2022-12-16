@@ -11,11 +11,12 @@ import {
 import { categories } from "../../constants/categoryConstants";
 import { ImageModal } from "./imageModal";
 import { EditModal } from "./editModal";
-import {BucketsSelect} from '../../components/settings/buckets';
+import { CreateVendorsModal } from "./vendorsModal";
 import Toast from "react-native-toast-message";
 
 export const Settings = (props) => {
   const { receipts, loading, updateLocalReceipt } = props;
+  const [vendorModalOpen, setVendorModalOpen] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -106,6 +107,10 @@ export const Settings = (props) => {
         close={() => {
           setEditModalOpen(false);
         }}
+      />
+      <CreateVendorsModal
+        visible={vendorModalOpen}
+        close={() => setVendorModalOpen(false)}
       />
       {loading ? <ActivityIndicator size="large" color="red" /> : null}
     </View>

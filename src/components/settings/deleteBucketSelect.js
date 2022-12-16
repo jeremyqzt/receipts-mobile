@@ -41,8 +41,6 @@ export const BucketsSelect = (props) => {
     (bucket) => bucket.id !== activeBucket.id
   );
 
-  console.log(deletableBuckets)
-
   return (
     <DeleteBucketDropdown
       buckets={deletableBuckets}
