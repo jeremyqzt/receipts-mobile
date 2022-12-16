@@ -1,5 +1,5 @@
 import { Button, Input, Text } from "@rneui/themed";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import Modal from "react-native-modal";
 import React, { useState } from "react";
 import DatePicker from "react-native-datepicker";
@@ -7,13 +7,25 @@ import { createBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";
 import { useAtom } from "jotai";
 import { bucketAtom } from "../../atom/atom";
+import { Chip } from "@rneui/themed";
+import { getVendors } from "../../utils/receiptUtils";
+import { useFetch } from "../../hooks/";
 
 export const CreateVendorsModal = (props) => {
   const { visible, closeModal } = props;
 
   const [vendorName, setVendorName] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [lloading, setLoading] = useState(false);
 
+  const { response: remoteVendors, loading: loadingVendors } =
+    useFetch(getVendors);
+  const loading = loadingVendors || lloading;
+
+  const vendors = [
+    ...(remoteVendors || []),
+    ...(remoteVendors || []),
+    ...(remoteVendors || []),
+  ];
   return (
     <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
       <View style={styles.dialog}>
@@ -25,23 +37,54 @@ export const CreateVendorsModal = (props) => {
             <Text style={styles.inputIcon}>Name: </Text>
             <Input
               returnKeyType="done"
-              containerStyle={{ width: "60%" }}
+              containerStyle={{ width: "50%" }}
               placeholder={"Vendor Name"}
               value={vendorName}
               style={styles.input}
               onChangeText={(value) => setVendorName(value)}
             />
+            <View style={{ width: "20%", marginLeft: "10%" }}>
+              <Button loading={loading} title="Add" />
+            </View>
           </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>Description: </Text>
-            <Input
-              returnKeyType="done"
-              containerStyle={{ width: "60%" }}
-              placeholder={"Bucket Description"}
-              value={'a'}
-              style={styles.input}
-              onChangeText={(value) => setDescription(value)}
-            />
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              marginHorizontal: 10,
+              marginVertical: 5,
+              overflow: "scroll",
+            }}
+          >
+            <ScrollView
+              style={{
+                maxHeight: 300,
+              }}
+            >
+              <View>
+                {(vendors || []).map((r) => {
+                  return (
+                    <View>
+                      <Chip
+                        title={r.name}
+                        type="outline"
+                        icon={{
+                          name: "close",
+                          type: "font-awesome",
+                          size: 20,
+                          color: "red",
+                        }}
+                        iconRight
+                        containerStyle={{
+                          marginVertical: 5,
+                          marginHorizontal: 5,
+                        }}
+                      />
+                    </View>
+                  );
+                })}
+              </View>
+            </ScrollView>
           </View>
         </View>
         <View
@@ -72,7 +115,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     lineHeight: 48,
-    width: "40%",
+    width: "20%",
   },
   header: {
     marginHorizontal: 15,
