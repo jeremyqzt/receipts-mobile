@@ -12,6 +12,7 @@ export const CreateVendorsModal = (props) => {
   const { visible, closeModal } = props;
 
   const [vendorName, setVendorName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   return (
     <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
@@ -37,7 +38,7 @@ export const CreateVendorsModal = (props) => {
               returnKeyType="done"
               containerStyle={{ width: "60%" }}
               placeholder={"Bucket Description"}
-              value={description}
+              value={'a'}
               style={styles.input}
               onChangeText={(value) => setDescription(value)}
             />
@@ -50,16 +51,7 @@ export const CreateVendorsModal = (props) => {
             flexDirection: "row",
           }}
         >
-          <View style={{ marginTop: 24, width: "45%" }}>
-            <Button
-              style={{ width: "100%" }}
-              color="#cccccc"
-              loading={loading}
-              title="Cancel"
-              onPress={() => closeModal()}
-            />
-          </View>
-          <View style={{ marginTop: 24, width: "45%" }}>
+          <View style={{ marginTop: 24, width: "100%" }}>
             <Button
               loading={loading}
               title="Done"

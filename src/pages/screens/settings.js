@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { BucketsSelect } from "../../components/settings/buckets";
 import { CreateBucketModal } from "../../components/settings/bucketModal";
 import { DeleteBucketModal } from "../../components/settings/deleteBucketModal";
+import { CreateVendorsModal } from "../../components/settings/vendorsModal";
+
 import { useAtom } from "jotai";
 import { bucketAtom } from "../../atom/atom";
 
@@ -18,6 +20,7 @@ export const SettingsScreen = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const [deleteVis, setDeleteVis] = useState(false);
   const [bAtom] = useAtom(bucketAtom);
+  const [vendorModalOpen, setVendorModalOpen] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -56,7 +59,10 @@ export const SettingsScreen = ({ navigation }) => {
             setVisible(false);
           }}
         />
-
+        <CreateVendorsModal
+          visible={vendorModalOpen}
+          closeModal={() => setVendorModalOpen(false)}
+        />
         <View
           style={{
             width: "100%",
@@ -150,6 +156,38 @@ export const SettingsScreen = ({ navigation }) => {
             }}
             onPress={async () => {
               setDeleteVis(true);
+            }}
+          />
+        </View>
+        <View
+          style={{
+            width: "100%",
+          }}
+        >
+          <View>
+            <Text
+              style={{
+                fontSize: 24,
+                fontWeight: "bold",
+                marginLeft: 10,
+                marginTop: 24,
+              }}
+            >
+              Common Vendors
+            </Text>
+            <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4 }}>
+             Create up to 10 commonly used vendors to quickly populate your receipt's data!
+            </Text>
+          </View>
+          <Button
+            title={"Common Vendors"}
+            loading={loading}
+            style={{
+              width: "100%",
+              paddingHorizontal: 10,
+            }}
+            onPress={async () => {
+              setVendorModalOpen(true);
             }}
           />
         </View>
