@@ -37,32 +37,27 @@ export const SettingsScreen = ({ navigation }) => {
 
   return (
     <>
-      <ScrollView
-        contentContainerStyle={{
-          flex: 1,
-          justifyContent: "flex-start",
-          alignItems: "center",
-          flexDirection: "column",
+      <DeleteBucketModal
+        buckets={buckets}
+        activeBucket={activeBucket}
+        visible={deleteVis}
+        closeModal={() => {
+          setDeleteVis(false);
         }}
+      />
+      <CreateBucketModal
+        visible={visible}
+        closeModal={() => {
+          setVisible(false);
+        }}
+      />
+      <CreateVendorsModal
+        visible={vendorModalOpen}
+        closeModal={() => setVendorModalOpen(false)}
+      />
+      <ScrollView
+
       >
-        <DeleteBucketModal
-          buckets={buckets}
-          activeBucket={activeBucket}
-          visible={deleteVis}
-          closeModal={() => {
-            setDeleteVis(false);
-          }}
-        />
-        <CreateBucketModal
-          visible={visible}
-          closeModal={() => {
-            setVisible(false);
-          }}
-        />
-        <CreateVendorsModal
-          visible={vendorModalOpen}
-          closeModal={() => setVendorModalOpen(false)}
-        />
         <View
           style={{
             width: "100%",
@@ -176,7 +171,8 @@ export const SettingsScreen = ({ navigation }) => {
               Common Vendors
             </Text>
             <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4 }}>
-             Create up to 10 commonly used vendors to quickly populate your receipt's data!
+              Create up to 10 commonly used vendors to quickly populate your
+              receipt's data!
             </Text>
           </View>
           <Button
@@ -202,7 +198,7 @@ export const SettingsScreen = ({ navigation }) => {
                 fontSize: 24,
                 fontWeight: "bold",
                 marginLeft: 10,
-                marginTop: 150,
+                marginTop: 50,
               }}
             >
               Logout
@@ -224,6 +220,7 @@ export const SettingsScreen = ({ navigation }) => {
             style={{
               width: "100%",
               paddingHorizontal: 10,
+              marginVertical: 10
             }}
             onPress={async () => {
               await SecureStore.deleteItemAsync("access_token");

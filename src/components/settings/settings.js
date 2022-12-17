@@ -42,6 +42,7 @@ export const Settings = (props) => {
       <FlatList
         style={{
           width: "100%",
+          height: "100%"
         }}
         keyExtractor={(_, index) => index.toString()}
         data={receipts}

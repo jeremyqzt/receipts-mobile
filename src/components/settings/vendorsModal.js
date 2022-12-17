@@ -8,7 +8,7 @@ import Toast from "react-native-toast-message";
 import { useAtom } from "jotai";
 import { bucketAtom } from "../../atom/atom";
 import { Chip } from "@rneui/themed";
-import { getVendors } from "../../utils/receiptUtils";
+import { getVendors, addVendors } from "../../utils/receiptUtils";
 import { useFetch } from "../../hooks/";
 
 export const CreateVendorsModal = (props) => {
@@ -16,16 +16,13 @@ export const CreateVendorsModal = (props) => {
 
   const [vendorName, setVendorName] = useState("");
   const [lloading, setLoading] = useState(false);
+  const [localVendors, setLocalVendor] = useState([]);
 
   const { response: remoteVendors, loading: loadingVendors } =
     useFetch(getVendors);
   const loading = loadingVendors || lloading;
 
-  const vendors = [
-    ...(remoteVendors || []),
-    ...(remoteVendors || []),
-    ...(remoteVendors || []),
-  ];
+  const vendors = [...(localVendors || []), ...(remoteVendors || [])];
   return (
     <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
       <View style={styles.dialog}>
@@ -44,7 +41,28 @@ export const CreateVendorsModal = (props) => {
               onChangeText={(value) => setVendorName(value)}
             />
             <View style={{ width: "20%", marginLeft: "10%" }}>
-              <Button loading={loading} title="Add" />
+              <Button
+                loading={loading}
+                title="Add"
+                onPress={() => {
+                  setLoading(true);
+                  addVendors(vendorName)
+                    .then((r) => {
+                      setLocalVendor(() => [...localVendors, { ...r }]);
+                    })
+                    .catch(() => {
+                      Toast.show({
+                        type: "error",
+                        text1: "🛑 Error!",
+                        text2: "Vendor could not be added, please try again!",
+                        position: "bottom",
+                      });
+                    })
+                    .finally(() => {
+                      setLoading(false);
+                    });
+                }}
+              />
             </View>
           </View>
           <View
