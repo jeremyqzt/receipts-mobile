@@ -18,7 +18,7 @@ export const CategoryFreq = () => {
     .filter((value) => value.total > 0)
     .map((value, index) => ({
       value: value.total,
-      name: categories[value.category].name,
+      name: categories[value.category - 1].name,
       key: `pie-${index}`,
       color: randomColor(),
       legendFontColor: "#7F7F7F",
