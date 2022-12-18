@@ -2,17 +2,17 @@ import { Button, Input, Text } from "@rneui/themed";
 import { StyleSheet, View, ScrollView } from "react-native";
 import Modal from "react-native-modal";
 import React, { useState } from "react";
-import DatePicker from "react-native-datepicker";
-import { createBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";
 import { useAtom } from "jotai";
-import { bucketAtom } from "../../atom/atom";
+import { vendorAtom } from "../../atom/atom";
 import { Chip } from "@rneui/themed";
 import { getVendors, addVendors, deleteVendor } from "../../utils/receiptUtils";
 import { useFetch } from "../../hooks/";
 
 export const CreateVendorsModal = (props) => {
   const { visible, closeModal } = props;
+
+  const [vAtom, setVendorAtom] = useAtom(vendorAtom);
 
   const [vendorName, setVendorName] = useState("");
   const [lloading, setLoading] = useState(false);
@@ -100,6 +100,8 @@ export const CreateVendorsModal = (props) => {
                           setLoading(true);
                           deleteVendor(r.id)
                             .then(() => {
+                              setVendorAtom(vAtom + 1);
+
                               setDeletedVendors(() => {
                                 return [...deletedVendors, r.id];
                               });

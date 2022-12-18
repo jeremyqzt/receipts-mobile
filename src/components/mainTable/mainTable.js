@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { ListItem, Avatar, Button } from "@rneui/themed";
 import {
@@ -16,6 +16,8 @@ import { categories } from "../../constants/categoryConstants";
 import { ImageModal } from "./imageModal";
 import { EditModal } from "./editModal";
 import { EmptyState } from "./emptyState";
+import { vendorAtom } from "../../atom/atom";
+import { useAtom } from "jotai";
 
 export const MainTable = (props) => {
   const {
@@ -34,8 +36,18 @@ export const MainTable = (props) => {
 
   const [activeReceipt, setActiveReceipt] = useState();
   const [activeReceiptIdx, setActiveReceiptIdx] = useState();
+  const [vAtom] = useAtom(vendorAtom);
 
-  const { response: vendors, loading: loadingVendors } = useFetch(getVendors);
+  const {
+    response: vendors,
+    loading: loadingVendors,
+    retryCall,
+  } = useFetch(getVendors);
+
+  useEffect(() => {
+    retryCall();
+  }, [vAtom]);
+
   const loading = topLoading || loadingVendors;
   return (
     <View
