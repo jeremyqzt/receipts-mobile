@@ -55,9 +55,7 @@ export const SettingsScreen = ({ navigation }) => {
         visible={vendorModalOpen}
         closeModal={() => setVendorModalOpen(false)}
       />
-      <ScrollView
-
-      >
+      <ScrollView>
         <View
           style={{
             width: "100%",
@@ -220,7 +218,7 @@ export const SettingsScreen = ({ navigation }) => {
             style={{
               width: "100%",
               paddingHorizontal: 10,
-              marginVertical: 10
+              marginVertical: 10,
             }}
             onPress={async () => {
               await SecureStore.deleteItemAsync("access_token");
@@ -235,6 +233,7 @@ export const SettingsScreen = ({ navigation }) => {
         </View>
       </ScrollView>
       <Toast />
+
     </>
   );
 };

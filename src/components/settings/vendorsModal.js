@@ -29,6 +29,7 @@ export const CreateVendorsModal = (props) => {
   );
   return (
     <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
+      <Toast />
       <View style={styles.dialog}>
         <View style={styles.header}>
           <Text h2>Create Vendors</Text>
@@ -48,10 +49,12 @@ export const CreateVendorsModal = (props) => {
               <Button
                 loading={loading}
                 title="Add"
+                disabled={vendors.length > 10 || !vendorName}
                 onPress={() => {
                   setLoading(true);
                   addVendors(vendorName)
                     .then((r) => {
+                      setVendorAtom(vAtom + 1);
                       setLocalVendor(() => [...localVendors, { ...r }]);
                     })
                     .catch(() => {
