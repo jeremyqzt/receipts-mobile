@@ -6,11 +6,16 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/r_splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "plugins": [
       [
         "expo-image-picker",
         {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
+          "photosPermission": "The app accesses your photos in order to upload receipts."
         }
       ]
     ],
@@ -28,11 +33,6 @@
         "projectId": "25d4d755-369c-4d4d-b297-9370067503ce"
       }
     }
-  },
-  "splash": {
-    "image": "./assets/splash.png",
-    "resizeMode": "contain",
-    "backgroundColor": "#ffffff"
   },
   "updates": {
     "fallbackToCacheTimeout": 0
