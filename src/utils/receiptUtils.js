@@ -77,3 +77,16 @@ export const addVendors = async (name) => {
     return res.json();
   });
 };
+
+export const deleteVendor = async (uid) => {
+  const data = { uid };
+
+  const path = `${domainRoot}${vendorUrl}delete/`;
+
+  return postData(path, data, true).then((res) => {
+    if (!res.ok) {
+      throw new Error();
+    }
+    return res.json();
+  });
+};

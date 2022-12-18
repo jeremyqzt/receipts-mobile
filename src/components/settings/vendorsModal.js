@@ -8,7 +8,7 @@ import Toast from "react-native-toast-message";
 import { useAtom } from "jotai";
 import { bucketAtom } from "../../atom/atom";
 import { Chip } from "@rneui/themed";
-import { getVendors, addVendors } from "../../utils/receiptUtils";
+import { getVendors, addVendors, deleteVendor } from "../../utils/receiptUtils";
 import { useFetch } from "../../hooks/";
 
 export const CreateVendorsModal = (props) => {
@@ -18,11 +18,15 @@ export const CreateVendorsModal = (props) => {
   const [lloading, setLoading] = useState(false);
   const [localVendors, setLocalVendor] = useState([]);
 
+  const [deletedVendors, setDeletedVendors] = useState([]);
+
   const { response: remoteVendors, loading: loadingVendors } =
     useFetch(getVendors);
   const loading = loadingVendors || lloading;
 
-  const vendors = [...(localVendors || []), ...(remoteVendors || [])];
+  const vendors = [...(localVendors || []), ...(remoteVendors || [])].filter(
+    (i) => !deletedVendors.includes(i.id)
+  );
   return (
     <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
       <View style={styles.dialog}>
@@ -91,6 +95,27 @@ export const CreateVendorsModal = (props) => {
                           type: "font-awesome",
                           size: 20,
                           color: "red",
+                        }}
+                        onPress={() => {
+                          setLoading(true);
+                          deleteVendor(r.id)
+                            .then(() => {
+                              setDeletedVendors(() => {
+                                return [...deletedVendors, r.id];
+                              });
+                            })
+                            .catch(() => {
+                              Toast.show({
+                                type: "error",
+                                text1: "🛑 Error!",
+                                text2:
+                                  "Vendor could not be deleted, please try again!",
+                                position: "bottom",
+                              });
+                            })
+                            .finally(() => {
+                              setLoading(false);
+                            });
                         }}
                         iconRight
                         containerStyle={{
