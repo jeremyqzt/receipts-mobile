@@ -13,6 +13,7 @@ export const HomeScreen = ({
   setSettingsModalOpen,
   navigation,
 }) => {
+
   const [loading, setLoading] = useState(true);
   const [refetch, setReFetch] = useState(false);
   const [totalCount, setTotalCount] = useState(0);

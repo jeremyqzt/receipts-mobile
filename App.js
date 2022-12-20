@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 
-import { ThemeProvider, createTheme } from "@rneui/themed";
+import { ThemeProvider, createTheme, useTheme } from "@rneui/themed";
 import { NavigationContainer } from "@react-navigation/native";
 import { LogIn } from "./src/pages/login";
 import { SignUp } from "./src/pages/signup";
@@ -13,20 +13,24 @@ const Stack = createNativeStackNavigator();
 const theme = createTheme({
   colors: {
     primary: "rgb(220, 53, 69)",
+    disabled: "rgba(220, 53, 69, 0.3)",
   },
   lightColors: {
     primary: "rgb(220, 53, 69)",
+    disabled: "rgba(220, 53, 69, 0.3)",
   },
   darkColors: {
     primary: "rgb(220, 53, 69)",
+    disabled: "rgba(220, 53, 69, 0.3)",
+    background: "black",
   },
 });
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} >
       <Toast />
-      <StatusBar backgroundColor={"transparent"} translucent />
+      <StatusBar backgroundColor={"white"} translucent />
       <NavigationContainer theme={theme}>
         <Stack.Navigator
           screenOptions={{
