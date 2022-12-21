@@ -88,13 +88,27 @@ export const LogIn = ({ navigation }) => {
       <View style={{ paddingHorizontal: "10%" }}>
         <Input
           placeholder="Email"
-          leftIcon={{ type: "font-awesome", name: "at" }}
+          leftIcon={{
+            type: "font-awesome",
+            name: "at",
+            color: colorScheme === "dark" ? "grey" : "black",
+          }}
           onChangeText={(value) => setUsername(value)}
+          style={{
+            color: colorScheme === "dark" ? "grey" : "black",
+          }}
         />
         <Input
           placeholder="Password"
           secureTextEntry={true}
-          leftIcon={{ type: "font-awesome", name: "key" }}
+          leftIcon={{
+            type: "font-awesome",
+            name: "key",
+            color: colorScheme === "dark" ? "grey" : "black",
+          }}
+          style={{
+            color: colorScheme === "dark" ? "grey" : "black",
+          }}
           onChangeText={(value) => setPassword(value)}
         />
       </View>

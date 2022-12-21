@@ -111,21 +111,30 @@ export const SignUp = () => {
           value={username}
           onChangeText={(e) => setUsername(e)}
           placeholder="Email"
-          leftIcon={{ type: "font-awesome", name: "at" }}
+          leftIcon={{ type: "font-awesome", name: "at", color: colorScheme === "dark" ? "grey" : "black", }}
+          style={{
+            color: colorScheme === "dark" ? "grey" : "black",
+          }}
         />
         <Input
           value={password1}
           onChangeText={(e) => setPassword1(e)}
           placeholder="Password"
           secureTextEntry={true}
-          leftIcon={{ type: "font-awesome", name: "key" }}
+          leftIcon={{ type: "font-awesome", name: "key", color: colorScheme === "dark" ? "grey" : "black", }}
+          style={{
+            color: colorScheme === "dark" ? "grey" : "black",
+          }}
         />
         <Input
           value={password2}
           onChangeText={(e) => setPassword2(e)}
           placeholder="Confirm Password"
           secureTextEntry={true}
-          leftIcon={{ type: "font-awesome", name: "key" }}
+          leftIcon={{ type: "font-awesome", name: "key", color: colorScheme === "dark" ? "grey" : "black", }}
+          style={{
+            color: colorScheme === "dark" ? "grey" : "black",
+          }}
         />
       </View>
       <View style={{ paddingHorizontal: "10%", marginTop: "2%" }}>
