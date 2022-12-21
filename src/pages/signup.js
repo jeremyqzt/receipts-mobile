@@ -2,13 +2,16 @@ import React, { useState } from "react";
 
 import { Input, Button } from "@rneui/themed";
 import { View, Image, Text, Linking } from "react-native";
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/logoDark.png";
 import Toast from "react-native-toast-message";
 import { loginFetch, singupFetch } from "../utils/loginUtils";
 import { validateEmail } from "../utils/validationUtils";
 import * as SecureStore from "expo-secure-store";
+import { useColorScheme } from "react-native";
 
 export const SignUp = () => {
+  const colorScheme = useColorScheme();
+
   const [loading, setLoading] = useState(false);
 
   const [username, setUsername] = useState();
@@ -59,7 +62,8 @@ export const SignUp = () => {
             Toast.show({
               type: "error",
               text1: "🛑 Login Failed!",
-              text2: "Your account has been created but an network occurred logging in!",
+              text2:
+                "Your account has been created but an network occurred logging in!",
               position: "bottom",
             });
           });
@@ -78,7 +82,12 @@ export const SignUp = () => {
   };
 
   return (
-    <View style={{ backgroundColor: "white", height: "100%" }}>
+    <View
+      style={{
+        backgroundColor: colorScheme === "dark" ? "black" : "white",
+        height: "100%",
+      }}
+    >
       <View
         style={{
           marginTop: "1%",
