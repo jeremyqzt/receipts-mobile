@@ -9,12 +9,16 @@ import { View, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import { VALID_CHARTS } from "../constants/chartConstants";
 import { ChartSelect } from "../components/charts/chartSelect";
+import { useColorScheme } from "react-native";
 
 const Tab = createBottomTabNavigator();
 export const Home = () => {
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [chartSelection, setChartSelection] = useState(VALID_CHARTS[0]);
+  const colorScheme = useColorScheme();
 
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "black" : "white";
   return (
     <>
       <Tab.Navigator>
@@ -30,6 +34,7 @@ export const Home = () => {
                     display: "flex",
                     justifyContent: "flex-end",
                     flexDirection: "column",
+                    backgroundColor: bgColor,
                   }}
                 >
                   <View
@@ -41,11 +46,14 @@ export const Home = () => {
                       borderBottomWidth: 1,
                       marginTop: 16,
                       paddingBottom: 8,
-                      borderBottomColor: "black",
+                      backgroundColor: bgColor,
+                      borderBottomColor: textColor,
                     }}
                   >
                     <View>
-                      <Text h4>Receipts</Text>
+                      <Text h4 style={{ color: textColor }}>
+                        Receipts
+                      </Text>
                     </View>
                     <View>
                       <TouchableOpacity
@@ -53,7 +61,11 @@ export const Home = () => {
                           setSettingsModalOpen(true);
                         }}
                       >
-                        <Icon name="cog" type="font-awesome-5" />
+                        <Icon
+                          name="cog"
+                          type="font-awesome-5"
+                          color={textColor}
+                        />
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -83,6 +95,8 @@ export const Home = () => {
                     display: "flex",
                     justifyContent: "flex-end",
                     flexDirection: "column",
+                    backgroundColor: bgColor,
+                    borderBottomColor: textColor,
                   }}
                 >
                   <View
@@ -94,11 +108,13 @@ export const Home = () => {
                       borderBottomWidth: 1,
                       marginTop: 16,
                       paddingBottom: 8,
-                      borderBottomColor: "black",
+                      borderBottomColor: textColor,
                     }}
                   >
                     <View>
-                      <Text h4>Upload Receipt</Text>
+                      <Text h4 style={{ color: textColor }}>
+                        Upload Receipt
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -122,6 +138,8 @@ export const Home = () => {
                     display: "flex",
                     justifyContent: "flex-end",
                     flexDirection: "column",
+                    backgroundColor: bgColor,
+                    borderBottomColor: textColor,
                   }}
                 >
                   <View
@@ -133,7 +151,7 @@ export const Home = () => {
                       borderBottomWidth: 1,
                       marginTop: 16,
                       paddingBottom: 0,
-                      borderBottomColor: "black",
+                      borderBottomColor: textColor,
                       width: "100%",
                     }}
                   >
@@ -146,7 +164,7 @@ export const Home = () => {
                       }}
                     >
                       <View>
-                        <Text style={{ lineHeight: 72 }} h4>
+                        <Text style={{ lineHeight: 72, color: textColor }} h4>
                           Analytics
                         </Text>
                       </View>
@@ -188,6 +206,8 @@ export const Home = () => {
                     display: "flex",
                     justifyContent: "flex-end",
                     flexDirection: "column",
+                    backgroundColor: bgColor,
+                    borderBottomColor: textColor,
                   }}
                 >
                   <View
@@ -199,11 +219,13 @@ export const Home = () => {
                       borderBottomWidth: 1,
                       marginTop: 16,
                       paddingBottom: 8,
-                      borderBottomColor: "black",
+                      borderBottomColor: textColor,
                     }}
                   >
                     <View>
-                      <Text h4>Ribbon Receipts Settings</Text>
+                      <Text h4 style={{ color: textColor }}>
+                        Ribbon Receipts Settings
+                      </Text>
                     </View>
                   </View>
                 </View>

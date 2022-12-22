@@ -6,7 +6,6 @@ import {
   Text,
   ActivityIndicator,
   FlatList,
-  StyleSheet,
   TouchableOpacity,
   RefreshControl,
 } from "react-native";
@@ -18,6 +17,7 @@ import { EditModal } from "./editModal";
 import { EmptyState } from "./emptyState";
 import { vendorAtom } from "../../atom/atom";
 import { useAtom } from "jotai";
+import { useColorScheme } from "react-native";
 
 export const MainTable = (props) => {
   const {
@@ -28,6 +28,7 @@ export const MainTable = (props) => {
     refetch,
     navigation,
   } = props;
+  const colorScheme = useColorScheme();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -49,13 +50,15 @@ export const MainTable = (props) => {
   }, [vAtom]);
 
   const loading = topLoading || loadingVendors;
+
+  const textColor = colorScheme === "dark" ? "white" : "black";
   return (
     <View
       style={{
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "white",
+        backgroundColor: colorScheme === "dark" ? "black" : "white",
         width: "100%",
       }}
     >
@@ -86,7 +89,10 @@ export const MainTable = (props) => {
           renderItem={({ item, index }) => {
             return (
               <ListItem.Swipeable
-                style={{ backgroundColor: "white" }}
+                style={{
+                  backgroundColor: colorScheme === "dark" ? "black" : "white",
+                  color: textColor,
+                }}
                 rightContent={(reset) => (
                   <Button
                     title="Delete"
@@ -143,14 +149,26 @@ export const MainTable = (props) => {
                       <ListItem.Content>
                         <ListItem.Title>
                           <Text
-                            style={{ fontWeight: "bold" }}
+                            style={{ fontWeight: "bold", color: textColor }}
                           >{`${item.vendor} `}</Text>
                         </ListItem.Title>
-                        <ListItem.Subtitle>{`Receipt Total: $${item.total_amount} `}</ListItem.Subtitle>
-                        <ListItem.Subtitle>{`Purchase Date: ${item.receipt_date} `}</ListItem.Subtitle>
-                        <ListItem.Subtitle>{`Purchase Category: ${
-                          categories[item.category - 1]?.name
-                        } `}</ListItem.Subtitle>
+                        <ListItem.Subtitle>
+                          <Text style={{ color: textColor }}>
+                            {`Receipt Total: $${item.total_amount} `}
+                          </Text>
+                        </ListItem.Subtitle>
+                        <ListItem.Subtitle>
+                          <Text
+                            style={{ color: textColor }}
+                          >{`Purchase Date: ${item.receipt_date} `}</Text>
+                        </ListItem.Subtitle>
+                        <ListItem.Subtitle>
+                          <Text
+                            style={{ color: textColor }}
+                          >{`Purchase Category: ${
+                            categories[item.category - 1]?.name
+                          } `}</Text>
+                        </ListItem.Subtitle>
                       </ListItem.Content>
                     </TouchableOpacity>
                   </View>
@@ -194,10 +212,3 @@ export const MainTable = (props) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  inputIcon: {
-    marginTop: 5,
-    fontSize: 35,
-  },
-});

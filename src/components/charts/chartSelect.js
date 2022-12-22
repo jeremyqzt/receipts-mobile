@@ -1,20 +1,34 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import { VALID_CHARTS } from "../../constants/chartConstants";
+import { useColorScheme } from "react-native";
 
 const ChartSelectDropdown = (props) => {
   const { charts, activeChart, setChart } = props;
   const [isFocus, setIsFocus] = useState(false);
+  const colorScheme = useColorScheme();
 
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "black" : "white";
   return (
-    <View style={styles.container}>
-      <View style={{ width: 250, marginRight: -16, marginLeft: 8, alignItems: "flex-end" }}>
+    <View style={{ ...styles.container, backgroundColor: bgColor }}>
+      <View
+        style={{
+          width: 250,
+          marginRight: -16,
+          marginLeft: 8,
+          alignItems: "flex-end",
+          backgroundColor: bgColor,
+        }}
+      >
         <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: "red" }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
+          style={[
+            styles.dropdown,
+            { backgroundColor: bgColor, color: textColor },
+          ]}
+          placeholderStyle={{ ...styles.placeholderStyle, color: textColor }}
+          selectedTextStyle={{ ...styles.selectedTextStyle, color: textColor }}
+          inputSearchStyle={{ ...styles.inputSearchStyle, color: textColor }}
           iconStyle={styles.iconStyle}
           data={charts}
           maxHeight={300}
@@ -85,7 +99,6 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "row",
-    backgroundColor: "white",
     padding: 10,
   },
   dropdown: {
