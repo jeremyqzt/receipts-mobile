@@ -3,24 +3,20 @@ import { getTotalMonthlyCosts } from "../../utils/chartUtils";
 import { useFetch } from "../../hooks/index";
 import { monthName } from "../../constants/chartConstants";
 import { Text, View, Dimensions, ScrollView } from "react-native";
-import { BarChart } from "react-native-chart-kit";
 import { categories } from "../../constants/categoryConstants";
-import {
-  Table,
-  TableWrapper,
-  Row,
-  Rows,
-  Col,
-  Cols,
-  Cell,
-} from "react-native-table-component";
+import { Table, Row } from "react-native-table-component";
 import MultiSelect from "react-native-multiple-select";
+import { useColorScheme } from "react-native";
 
 export const CategoryTables = () => {
   const { response: chartResp } = useFetch(getTotalMonthlyCosts);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const colorScheme = useColorScheme();
 
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "black" : "white";
+  const middleColor = colorScheme === "dark" ? "grey" : "#DCDCDC";
   const transformedCategories = {};
 
   (chartResp || []).forEach((item) => {
@@ -64,7 +60,7 @@ export const CategoryTables = () => {
     }),
   ];
 
-  const width = data[0].map(() => 120);
+  const width = data[0].map(() => 150);
 
   return (
     <>
@@ -75,6 +71,7 @@ export const CategoryTables = () => {
           marginTop: "5%",
           width: "100%",
           textAlign: "center",
+          color: textColor,
         }}
       >
         Category Totals
@@ -101,20 +98,48 @@ export const CategoryTables = () => {
             onClearSelector={() => {
               setIsOpen(false);
             }}
-            styleSelectorContainer={{height: Dimensions.get("window").height * 0.5}}
-            styleRowList={{marginVertical: 3}}
-            fontSize={18}
-            itemFontSize={18}
+
+            styleRowList={{ marginVertical: 3 }}
+            fontSize={20}
+            itemFontSize={20}
             selectedItems={selectedItems}
-            selectText="Pick Categories"
+            selectText=" Pick Categories"
             tagRemoveIconColor="#CCC"
             tagBorderColor="#CCC"
             tagTextColor="#CCC"
-            selectedItemTextColor="#CCC"
-            selectedItemIconColor="#CCC"
             itemTextColor="#000"
             displayKey="name"
-            searchInputStyle={{ color: "#CCC" }}
+            styleInputGroup={{
+              color: textColor,
+              backgroundColor: bgColor,
+            }}
+            styleDropdownMenu={{
+              color: textColor,
+              backgroundColor: bgColor,
+            }}
+            styleSelectorContainer={{
+              color: textColor,
+              backgroundColor: bgColor,
+              height: Dimensions.get("window").height * 0.5,
+            }}
+            styleTextDropdown={{
+              color: textColor,
+              backgroundColor: bgColor,
+            }}
+            styleMainWrapper={{
+              color: textColor,
+              backgroundColor: bgColor,
+            }}
+            styleIndicator={{
+              color: textColor,
+              backgroundColor: bgColor,
+              height: 30
+            }}
+            styleDropdownMenuSubsection={{
+              color: textColor,
+              backgroundColor: bgColor,
+            }}
+            searchInputStyle={{ color: textColor }}
             textInputProps={{ editable: false, autoFocus: false }}
             searchInputPlaceholderText=""
             searchIcon={false}
@@ -136,12 +161,13 @@ export const CategoryTables = () => {
                   key={index}
                   data={rowData}
                   style={[
-                    index % 2 && { backgroundColor: "#F5F5F5" },
-                    { height: 25 },
+                    index % 2 === 1 && { backgroundColor: bgColor },
+                    index % 2 === 0 && { backgroundColor: middleColor },
+                    { height: 30 },
                   ]}
                   widthArr={width}
                   textStyle={[
-                    { fontSize: 16, textAlign: "center" },
+                    { fontSize: 18, textAlign: "center", color: textColor },
                     index === 0 && { fontWeight: "bold" },
                   ]}
                 />

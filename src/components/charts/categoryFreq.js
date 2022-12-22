@@ -4,10 +4,12 @@ import { useFetch } from "../../hooks/index";
 import { categories } from "../../constants/categoryConstants";
 import { Text, View, Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
+import { useColorScheme } from "react-native";
 
 export const CategoryFreq = () => {
   const { response: categoryDataRaw } = useFetch(getReceiptCategoryCount);
-
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
   const randomColor = () =>
     ("#" + ((Math.random() * 0xffffff) << 0).toString(16) + "000000").slice(
       0,
@@ -34,6 +36,7 @@ export const CategoryFreq = () => {
           marginTop: "5%",
           width: "100%",
           textAlign: "center",
+          color: textColor
         }}
       >
         Category Frequency

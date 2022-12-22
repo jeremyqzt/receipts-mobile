@@ -4,10 +4,14 @@ import { useFetch } from "../../hooks/index";
 import { monthName } from "../../constants/chartConstants";
 import { Text, View, Dimensions } from "react-native";
 import { BarChart } from "react-native-chart-kit";
+import { useColorScheme } from "react-native";
 
 export const MonthlyAverage = () => {
   const { response: chartResp } = useFetch(getAverageCosts);
+  const colorScheme = useColorScheme();
 
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "black" : "white";
   const d = new Date();
   d.setDate(1);
   const dateArr = [];
@@ -61,9 +65,9 @@ export const MonthlyAverage = () => {
           yAxisLabel="$"
           withInnerLines={false}
           chartConfig={{
-            backgroundGradientFrom: "white",
-            backgroundGradientTo: "white",
-            color: () => `black`,
+            backgroundGradientFrom: bgColor,
+            backgroundGradientTo: bgColor,
+            color: () => textColor,
             barPercentage: 0.75,
           }}
         />

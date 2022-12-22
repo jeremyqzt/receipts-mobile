@@ -3,10 +3,12 @@ import { getVendorCount } from "../../utils/chartUtils";
 import { useFetch } from "../../hooks/index";
 import { Text, View, Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
+import { useColorScheme } from "react-native";
 
 export const VendorFreq = () => {
   const { response: vendorDataRaw } = useFetch(getVendorCount);
-
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
   const randomColor = () =>
     ("#" + ((Math.random() * 0xffffff) << 0).toString(16) + "000000").slice(
       0,
@@ -33,6 +35,7 @@ export const VendorFreq = () => {
           marginTop: "5%",
           width: "100%",
           textAlign: "center",
+          color: textColor,
         }}
       >
         Vendor Frequency
