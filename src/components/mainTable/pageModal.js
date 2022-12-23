@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { Button, Text, Input } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
+import { useColorScheme } from "react-native";
 
 export const PageModal = (props) => {
   const { setPaging, visible, close, totalCount } = props;
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "#202020" : "white";
 
   const [page, setPage] = useState(1);
   const [countPer, setCountPer] = useState(20);
@@ -14,25 +18,37 @@ export const PageModal = (props) => {
 
   return (
     <Modal isVisible={visible} onBackdropPress={close}>
-      <View style={styles.modal}>
-        <Text h3>Search Term</Text>
+      <View
+        style={[styles.modal, { backgroundColor: bgColor, borderRadius: 25 }]}
+      >
+        <Text h3 style={{ color: textColor }}>
+          Search Term
+        </Text>
         <View style={styles.counter}>
           <Input
             containerStyle={{
               width: "100%",
               paddingHorizontal: 10,
-              marginLeft: -8,
+              marginLeft: 0,
+              backgroundColor: bgColor,
+              color: textColor,
             }}
+            style={[{ color: textColor }]}
             placeholder="Search for Vendor or Description..."
             returnKeyType="done"
             onChangeText={(v) => setSearchTerm(v)}
             value={searchTerm}
           />
         </View>
-        <Text h3 style={{ marginBottom: 8, marginTop: 8 }}>
+        <Text h3 style={{ marginBottom: 8, marginTop: 8, color: textColor }}>
           Page Number
         </Text>
-        <View style={styles.counter}>
+        <View
+          style={[
+            styles.counter,
+            { backgroundColor: bgColor, color: textColor },
+          ]}
+        >
           <View style={{ display: "flex" }}>
             <Button
               disabled={page <= 1}
@@ -55,6 +71,7 @@ export const PageModal = (props) => {
                 display: "flex",
                 marginVertical: "auto",
                 paddingVertical: "auto",
+                color: textColor,
               }}
             >{`Current Page: ${page} of ${availablePages}`}</Text>
           </View>
@@ -69,11 +86,16 @@ export const PageModal = (props) => {
             </Button>
           </View>
         </View>
-        <Text h3 style={{ marginBottom: 8, marginTop: 16 }}>
+        <Text h3 style={{ marginBottom: 8, marginTop: 16, color: textColor }}>
           Page Size
         </Text>
 
-        <View style={styles.counter}>
+        <View
+          style={[
+            styles.counter,
+            { backgroundColor: bgColor, color: textColor },
+          ]}
+        >
           <View style={{ display: "flex" }}>
             <Button
               disabled={countPer <= 5}
@@ -97,6 +119,7 @@ export const PageModal = (props) => {
                 display: "flex",
                 marginVertical: "auto",
                 paddingVertical: "auto",
+                color: textColor,
               }}
             >{`Page Size: ${countPer}`}</Text>
           </View>

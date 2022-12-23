@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
+import { useColorScheme } from "react-native";
 
 const DeleteBucketDropdown = (props) => {
   const { buckets, activeBucket, setBuckets } = props;
   const [isFocus, setIsFocus] = useState(false);
-
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "#202020" : "white";
   return (
-    <View style={styles.container}>
-      <Text style={styles.inputIcon}>To Delete: </Text>
+    <View style={[styles.container, { backgroundColor: bgColor }]}>
+      <Text style={[styles.inputIcon, { color: textColor }]}>To Delete: </Text>
       <View style={{ width: "60%", marginBottom: 0, marginLeft: 8 }}>
         <Dropdown
           style={[styles.dropdown, isFocus && { borderColor: "red" }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
+          placeholderStyle={[styles.placeholderStyle, { color: textColor }]}
+          selectedTextStyle={[styles.selectedTextStyle, { color: textColor }]}
+          inputSearchStyle={[styles.inputSearchStyle, { color: textColor }]}
           iconStyle={styles.iconStyle}
           data={buckets}
           maxHeight={300}

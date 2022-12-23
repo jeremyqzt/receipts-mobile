@@ -7,18 +7,21 @@ import Toast from "react-native-toast-message";
 import { BucketsSelect } from "./deleteBucketSelect";
 import { bucketAtom } from "../../atom/atom";
 import { useAtom } from "jotai";
+import { useColorScheme } from "react-native";
 
 export const DeleteBucketModal = (props) => {
   const { visible, closeModal, activeBucket, buckets } = props;
   const [loading, setLoading] = useState(false);
   const [selectedBucket, setSelectedBucket] = useState();
   const [bAtom, setBucketAtom] = useAtom(bucketAtom);
-
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "#202020" : "white";
   return (
     <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
-      <View style={styles.dialog}>
-        <View style={styles.header}>
-          <Text h2>Delete Bucket</Text>
+      <View style={[styles.dialog, {backgroundColor:bgColor , borderRadius: 25}]}>
+      <View style={[styles.header, {color: textColor}]}>
+          <Text h2 style={{color: textColor}}>Delete Bucket</Text>
         </View>
 
         <View>
@@ -27,7 +30,9 @@ export const DeleteBucketModal = (props) => {
               buckets={buckets}
               activeBucket={activeBucket}
               toDelete={selectedBucket}
-              setToDelete={(a) => {setSelectedBucket(a)}}
+              setToDelete={(a) => {
+                setSelectedBucket(a);
+              }}
             />
           </View>
         </View>
@@ -115,7 +120,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 15,
     borderRadius: 15,
-
   },
   container: {
     display: "flex",

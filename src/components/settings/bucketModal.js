@@ -7,8 +7,29 @@ import { createBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";
 import { useAtom } from "jotai";
 import { bucketAtom } from "../../atom/atom";
+import { useColorScheme } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const DatePickerLocal = (props) => {
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "#202020" : "white";
+
+  return (
+    <DateTimePicker
+      value={props.date}
+      mode={"date"}
+      display="default"
+      maximumDate={new Date(2100, 1, 1)}
+      minimumDate={new Date(1900, 1, 1)}
+      onChange={(_,d) => {
+        props.setDate(d);
+      }}
+      style={{ width: "60%", marginVertical: 8, backgroundColor: bgColor }}
+      placeholder="Effective Date"
+    />
+  );
+
   return (
     <DatePicker
       style={{ width: "60%", marginVertical: 8 }}
@@ -25,6 +46,7 @@ const DatePickerLocal = (props) => {
         dateInput: {
           marginLeft: 8,
           marginRight: 8,
+          color: textColor,
         },
       }}
       onDateChange={(date) => {
@@ -36,7 +58,9 @@ const DatePickerLocal = (props) => {
 
 export const CreateBucketModal = (props) => {
   const { visible, closeModal } = props;
-
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "#202020" : "white";
   const [modalName, setModalName] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
@@ -46,35 +70,49 @@ export const CreateBucketModal = (props) => {
 
   return (
     <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
-      <View style={styles.dialog}>
+      <View style={[styles.dialog, { backgroundColor: bgColor }]}>
         <View style={styles.header}>
-          <Text h2>Create Bucket</Text>
+          <Text h2 style={{ color: textColor }}>
+            Create Bucket
+          </Text>
         </View>
         <View>
           <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>Name: </Text>
+            <Text style={[styles.inputIcon, { color: textColor }]}>Name: </Text>
             <Input
               returnKeyType="done"
               containerStyle={{ width: "60%" }}
               placeholder={"Bucket Name"}
               value={modalName}
-              style={styles.input}
+              inputContainerStyle={{
+                borderBottomColor: textColor,
+                color: textColor,
+              }}
+              style={[styles.input, { color: textColor }]}
               onChangeText={(value) => setModalName(value)}
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>Description: </Text>
+            <Text style={[styles.inputIcon, { color: textColor }]}>
+              Description:{" "}
+            </Text>
             <Input
               returnKeyType="done"
+              inputContainerStyle={{
+                borderBottomColor: textColor,
+                color: textColor,
+              }}
               containerStyle={{ width: "60%" }}
               placeholder={"Bucket Description"}
               value={description}
-              style={styles.input}
+              style={[styles.input, { color: textColor }]}
               onChangeText={(value) => setDescription(value)}
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>Effective Date: </Text>
+            <Text style={[styles.inputIcon, { color: textColor }]}>
+              Effective Date:{" "}
+            </Text>
             <DatePickerLocal setDate={setDate} date={date} />
           </View>
         </View>

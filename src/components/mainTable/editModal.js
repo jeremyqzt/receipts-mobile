@@ -3,34 +3,29 @@ import { StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
 import React, { useState, useEffect } from "react";
 import { Dropdown } from "react-native-element-dropdown";
-import DatePicker from "react-native-datepicker";
 import { categories } from "../../constants/categoryConstants";
 import { updateReceipts } from "../../utils/receiptUtils";
 import Toast from "react-native-toast-message";
+import { useColorScheme } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const DatePickerLocal = (props) => {
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "#202020" : "white";
   return (
     <View style={{ width: "60%", marginBottom: 16 }}>
-      <DatePicker
-        style={{ width: "100%" }}
-        date={props.date}
-        mode="date"
-        placeholder="Select Receipt Date"
-        format="YYYY-MM-DD"
-        minDate="2000-01-01"
-        maxDate="2100-01-01"
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
-        showIcon={false}
-        customStyles={{
-          dateInput: {
-            marginLeft: 8,
-            marginRight: 8,
-          },
+      <DateTimePicker
+        value={props.date}
+        mode={"date"}
+        display="default"
+        maximumDate={new Date(2100, 1, 1)}
+        minimumDate={new Date(1900, 1, 1)}
+        onChange={(_, d) => {
+          props.setDate(d);
         }}
-        onDateChange={(date) => {
-          props.setDate(date);
-        }}
+        style={{ width: "60%", marginVertical: 8, backgroundColor: bgColor }}
+        placeholder="Effective Date"
       />
     </View>
   );
@@ -39,16 +34,18 @@ const DatePickerLocal = (props) => {
 const DropdownComponent = (props) => {
   const { category, setCategory } = props;
   const [isFocus, setIsFocus] = useState(false);
-
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "#202020" : "white";
   return (
-    <View style={styles.container}>
-      <Text style={styles.inputIcon}>Category: </Text>
+    <View style={[styles.container, { backgroundColor: bgColor }]}>
+      <Text style={[styles.inputIcon, { color: textColor }]}>Category: </Text>
       <View style={{ width: "65%", marginBottom: 16, marginLeft: 8 }}>
         <Dropdown
           style={[styles.dropdown, isFocus && { borderColor: "red" }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
+          placeholderStyle={[styles.placeholderStyle, { color: textColor }]}
+          selectedTextStyle={[styles.selectedTextStyle, { color: textColor }]}
+          inputSearchStyle={[styles.inputSearchStyle, { color: textColor }]}
           iconStyle={styles.iconStyle}
           data={categories}
           maxHeight={300}
@@ -73,6 +70,9 @@ const DropdownComponent = (props) => {
 const VendorDropdownComponent = (props) => {
   const { vendors = [], setVendor, vendor } = props;
   const [isFocus, setIsFocus] = useState(false);
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "#202020" : "white";
 
   const [enteredVendor, setEnteredVendor] = useState(null);
 
@@ -86,14 +86,14 @@ const VendorDropdownComponent = (props) => {
   ];
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.inputIcon}>Vendor: </Text>
+    <View style={[styles.container, { backgroundColor: bgColor }]}>
+      <Text style={[styles.inputIcon, { color: textColor }]}>Vendor: </Text>
       <View style={{ width: "65%", marginBottom: 16, marginLeft: 8 }}>
         <Dropdown
           style={[styles.dropdown, isFocus && { borderColor: "red" }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
+          placeholderStyle={[styles.placeholderStyle, { color: textColor }]}
+          selectedTextStyle={[styles.selectedTextStyle, { color: textColor }]}
+          inputSearchStyle={[styles.inputSearchStyle, { color: textColor }]}
           iconStyle={styles.iconStyle}
           data={realVendors}
           maxHeight={300}
@@ -104,7 +104,7 @@ const VendorDropdownComponent = (props) => {
           keyboardAvoiding
           onChangeText={(v) => setEnteredVendor(v)}
           onBlur={() => {
-            setIsFocus(false)
+            setIsFocus(false);
           }}
           search
           searchPlaceholder="Enter a Vendor..."
@@ -132,6 +132,9 @@ export const EditModal = (props) => {
   } = props;
   const { total_amount, vendor, description, receipt_date, category, pk } =
     receipt;
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "#202020" : "white";
   const [receiptCat, setReceiptCat] = useState(category);
   const [amount, setAmount] = useState(total_amount);
   const [lVendor, setVendor] = useState(vendor);
@@ -225,13 +228,22 @@ export const EditModal = (props) => {
 
   return (
     <Modal isVisible={visible} onBackdropPress={closeModal} avoidKeyboard>
-      <View style={styles.dialog}>
-        <View style={styles.header}>
-          <Text h2>Edit Receipt</Text>
+      <View style={[styles.dialog, { backgroundColor: bgColor }]}>
+        <View
+          style={[
+            styles.header,
+            { backgroundColor: bgColor, color: textColor },
+          ]}
+        >
+          <Text h2 style={{ color: textColor }}>
+            Edit Receipt
+          </Text>
         </View>
         <View>
           <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>Amount:</Text>
+            <Text style={[styles.inputIcon, { color: textColor }]}>
+              Amount:
+            </Text>
 
             <Input
               placeholder="Total Amount"
@@ -239,7 +251,8 @@ export const EditModal = (props) => {
               returnKeyType="done"
               containerStyle={{ width: "60%" }}
               value={`${amount}`}
-              style={styles.input}
+              inputContainerStyle={{ borderBottomColor: textColor }}
+              style={[styles.input, { color: textColor }]}
               {...errorPlaceholder}
               onChangeText={(value) => {
                 setAmount(value);
@@ -256,7 +269,7 @@ export const EditModal = (props) => {
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>Date: </Text>
+            <Text style={[styles.inputIcon, { color: textColor }]}>Date: </Text>
 
             <DatePickerLocal date={lDate} setDate={setDate} />
           </View>
@@ -273,14 +286,17 @@ export const EditModal = (props) => {
             }}
           />
           <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>Description: </Text>
+            <Text style={[styles.inputIcon, { color: textColor }]}>
+              Description:{" "}
+            </Text>
 
             <Input
               returnKeyType="done"
               containerStyle={{ width: "60%" }}
               placeholder={"Enter a description..."}
+              inputContainerStyle={{ borderBottomColor: textColor }}
               value={lDescription}
-              style={styles.input}
+              style={[styles.input, { color: textColor }]}
               onChangeText={(value) => setDescription(value)}
             />
           </View>

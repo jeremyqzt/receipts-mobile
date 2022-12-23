@@ -8,10 +8,13 @@ import { vendorAtom } from "../../atom/atom";
 import { Chip } from "@rneui/themed";
 import { getVendors, addVendors, deleteVendor } from "../../utils/receiptUtils";
 import { useFetch } from "../../hooks/";
+import { useColorScheme } from "react-native";
 
 export const CreateVendorsModal = (props) => {
   const { visible, closeModal } = props;
-
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? '#202020' : "white";
   const [vAtom, setVendorAtom] = useAtom(vendorAtom);
 
   const [vendorName, setVendorName] = useState("");
@@ -30,19 +33,20 @@ export const CreateVendorsModal = (props) => {
   return (
     <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
       <Toast />
-      <View style={styles.dialog}>
-        <View style={styles.header}>
-          <Text h2>Create Vendors</Text>
+      <View style={[styles.dialog, {backgroundColor:bgColor , borderRadius: 25}]}>
+        <View style={[styles.header, {color: textColor}]}>
+          <Text h2 style={{color: textColor}}>Create Vendors</Text>
         </View>
         <View>
           <View style={styles.inputContainer}>
-            <Text style={styles.inputIcon}>Name: </Text>
+            <Text style={[styles.inputIcon, {color: textColor}]}>Name: </Text>
             <Input
               returnKeyType="done"
-              containerStyle={{ width: "50%" }}
+              containerStyle={{ width: "50%", color: textColor, borderBottomColor: textColor }}
+              inputContainerStyle={{borderBottomColor: textColor}}
               placeholder={"Vendor Name"}
               value={vendorName}
-              style={styles.input}
+              style={[styles.input, {color: textColor}]}
               onChangeText={(value) => setVendorName(value)}
             />
             <View style={{ width: "20%", marginLeft: "10%" }}>
