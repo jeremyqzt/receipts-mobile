@@ -5,33 +5,27 @@ import { setActiveBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";
 import { receiptAtom, bucketAtom } from "../../atom/atom";
 import { useAtom } from "jotai";
+import { useColorScheme } from "react-native";
 
 const BucketDropdown = (props) => {
   const { buckets, setBuckets, activeBucket, setLoading } = props;
   const [isFocus, setIsFocus] = useState(false);
   const [rAtom, setReceiptAtom] = useAtom(receiptAtom);
   const [bAtom, setBucketAtom] = useAtom(bucketAtom);
-
-  const renderLabel = () => {
-    if (isFocus) {
-      return (
-        <Text style={[styles.label, isFocus && { color: "blue" }]}>
-          Buckets
-        </Text>
-      );
-    }
-    return null;
-  };
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "black" : "white";
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, { backgroundColor: bgColor, color: textColor }]}
+    >
       <Text style={styles.inputIcon}>🪣</Text>
-      {renderLabel()}
       <Dropdown
-        style={[styles.dropdown, isFocus && { borderColor: "red" }]}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
+        style={[styles.dropdown, { color: textColor }]}
+        placeholderStyle={[styles.placeholderStyle, { color: textColor }]}
+        selectedTextStyle={[styles.selectedTextStyle, { color: textColor }]}
+        inputSearchStyle={[styles.inputSearchStyle, { color: textColor }]}
         iconStyle={styles.iconStyle}
         data={buckets}
         search
@@ -65,7 +59,8 @@ const BucketDropdown = (props) => {
                   "Your active bucket could not be updated, please try again!",
                 position: "bottom",
               });
-            }).finally(() => setLoading(false));
+            })
+            .finally(() => setLoading(false));
 
           setIsFocus(false);
         }}

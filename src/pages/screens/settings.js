@@ -12,8 +12,12 @@ import { useAtom } from "jotai";
 import { bucketAtom } from "../../atom/atom";
 
 import Toast from "react-native-toast-message";
+import { useColorScheme } from "react-native";
 
 export const SettingsScreen = ({ navigation }) => {
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "black" : "white";
   const [buckets, setBuckets] = useState([]);
   const [activeBucket, setActiveBucket] = useState({});
   const [loading, setLoading] = useState(false);
@@ -55,16 +59,26 @@ export const SettingsScreen = ({ navigation }) => {
         visible={vendorModalOpen}
         closeModal={() => setVendorModalOpen(false)}
       />
-      <ScrollView>
+      <ScrollView style={{
+        backgroundColor: bgColor
+      }}>
         <View
           style={{
             width: "100%",
+            backgroundColor: bgColor,
+            color: textColor,
           }}
         >
-          <View>
+          <View
+            style={{
+              backgroundColor: bgColor,
+              color: textColor,
+            }}
+          >
             <Text
               style={{
                 fontSize: 24,
+                color: textColor,
                 fontWeight: "bold",
                 marginLeft: 10,
                 marginTop: 12,
@@ -72,7 +86,14 @@ export const SettingsScreen = ({ navigation }) => {
             >
               Bucket Selection
             </Text>
-            <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                marginLeft: 10,
+                marginTop: 4,
+                color: textColor,
+              }}
+            >
               Update your active bucket below, receipts will automatically, load
               from, and upload to this bucket.
             </Text>
@@ -87,6 +108,8 @@ export const SettingsScreen = ({ navigation }) => {
         <View
           style={{
             width: "100%",
+            backgroundColor: bgColor,
+            color: textColor,
           }}
         >
           <View>
@@ -96,11 +119,19 @@ export const SettingsScreen = ({ navigation }) => {
                 fontWeight: "bold",
                 marginLeft: 10,
                 marginTop: 24,
+                color: textColor,
               }}
             >
               Bucket Creation
             </Text>
-            <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                marginLeft: 10,
+                marginTop: 4,
+                color: textColor,
+              }}
+            >
               Create a new bucket to upload receipts into below, this will open
               a modal. The active bucket will not change when a new bucket is
               created.
@@ -122,6 +153,8 @@ export const SettingsScreen = ({ navigation }) => {
         <View
           style={{
             width: "100%",
+            backgroundColor: bgColor,
+            color: textColor,
           }}
         >
           <View>
@@ -131,11 +164,19 @@ export const SettingsScreen = ({ navigation }) => {
                 fontWeight: "bold",
                 marginLeft: 10,
                 marginTop: 24,
+                color: textColor,
               }}
             >
               Bucket Deletion
             </Text>
-            <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                marginLeft: 10,
+                marginTop: 4,
+                color: textColor,
+              }}
+            >
               Delete a bucket, this deletes all receipts associated with the
               bucket. Active buckets cannot be deleted.
             </Text>
@@ -155,6 +196,8 @@ export const SettingsScreen = ({ navigation }) => {
         <View
           style={{
             width: "100%",
+            backgroundColor: bgColor,
+            color: textColor,
           }}
         >
           <View>
@@ -164,11 +207,19 @@ export const SettingsScreen = ({ navigation }) => {
                 fontWeight: "bold",
                 marginLeft: 10,
                 marginTop: 24,
+                color: textColor,
               }}
             >
               Common Vendors
             </Text>
-            <Text style={{ fontSize: 15, marginLeft: 10, marginTop: 4 }}>
+            <Text
+              style={{
+                fontSize: 15,
+                marginLeft: 10,
+                marginTop: 4,
+                color: textColor,
+              }}
+            >
               Create up to 10 commonly used vendors to quickly populate your
               receipt's data!
             </Text>
@@ -188,6 +239,8 @@ export const SettingsScreen = ({ navigation }) => {
         <View
           style={{
             width: "100%",
+            backgroundColor: bgColor,
+            color: textColor,
           }}
         >
           <View>
@@ -197,6 +250,7 @@ export const SettingsScreen = ({ navigation }) => {
                 fontWeight: "bold",
                 marginLeft: 10,
                 marginTop: 50,
+                color:textColor
               }}
             >
               Logout
@@ -207,6 +261,7 @@ export const SettingsScreen = ({ navigation }) => {
                 marginLeft: 10,
                 marginTop: 4,
                 marginBottom: 8,
+                color:textColor
               }}
             >
               Click the logout button to end the current session. You will need
@@ -233,7 +288,6 @@ export const SettingsScreen = ({ navigation }) => {
         </View>
       </ScrollView>
       <Toast />
-
     </>
   );
 };

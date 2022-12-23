@@ -7,13 +7,16 @@ import { useAtom } from "jotai";
 import { receiptAtom } from "../../atom/atom";
 import Toast from "react-native-toast-message";
 import { PageModal } from "../../components/mainTable/pageModal";
+import { useColorScheme } from "react-native";
 
 export const HomeScreen = ({
   settingsModalOpen,
   setSettingsModalOpen,
   navigation,
 }) => {
-
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "black" : "white";
   const [loading, setLoading] = useState(true);
   const [refetch, setReFetch] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
@@ -93,7 +96,8 @@ export const HomeScreen = ({
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "white",
+          backgroundColor: bgColor,
+          color: textColor,
           width: "100%",
         }}
       >
