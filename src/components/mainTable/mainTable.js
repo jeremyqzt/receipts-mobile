@@ -31,6 +31,7 @@ export const MainTable = (props) => {
   const colorScheme = useColorScheme();
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [scrollEnabled, setScrollEnabled] = useState(true);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
   const [editModaReload, setEditModalReload] = useState(false);
@@ -72,6 +73,7 @@ export const MainTable = (props) => {
       ) : null}
       {!loading ? (
         <FlatList
+          scrollEnabled={scrollEnabled}
           style={{
             width: "100%",
           }}
@@ -89,9 +91,13 @@ export const MainTable = (props) => {
           renderItem={({ item, index }) => {
             return (
               <ListItem.Swipeable
+                onSwipeBegin={() => setScrollEnabled(false)}
+                onSwipeEnd={() => setScrollEnabled(true)}
                 style={{
                   backgroundColor: colorScheme === "dark" ? "black" : "white",
                   color: textColor,
+                  borderBottomColor: textColor,
+                  borderBottomWidth: 1,
                 }}
                 rightContent={(reset) => (
                   <Button
@@ -104,7 +110,6 @@ export const MainTable = (props) => {
                     buttonStyle={{ minHeight: "100%", backgroundColor: "red" }}
                   />
                 )}
-                bottomDivider
               >
                 <View
                   style={{

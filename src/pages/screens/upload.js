@@ -16,8 +16,12 @@ import { postReceipt } from "../../utils/receiptUtils";
 import { Icon } from "../../components/upload/icon";
 import { useAtom } from "jotai";
 import { receiptAtom, bucketAtom } from "../../atom/atom";
+import { useColorScheme } from "react-native";
 
 export const UploadScreen = () => {
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "black" : "white";
   const [showCamera, setShowCamera] = useState(false);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState(null);
@@ -126,6 +130,7 @@ export const UploadScreen = () => {
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "column",
+        backgroundColor: bgColor,
       }}
     >
       <View
@@ -134,6 +139,7 @@ export const UploadScreen = () => {
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
+          backgroundColor: bgColor,
         }}
       >
         <View
@@ -199,10 +205,10 @@ export const UploadScreen = () => {
                           triggerUpload();
                         }}
                       />
-                      <Text>
+                      <Text style={{color: textColor}}>
                         Hint: Change the active bucket by visiting the settings.
                       </Text>
-                      <Text>
+                      <Text style={{color: textColor}}>
                         If this image doesn't look right, you can always try
                         again!
                       </Text>
@@ -217,20 +223,20 @@ export const UploadScreen = () => {
                       marginVertical: "1%",
                       marginHorizontal: 50,
                       borderRadius: 25,
-                      backgroundColor: "#F5F5F5",
+                      backgroundColor: bgColor,
                     }}
                   >
                     <Icon
                       width="100%"
                       height="100%"
                       strokeWidth={15}
-                      stroke="black"
+                      stroke={textColor}
                     />
                   </View>
                 )}
               </View>
               {!image ? (
-                <Text style={{ fontSize: 20 }}>
+                <Text style={{ fontSize: 20, color: textColor }}>
                   Take or upload an image to create a record!
                 </Text>
               ) : null}
