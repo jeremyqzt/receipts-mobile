@@ -11,12 +11,20 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 const DatePickerLocal = (props) => {
   const colorScheme = useColorScheme();
-  const textColor = colorScheme === "dark" ? "white" : "black";
   const bgColor = colorScheme === "dark" ? "#202020" : "white";
+  let d;
+
+  try {
+    const dateTime = props.date ? Date.parse(props.date): new Date();
+    d = dateTime;
+  } catch {
+    d = new Date();
+  }
+
   return (
     <View style={{ width: "60%", marginBottom: 16 }}>
       <DateTimePicker
-        value={props.date}
+        value={d}
         mode={"date"}
         display="default"
         maximumDate={new Date(2100, 1, 1)}
@@ -24,7 +32,12 @@ const DatePickerLocal = (props) => {
         onChange={(_, d) => {
           props.setDate(d);
         }}
-        style={{ width: "60%", marginVertical: 8, backgroundColor: bgColor }}
+        style={{
+          width: "60%",
+          marginVertical: 8,
+          backgroundColor: bgColor,
+          height: 36,
+        }}
         placeholder="Effective Date"
       />
     </View>

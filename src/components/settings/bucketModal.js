@@ -2,7 +2,6 @@ import { Button, Input, Text } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
 import React, { useState } from "react";
-import DatePicker from "react-native-datepicker";
 import { createBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";
 import { useAtom } from "jotai";
@@ -12,7 +11,6 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 const DatePickerLocal = (props) => {
   const colorScheme = useColorScheme();
-  const textColor = colorScheme === "dark" ? "white" : "black";
   const bgColor = colorScheme === "dark" ? "#202020" : "white";
 
   return (
@@ -27,31 +25,6 @@ const DatePickerLocal = (props) => {
       }}
       style={{ width: "60%", marginVertical: 8, backgroundColor: bgColor }}
       placeholder="Effective Date"
-    />
-  );
-
-  return (
-    <DatePicker
-      style={{ width: "60%", marginVertical: 8 }}
-      date={props.date}
-      mode="date"
-      placeholder="Effective Date"
-      format="YYYY-MM-DD"
-      minDate="2000-01-01"
-      maxDate="2100-01-01"
-      confirmBtnText="Confirm"
-      cancelBtnText="Cancel"
-      showIcon={false}
-      customStyles={{
-        dateInput: {
-          marginLeft: 8,
-          marginRight: 8,
-          color: textColor,
-        },
-      }}
-      onDateChange={(date) => {
-        props.setDate(date);
-      }}
     />
   );
 };
