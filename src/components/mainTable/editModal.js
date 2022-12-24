@@ -15,7 +15,7 @@ const DatePickerLocal = (props) => {
   let d;
 
   try {
-    const dateTime = props.date ? Date.parse(props.date): new Date();
+    const dateTime = props.date ? new Date(`${props.date}T00:00:00`): new Date();
     d = dateTime;
   } catch {
     d = new Date();
