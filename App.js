@@ -7,6 +7,7 @@ import { SignUp } from "./src/pages/signup";
 import { Home } from "./src/pages/home";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Toast from "react-native-toast-message";
+import { useColorScheme } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,14 +28,18 @@ const theme = createTheme({
 });
 
 const App = () => {
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "#202020" : "white";
+
   return (
     <ThemeProvider theme={theme} >
       <Toast />
-      <StatusBar backgroundColor={"white"} translucent />
+      <StatusBar backgroundColor={bgColor} translucent />
       <NavigationContainer theme={theme}>
         <Stack.Navigator
           screenOptions={{
-            cardStyle: { opacity: 1, backgroundColor: "white" },
+            cardStyle: { opacity: 1, backgroundColor: bgColor },
             cardOverlayEnabled: true,
           }}
         >

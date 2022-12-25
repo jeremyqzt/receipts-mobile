@@ -21,7 +21,22 @@ export const Home = () => {
   const bgColor = colorScheme === "dark" ? "black" : "white";
   return (
     <>
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={() => ({
+          headerShown: false,
+          tabBarStyle: {
+            height: 90,
+            paddingHorizontal: 5,
+            paddingTop: 0,
+            inactiveTintColor: textColor,
+            backgroundColor: bgColor,
+            activeTintColor: "rgb(220, 53, 69)",
+            position: "absolute",
+            borderTopWidth: 1,
+            borderTopColor: textColor,
+          },
+        })}
+      >
         <Tab.Screen
           name="Home"
           options={{
@@ -72,9 +87,15 @@ export const Home = () => {
                 </View>
               );
             },
-            tabBarIcon: ({ color }) => (
-              <Icon name="receipt" type="font-awesome-5" color={color} />
+            tabBarLabel: ({focused, color}) => (
+              <Text style={{color: focused ? color : textColor}}>Home</Text>
             ),
+            tabBarIcon: ({ focused, color }) => {
+              const realColor = focused ? color : textColor;
+              return (
+                <Icon name="receipt" type="font-awesome-5" color={realColor} />
+              );
+            },
           }}
           children={({ navigation }) => (
             <HomeScreen
@@ -120,9 +141,15 @@ export const Home = () => {
                 </View>
               );
             },
-            tabBarIcon: ({ color }) => (
-              <Icon name="upload" type="font-awesome-5" color={color} />
+            tabBarLabel: ({focused, color}) => (
+              <Text style={{color: focused ? color : textColor}}>Upload</Text>
             ),
+            tabBarIcon: ({ color, focused }) => {
+              const realColor = focused ? color : textColor;
+              return (
+                <Icon name="upload" type="font-awesome-5" color={realColor} />
+              );
+            },
           }}
           name="Upload"
           component={UploadScreen}
@@ -182,9 +209,19 @@ export const Home = () => {
                 </View>
               );
             },
-            tabBarIcon: ({ color }) => (
-              <Icon name="chart-bar" type="font-awesome-5" color={color} />
+            tabBarLabel: ({focused, color}) => (
+              <Text style={{color: focused ? color : textColor}}>Analytics</Text>
             ),
+            tabBarIcon: ({ color, focused }) => {
+              const realColor = focused ? color : textColor;
+              return (
+                <Icon
+                  name="chart-bar"
+                  type="font-awesome-5"
+                  color={realColor}
+                />
+              );
+            },
           }}
           name="Analytics"
           children={({}) => (
@@ -231,9 +268,15 @@ export const Home = () => {
                 </View>
               );
             },
-            tabBarIcon: ({ color }) => (
-              <Icon name="cog" type="font-awesome-5" color={color} />
+            tabBarLabel: ({focused, color}) => (
+              <Text style={{color: focused ? color : textColor}}>Settings</Text>
             ),
+            tabBarIcon: ({ color, focused }) => {
+              const realColor = focused ? color : textColor;
+              return (
+                <Icon name="cog" type="font-awesome-5" color={realColor} />
+              );
+            },
           }}
           name="Settings"
           component={SettingsScreen}
