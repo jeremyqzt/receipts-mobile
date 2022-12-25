@@ -15,8 +15,14 @@ const DatePickerLocal = (props) => {
   let d;
 
   try {
-    const dateTime = props.date ? new Date(`${props.date}T00:00:00`): new Date();
-    d = dateTime;
+    if (!(props?.date instanceof Date)) {
+      const dateTime = props.date
+        ? new Date(`${props.date}T00:00:00`)
+        : new Date();
+      d = dateTime;
+    } else {
+      d = props.date;
+    }
   } catch {
     d = new Date();
   }
@@ -30,7 +36,7 @@ const DatePickerLocal = (props) => {
         maximumDate={new Date(2100, 1, 1)}
         minimumDate={new Date(1900, 1, 1)}
         onChange={(_, d) => {
-          props.setDate(d);
+          props.setDate(d.toISOString().split("T")[0]);
         }}
         style={{
           width: "60%",
@@ -163,8 +169,7 @@ export const EditModal = (props) => {
       category: receiptCat,
       vendor: lVendor,
       total_amount: amount,
-      receipt_date_datetime: lDate,
-      receipt_date: lDate,
+      ...(lDate ? { receipt_date_datetime: lDate, receipt_date: lDate } : {}),
       description: lDescription,
     },
     uid: pk,

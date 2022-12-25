@@ -113,7 +113,6 @@ export const HomeScreen = ({
           }}
         />
       </View>
-      <Toast />
     </>
   );
 };

@@ -59,235 +59,245 @@ export const SettingsScreen = ({ navigation }) => {
         visible={vendorModalOpen}
         closeModal={() => setVendorModalOpen(false)}
       />
-      <ScrollView style={{
-        backgroundColor: bgColor
-      }}>
+      <ScrollView
+        style={{
+          backgroundColor: bgColor,
+        }}
+      >
         <View
           style={{
             width: "100%",
             backgroundColor: bgColor,
             color: textColor,
+            paddingBottom: 100,
           }}
         >
           <View
             style={{
+              width: "100%",
               backgroundColor: bgColor,
               color: textColor,
             }}
           >
-            <Text
+            <View
               style={{
-                fontSize: 24,
-                color: textColor,
-                fontWeight: "bold",
-                marginLeft: 10,
-                marginTop: 12,
-              }}
-            >
-              Bucket Selection
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                marginLeft: 10,
-                marginTop: 4,
+                backgroundColor: bgColor,
                 color: textColor,
               }}
             >
-              Update your active bucket below, receipts will automatically, load
-              from, and upload to this bucket.
-            </Text>
+              <Text
+                style={{
+                  fontSize: 24,
+                  color: textColor,
+                  fontWeight: "bold",
+                  marginLeft: 10,
+                  marginTop: 12,
+                }}
+              >
+                Bucket Selection
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginLeft: 10,
+                  marginTop: 4,
+                  color: textColor,
+                }}
+              >
+                Update your active bucket below, receipts will automatically,
+                load from, and upload to this bucket.
+              </Text>
+            </View>
+            <BucketsSelect
+              buckets={buckets}
+              activeBucket={activeBucket}
+              setLoading={(v) => setLoading(v)}
+            />
           </View>
-          <BucketsSelect
-            buckets={buckets}
-            activeBucket={activeBucket}
-            setLoading={(v) => setLoading(v)}
-          />
-        </View>
 
-        <View
-          style={{
-            width: "100%",
-            backgroundColor: bgColor,
-            color: textColor,
-          }}
-        >
-          <View>
-            <Text
-              style={{
-                fontSize: 24,
-                fontWeight: "bold",
-                marginLeft: 10,
-                marginTop: 24,
-                color: textColor,
-              }}
-            >
-              Bucket Creation
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                marginLeft: 10,
-                marginTop: 4,
-                color: textColor,
-              }}
-            >
-              Create a new bucket to upload receipts into below, this will open
-              a modal. The active bucket will not change when a new bucket is
-              created.
-            </Text>
-          </View>
-          <Button
-            title={"Create A Bucket"}
-            loading={loading}
-            amount={(buckets ?? []).length}
+          <View
             style={{
               width: "100%",
-              paddingHorizontal: 10,
+              backgroundColor: bgColor,
+              color: textColor,
             }}
-            onPress={async () => {
-              setVisible(true);
-            }}
-          />
-        </View>
-        <View
-          style={{
-            width: "100%",
-            backgroundColor: bgColor,
-            color: textColor,
-          }}
-        >
-          <View>
-            <Text
+          >
+            <View>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  marginLeft: 10,
+                  marginTop: 24,
+                  color: textColor,
+                }}
+              >
+                Bucket Creation
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginLeft: 10,
+                  marginTop: 4,
+                  color: textColor,
+                }}
+              >
+                Create a new bucket to upload receipts into below, this will
+                open a modal. The active bucket will not change when a new
+                bucket is created.
+              </Text>
+            </View>
+            <Button
+              title={"Create A Bucket"}
+              loading={loading}
+              amount={(buckets ?? []).length}
               style={{
-                fontSize: 24,
-                fontWeight: "bold",
-                marginLeft: 10,
-                marginTop: 24,
-                color: textColor,
+                width: "100%",
+                paddingHorizontal: 10,
               }}
-            >
-              Bucket Deletion
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                marginLeft: 10,
-                marginTop: 4,
-                color: textColor,
+              onPress={async () => {
+                setVisible(true);
               }}
-            >
-              Delete a bucket, this deletes all receipts associated with the
-              bucket. Active buckets cannot be deleted.
-            </Text>
+            />
           </View>
-          <Button
-            title={"Delete A Bucket"}
-            loading={loading}
+          <View
             style={{
               width: "100%",
-              paddingHorizontal: 10,
+              backgroundColor: bgColor,
+              color: textColor,
             }}
-            onPress={async () => {
-              setDeleteVis(true);
-            }}
-          />
-        </View>
-        <View
-          style={{
-            width: "100%",
-            backgroundColor: bgColor,
-            color: textColor,
-          }}
-        >
-          <View>
-            <Text
+          >
+            <View>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  marginLeft: 10,
+                  marginTop: 24,
+                  color: textColor,
+                }}
+              >
+                Bucket Deletion
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginLeft: 10,
+                  marginTop: 4,
+                  color: textColor,
+                }}
+              >
+                Delete a bucket, this deletes all receipts associated with the
+                bucket. Active buckets cannot be deleted.
+              </Text>
+            </View>
+            <Button
+              title={"Delete A Bucket"}
+              loading={loading}
               style={{
-                fontSize: 24,
-                fontWeight: "bold",
-                marginLeft: 10,
-                marginTop: 24,
-                color: textColor,
+                width: "100%",
+                paddingHorizontal: 10,
               }}
-            >
-              Common Vendors
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                marginLeft: 10,
-                marginTop: 4,
-                color: textColor,
+              onPress={async () => {
+                setDeleteVis(true);
               }}
-            >
-              Create up to 10 commonly used vendors to quickly populate your
-              receipt's data!
-            </Text>
+            />
           </View>
-          <Button
-            title={"Common Vendors"}
-            loading={loading}
+          <View
             style={{
               width: "100%",
-              paddingHorizontal: 10,
+              backgroundColor: bgColor,
+              color: textColor,
             }}
-            onPress={async () => {
-              setVendorModalOpen(true);
-            }}
-          />
-        </View>
-        <View
-          style={{
-            width: "100%",
-            backgroundColor: bgColor,
-            color: textColor,
-          }}
-        >
-          <View>
-            <Text
+          >
+            <View>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  marginLeft: 10,
+                  marginTop: 24,
+                  color: textColor,
+                }}
+              >
+                Common Vendors
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginLeft: 10,
+                  marginTop: 4,
+                  color: textColor,
+                }}
+              >
+                Create up to 10 commonly used vendors to quickly populate your
+                receipt's data!
+              </Text>
+            </View>
+            <Button
+              title={"Common Vendors"}
+              loading={loading}
               style={{
-                fontSize: 24,
-                fontWeight: "bold",
-                marginLeft: 10,
-                marginTop: 50,
-                color:textColor
+                width: "100%",
+                paddingHorizontal: 10,
               }}
-            >
-              Logout
-            </Text>
-            <Text
-              style={{
-                fontSize: 15,
-                marginLeft: 10,
-                marginTop: 4,
-                marginBottom: 8,
-                color:textColor
+              onPress={async () => {
+                setVendorModalOpen(true);
               }}
-            >
-              Click the logout button to end the current session. You will need
-              to re-enter your credentials.
-            </Text>
+            />
           </View>
-          <Button
-            title={"Logout!"}
+          <View
             style={{
               width: "100%",
-              paddingHorizontal: 10,
-              marginVertical: 10,
+              backgroundColor: bgColor,
+              color: textColor,
             }}
-            onPress={async () => {
-              await SecureStore.deleteItemAsync("access_token");
-              await SecureStore.deleteItemAsync("refresh_token");
+          >
+            <View>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  marginLeft: 10,
+                  marginTop: 50,
+                  color: textColor,
+                }}
+              >
+                Logout
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginLeft: 10,
+                  marginTop: 4,
+                  marginBottom: 8,
+                  color: textColor,
+                }}
+              >
+                Click the logout button to end the current session. You will
+                need to re-enter your credentials.
+              </Text>
+            </View>
+            <Button
+              title={"Logout!"}
+              style={{
+                width: "100%",
+                paddingHorizontal: 10,
+                marginVertical: 10,
+              }}
+              onPress={async () => {
+                await SecureStore.deleteItemAsync("access_token");
+                await SecureStore.deleteItemAsync("refresh_token");
 
-              navigation.reset({
-                index: 0,
-                routes: [{ name: "login" }],
-              });
-            }}
-          />
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: "login" }],
+                });
+              }}
+            />
+          </View>
         </View>
       </ScrollView>
-      <Toast />
     </>
   );
 };

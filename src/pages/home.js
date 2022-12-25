@@ -10,6 +10,7 @@ import { useState } from "react";
 import { VALID_CHARTS } from "../constants/chartConstants";
 import { ChartSelect } from "../components/charts/chartSelect";
 import { useColorScheme } from "react-native";
+import Toast from "react-native-toast-message";
 
 const Tab = createBottomTabNavigator();
 export const Home = () => {
@@ -282,6 +283,7 @@ export const Home = () => {
           component={SettingsScreen}
         />
       </Tab.Navigator>
+      <Toast />
     </>
   );
 };

@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 import { View, Image, Text, TouchableOpacity } from "react-native";
-import Logo from "../../../assets/logo.png";
+import Logo from "../../../assets/logoDark.png";
 
 export const EmptyState = ({navigation}) => {
   return (

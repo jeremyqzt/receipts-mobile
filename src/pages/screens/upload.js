@@ -124,175 +124,177 @@ export const UploadScreen = () => {
   }
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flex: 1,
-        justifyContent: "flex-start",
-        alignItems: "center",
-        flexDirection: "column",
-        backgroundColor: bgColor,
-      }}
-    >
-      <View
+    <View style={{ flex: 1 }}>
+      <ScrollView
         style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
           backgroundColor: bgColor,
         }}
       >
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-          }}
-        >
-          {showCamera ? (
-            <Camera
-              style={styles.camera}
-              type={CameraType.back}
-              ref={(ref) => setCamera(ref)}
+        <View>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              height: 700,
+              backgroundColor: bgColor,
+              paddingBottom: 100,
+            }}
+          >
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                height: "70%",
+                width: "100%",
+              }}
             >
-              <View style={styles.buttonContainerOutter}>
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={takePicture}
-                  />
-                </View>
-              </View>
-            </Camera>
-          ) : (
-            <>
-              <View
-                style={{
-                  marginTop: -159,
-                  width: "100%",
-                  height: "60%",
-                }}
-              >
-                {image ? (
-                  <>
-                    <Image
-                      style={{
-                        width: null,
-                        height: "100%",
-                        resizeMode: "contain",
-                        marginTop: "1%",
-                      }}
-                      source={{ uri: image }}
-                    />
-                    <View
-                      style={{
-                        width: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        marginTop: 0,
-                      }}
-                    >
-                      <Button
-                        loading={loading}
-                        style={{
-                          width: 200,
-                          marginHorizontal: "auto",
-                          marginVertical: 16,
-                        }}
-                        title={`Upload to ${activeBucket.name}!`}
-                        onPress={async () => {
-                          triggerUpload();
-                        }}
+              {showCamera ? (
+                <Camera
+                  style={styles.camera}
+                  type={CameraType.back}
+                  ref={(ref) => setCamera(ref)}
+                >
+                  <View style={styles.buttonContainerOutter}>
+                    <View style={styles.buttonContainer}>
+                      <TouchableOpacity
+                        style={styles.button}
+                        onPress={takePicture}
                       />
-                      <Text style={{color: textColor}}>
-                        Hint: Change the active bucket by visiting the settings.
-                      </Text>
-                      <Text style={{color: textColor}}>
-                        If this image doesn't look right, you can always try
-                        again!
-                      </Text>
                     </View>
-                  </>
-                ) : (
+                  </View>
+                </Camera>
+              ) : (
+                <>
                   <View
                     style={{
-                      width: null,
-                      height: "75%",
-                      resizeMode: "contain",
-                      marginVertical: "1%",
-                      marginHorizontal: 50,
-                      borderRadius: 25,
-                      backgroundColor: bgColor,
+                      marginTop: -159,
+                      width: "100%",
+                      height: "60%",
                     }}
                   >
-                    <Icon
-                      width="100%"
-                      height="100%"
-                      strokeWidth={15}
-                      stroke={textColor}
-                    />
+                    {image ? (
+                      <>
+                        <Image
+                          style={{
+                            width: null,
+                            height: "100%",
+                            resizeMode: "contain",
+                            marginTop: "1%",
+                          }}
+                          source={{ uri: image }}
+                        />
+                        <View
+                          style={{
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            marginTop: 0,
+                          }}
+                        >
+                          <Button
+                            loading={loading}
+                            style={{
+                              width: 200,
+                              marginHorizontal: "auto",
+                              marginVertical: 16,
+                            }}
+                            title={`Upload to ${activeBucket.name}!`}
+                            onPress={async () => {
+                              triggerUpload();
+                            }}
+                          />
+                          <Text style={{ color: textColor }}>
+                            Hint: Change the active bucket by visiting the
+                            settings.
+                          </Text>
+                          <Text style={{ color: textColor }}>
+                            If this image doesn't look right, you can always try
+                            again!
+                          </Text>
+                        </View>
+                      </>
+                    ) : (
+                      <View
+                        style={{
+                          width: null,
+                          height: "75%",
+                          resizeMode: "contain",
+                          marginVertical: "1%",
+                          marginHorizontal: 50,
+                          borderRadius: 25,
+                          backgroundColor: bgColor,
+                        }}
+                      >
+                        <Icon
+                          width="100%"
+                          height="100%"
+                          strokeWidth={15}
+                          stroke={textColor}
+                        />
+                      </View>
+                    )}
                   </View>
-                )}
+                  {!image ? (
+                    <Text style={{ fontSize: 20, color: textColor }}>
+                      Take or upload an image to create a record!
+                    </Text>
+                  ) : null}
+                </>
+              )}
+            </View>
+
+            <View
+              style={{
+                marginTop: "3%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-around",
+                marginBottom: "3%",
+              }}
+            >
+              <View
+                style={{
+                  width: "100%",
+                }}
+              >
+                <Button
+                  loading={loading}
+                  style={{
+                    width: 200,
+                  }}
+                  title={"Select Image!"}
+                  onPress={async () => {
+                    pickImage();
+                  }}
+                />
               </View>
-              {!image ? (
-                <Text style={{ fontSize: 20, color: textColor }}>
-                  Take or upload an image to create a record!
-                </Text>
-              ) : null}
-            </>
-          )}
-        </View>
-
-        <View
-          style={{
-            marginTop: "3%",
-
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-around",
-            marginBottom: "3%",
-          }}
-        >
-          <View
-            style={{
-              width: "100%",
-            }}
-          >
-            <Button
-              loading={loading}
-              style={{
-                width: 200,
-              }}
-              title={"Select Image!"}
-              onPress={async () => {
-                pickImage();
-              }}
-            />
-          </View>
-          <View
-            style={{
-              marginTop: 20,
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <Button
-              style={{
-                width: 200,
-              }}
-              loading={loading}
-              title={showCamera ? "Hide Camera!" : "Show Camera!"}
-              onPress={async () => {
-                setShowCamera(!showCamera);
-              }}
-            />
+              <View
+                style={{
+                  marginTop: 20,
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Button
+                  style={{
+                    width: 200,
+                  }}
+                  loading={loading}
+                  title={showCamera ? "Hide Camera!" : "Show Camera!"}
+                  onPress={async () => {
+                    setShowCamera(!showCamera);
+                  }}
+                />
+              </View>
+            </View>
           </View>
         </View>
-      </View>
-      <Toast />
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
