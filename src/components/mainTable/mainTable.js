@@ -76,6 +76,7 @@ export const MainTable = (props) => {
           scrollEnabled={scrollEnabled}
           style={{
             width: "100%",
+            marginBottom: 90,
           }}
           keyExtractor={(_, index) => index.toString()}
           data={receipts}
