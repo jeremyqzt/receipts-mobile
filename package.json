@@ -1,5 +1,5 @@
 {
-  "name": "receipts-mobile",
+  "name": "ribbon-receipts",
   "version": "1.0.1",
   "scripts": {
     "start": "expo start --dev-client",
