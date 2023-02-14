@@ -19,6 +19,13 @@
     "production": {}
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "ascAppId": "1662296584",
+        "appleTeamId": "4T378897WN",
+        "companyName": "Digi Ribbon",
+        "appName": "Ribbon Receipts"
+      }
+    }
   }
 }
