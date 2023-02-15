@@ -11,7 +11,7 @@ export const ImageModal = (props) => {
       <View style={styles.dialog}>
         <Image
           source={{uri:image_url}}
-          style={{width: "100%", aspectRatio: 1}}
+          style={{height: "100%", aspectRatio: 1, width: undefined, resizeMode:'contain'}}
           PlaceholderContent={<ActivityIndicator />}
         />
       </View>
@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
   dialog: {
     backgroundColor: "white",
     padding: 25,
+    maxHeight: "70%",
   },
-
 });
