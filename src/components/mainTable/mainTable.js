@@ -92,8 +92,12 @@ export const MainTable = (props) => {
           renderItem={({ item, index }) => {
             return (
               <ListItem.Swipeable
-                onSwipeBegin={() => setScrollEnabled(false)}
+                onSwipeBegin={() => {
+                  setScrollEnabled(false)
+                  setTimeout(() => setScrollEnabled(true), 2000)
+                }}
                 onSwipeEnd={() => setScrollEnabled(true)}
+                closeOnScroll={false}
                 style={{
                   backgroundColor: colorScheme === "dark" ? "black" : "white",
                   color: textColor,
