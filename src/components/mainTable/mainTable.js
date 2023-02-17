@@ -69,7 +69,12 @@ export const MainTable = (props) => {
         </View>
       ) : null}
       {!loading && (receipts.length ?? []) === 0 ? (
-        <EmptyState navigation={navigation} />
+        <EmptyState
+          navigation={navigation}
+          onRefresh={() => {
+            refetch();
+          }}
+        />
       ) : null}
       {!loading ? (
         <FlatList
@@ -93,8 +98,8 @@ export const MainTable = (props) => {
             return (
               <ListItem.Swipeable
                 onSwipeBegin={() => {
-                  setScrollEnabled(false)
-                  setTimeout(() => setScrollEnabled(true), 2000)
+                  setScrollEnabled(false);
+                  setTimeout(() => setScrollEnabled(true), 2000);
                 }}
                 onSwipeEnd={() => setScrollEnabled(true)}
                 closeOnScroll={false}

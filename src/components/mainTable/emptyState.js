@@ -1,7 +1,7 @@
 import { View, Image, Text, TouchableOpacity } from "react-native";
 import Logo from "../../../assets/logoDark.png";
 
-export const EmptyState = ({navigation}) => {
+export const EmptyState = ({ navigation, onRefresh }) => {
   return (
     <View
       style={{
@@ -23,7 +23,7 @@ export const EmptyState = ({navigation}) => {
         <Image
           style={{
             width: null,
-            height: "50%",
+            height: "20%",
             resizeMode: "contain",
             marginTop: "0%",
           }}
@@ -46,7 +46,11 @@ export const EmptyState = ({navigation}) => {
         >
           No Receipts found here!
         </Text>
-        <TouchableOpacity onPress={() => {navigation.navigate('Upload')}}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Upload");
+          }}
+        >
           <Text
             style={{
               width: "100%",
@@ -60,7 +64,11 @@ export const EmptyState = ({navigation}) => {
             📷 Click me to upload your first receipt.
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {navigation.navigate('Settings')}}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Settings");
+          }}
+        >
           <Text
             style={{
               width: "100%",
@@ -72,6 +80,25 @@ export const EmptyState = ({navigation}) => {
             }}
           >
             ⚙️ Or, click me to change your active bucket.
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            onRefresh();
+          }}
+        >
+          <Text
+            style={{
+              width: "100%",
+              textAlign: "center",
+              fontSize: 18,
+              marginTop: 48,
+              textDecorationLine: "underline",
+              color: "#dc3545",
+            }}
+          >
+            🚫 If you believe you're seeing this page in error, press me to
+            refresh!
           </Text>
         </TouchableOpacity>
       </View>
