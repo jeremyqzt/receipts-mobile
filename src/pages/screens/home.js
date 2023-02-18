@@ -43,6 +43,7 @@ export const HomeScreen = ({
         /// const { pages, receipts: r, total } = res;
         const receiptsArr = !refetch ? [...r] : [...receipts, ...r];
         setReceipts(receiptsArr);
+        // setReceipts([]);
         setTotalCount(total);
       })
       .catch(() => {

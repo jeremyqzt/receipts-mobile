@@ -5,7 +5,11 @@ This is a react native app to store receipts. It runs using react native
 ## Running
 Run with expo `expo start` 
 
-Build with eas `receipts-mobile % eas build --profile production --platform ios`
+Build with eas `eas build --profile production --platform ios`
+
+
+## Submitting
+Using eas `eas submit -p ios`
 
 ## Images
 <img src="images/IMG_0789.PNG" alt= “” width="20%">

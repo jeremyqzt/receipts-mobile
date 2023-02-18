@@ -97,8 +97,8 @@ export const EmptyState = ({ navigation, onRefresh }) => {
               color: "#dc3545",
             }}
           >
-            🚫 If you believe you're seeing this page in error, press me to
-            refresh!
+            🚫 Is this an error? Press me to
+            try again!
           </Text>
         </TouchableOpacity>
       </View>
