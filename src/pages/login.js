@@ -8,6 +8,7 @@ import * as SecureStore from "expo-secure-store";
 import Toast from "react-native-toast-message";
 import { parseJwt } from "../utils/tools";
 import { useColorScheme } from "react-native";
+import * as LocalAuthentication from "expo-local-authentication";
 
 export const LogIn = ({ navigation }) => {
   const colorScheme = useColorScheme();
@@ -16,6 +17,28 @@ export const LogIn = ({ navigation }) => {
 
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+
+  const [usernameS, setUsernameS] = useState();
+  const [passwordS, setPasswordS] = useState();
+  const [useLocalAuth, setUseLocalAuth] = useState(false);
+
+  useEffect(() => {
+    LocalAuthentication.hasHardwareAsync((has) => {
+      if (has) {
+        LocalAuthentication.isEnrolledAsync((enrolled) => {
+          setUseLocalAuth(enrolled);
+        });
+      }
+    });
+
+    SecureStore.getItemAsync("username").then((token) => {
+      setUsernameS(token);
+    });
+
+    SecureStore.getItemAsync("password").then((token) => {
+      setPasswordS(token);
+    });
+  });
 
   useEffect(() => {
     SecureStore.getItemAsync("access_token").then((token) => {
@@ -29,9 +52,12 @@ export const LogIn = ({ navigation }) => {
     });
   });
 
-  const loginNow = () => {
+  const loginNow = (useLocal) => {
     setLoading(true);
-    loginFetch({ username, password })
+    loginFetch({
+      username: useLocal ? username : usernameS,
+      password: useLocal ? password : passwordS,
+    })
       .then((res) => {
         if (res.status >= 400) {
           throw "Login error";
@@ -39,6 +65,8 @@ export const LogIn = ({ navigation }) => {
         return res.json();
       })
       .then(async (res) => {
+        await SecureStore.setItemAsync("username", username);
+        await SecureStore.setItemAsync("password", password);
         await SecureStore.setItemAsync("access_token", res.access);
         await SecureStore.setItemAsync("refresh_token", res.refresh);
 
@@ -118,10 +146,33 @@ export const LogIn = ({ navigation }) => {
           loading={loading}
           buttonStyle={{ borderRadius: 5 }}
           onPress={() => {
-            loginNow();
+            loginNow(true);
           }}
         />
       </View>
+      {usernameS && passwordS && useLocalAuth ? (
+        <View style={{ paddingHorizontal: "10%", marginTop: "5%" }}>
+          <Button
+            title={"Login In With FaceID"}
+            loading={loading}
+            buttonStyle={{ borderRadius: 5 }}
+            onPress={() => {
+              LocalAuthentication.authenticateAsync((res) => {
+                if (res.success) {
+                  loginNow(false);
+                } else {
+                  Toast.show({
+                    type: "error",
+                    text1: "🛑 Login Failed!",
+                    text2: "FaceID has auth not successful. Please try again!",
+                    position: "bottom",
+                  });
+                }
+              });
+            }}
+          />
+        </View>
+      ) : null}
       <View style={{ paddingHorizontal: 15, marginTop: "30%" }}>
         <Button
           loading={loading}

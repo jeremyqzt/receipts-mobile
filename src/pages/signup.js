@@ -52,6 +52,8 @@ export const SignUp = () => {
           .then(async (res) => {
             await SecureStore.setItemAsync("access_token", res.access);
             await SecureStore.setItemAsync("refresh_token", res.refresh);
+            await SecureStore.setItemAsync("username", username);
+            await SecureStore.setItemAsync("password", password);
 
             navigation.reset({
               index: 0,

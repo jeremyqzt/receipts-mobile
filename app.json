@@ -20,9 +20,7 @@
       ]
     ],
     "android": {
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ],
+      "permissions": ["android.permission.RECORD_AUDIO"],
       "package": "com.digiribbon.receipts"
     },
     "ios": {
@@ -37,16 +35,18 @@
   "updates": {
     "fallbackToCacheTimeout": 0
   },
-  "assetBundlePatterns": [
-    "**/*"
-  ],
+  "assetBundlePatterns": ["**/*"],
   "infoPlist": {
     "NSPhotoLibraryUsageDescription": "This app uses the photo library to upload receipts.",
     "NSCameraUsageDescription": "This app uses the camera to capture receipts.",
-    "NSMicrophoneUsageDescription": "This app uses the microphone to record audio while you are using the video camera"
+    "NSMicrophoneUsageDescription": "This app uses the microphone to record audio while you are using the video camera",
+    "NSFaceIDUsageDescription": "This app can use FaceID to login more easily."
   },
   "ios": {
-    "supportsTablet": true
+    "supportsTablet": true,
+    "config": {
+      "usesNonExemptEncryption": false
+    }
   },
   "android": {
     "adaptiveIcon": {
