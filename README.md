@@ -20,7 +20,7 @@ Using eas `eas submit -p ios`
 
 ## Promo Text
 ```
-Say goodbye to the hassle of paper receipts and hello to effortless organization with Ribbon Receipts! With our app, you can store and access your receipts from anywhere, at any time.
+Say goodbye to the hassle of paper receipts and hello to effortless organization with Ribbon Receipts!
 ```
 
 ## Description
