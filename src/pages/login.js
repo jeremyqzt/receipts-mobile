@@ -23,9 +23,9 @@ export const LogIn = ({ navigation }) => {
   const [useLocalAuth, setUseLocalAuth] = useState(false);
 
   useEffect(() => {
-    LocalAuthentication.hasHardwareAsync((has) => {
+    LocalAuthentication.hasHardwareAsync().then((has) => {
       if (has) {
-        LocalAuthentication.isEnrolledAsync((enrolled) => {
+        LocalAuthentication.isEnrolledAsync().then((enrolled) => {
           setUseLocalAuth(enrolled);
         });
       }
