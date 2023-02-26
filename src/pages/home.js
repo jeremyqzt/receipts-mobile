@@ -26,7 +26,7 @@ export const Home = () => {
         screenOptions={() => ({
           headerShown: false,
           tabBarStyle: {
-            height: 90,
+            height: 100,
             paddingHorizontal: 5,
             paddingTop: 0,
             inactiveTintColor: textColor,

@@ -12,10 +12,7 @@
       }
     },
     "preview": {
-      "distribution": "internal",
-      "ios": {
-        "credentialsSource": "local"
-      }
+      "distribution": "internal"
     },
     "production": {}
   },

@@ -157,7 +157,7 @@ export const LogIn = ({ navigation }) => {
             loading={loading}
             buttonStyle={{ borderRadius: 5 }}
             onPress={() => {
-              LocalAuthentication.authenticateAsync((res) => {
+              LocalAuthentication.authenticateAsync().then((ret) => {
                 if (res.success) {
                   loginNow(false);
                 } else {
