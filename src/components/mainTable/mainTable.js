@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import Logo from "../../../assets/logoDark.png";
 
 import { ListItem, Avatar, Button } from "@rneui/themed";
 import {
   View,
   Text,
+  Image,
   ActivityIndicator,
   FlatList,
   TouchableOpacity,
@@ -95,113 +97,158 @@ export const MainTable = (props) => {
             />
           }
           renderItem={({ item, index }) => {
+            const isLast = index === receipts.length - 1;
+
             return (
-              <ListItem.Swipeable
-                onSwipeBegin={() => {
-                  setScrollEnabled(false);
-                  setTimeout(() => setScrollEnabled(true), 2000);
-                }}
-                onSwipeEnd={() => setScrollEnabled(true)}
-                closeOnScroll={false}
-                style={{
-                  backgroundColor: colorScheme === "dark" ? "black" : "white",
-                  color: textColor,
-                  borderBottomColor: textColor,
-                  borderBottomWidth: 1,
-                }}
-                rightContent={(reset) => (
-                  <Button
-                    title="Delete"
-                    onPress={() => {
-                      reset();
-                      deleteReceipt(index);
-                    }}
-                    icon={{ name: "delete", color: "white" }}
-                    buttonStyle={{ minHeight: "100%", backgroundColor: "red" }}
-                  />
-                )}
-              >
-                <View
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
+              <>
+                <ListItem.Swipeable
+                  onSwipeBegin={() => {
+                    setScrollEnabled(false);
+                    setTimeout(() => setScrollEnabled(true), 2000);
                   }}
+                  onSwipeEnd={() => setScrollEnabled(true)}
+                  closeOnScroll={false}
+                  style={{
+                    backgroundColor: colorScheme === "dark" ? "black" : "white",
+                    color: textColor,
+                    borderBottomColor: textColor,
+                    borderBottomWidth: 1,
+                  }}
+                  rightContent={(reset) => (
+                    <Button
+                      title="Delete"
+                      onPress={() => {
+                        reset();
+                        deleteReceipt(index);
+                      }}
+                      icon={{ name: "delete", color: "white" }}
+                      buttonStyle={{
+                        minHeight: "100%",
+                        backgroundColor: "red",
+                      }}
+                    />
+                  )}
                 >
                   <View
                     style={{
-                      width: "75%",
+                      width: "100%",
                       display: "flex",
                       flexDirection: "row",
-                      justifyContent: "flex-start",
+                      justifyContent: "space-between",
                     }}
                   >
-                    <TouchableOpacity
+                    <View
                       style={{
-                        marginRight: 10,
-                        marginVertical: "5%",
-                      }}
-                      onPress={() => {
-                        setActiveReceipt(item);
-                        setEditModalReload(!editModaReload);
-                        setModalOpen(true);
+                        width: "75%",
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
                       }}
                     >
-                      <Avatar
-                        title={item.alive}
-                        source={item.image_url && { uri: item.image_url }}
-                      />
-                    </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          marginRight: 10,
+                          marginVertical: "5%",
+                        }}
+                        onPress={() => {
+                          setActiveReceipt(item);
+                          setEditModalReload(!editModaReload);
+                          setModalOpen(true);
+                        }}
+                      >
+                        <Avatar
+                          title={item.alive}
+                          source={item.image_url && { uri: item.image_url }}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setActiveReceiptIdx(index);
+                          setActiveReceipt(item);
+                          setEditModalReload(!editModaReload);
+                          setEditModalOpen(true);
+                        }}
+                      >
+                        <ListItem.Content>
+                          <ListItem.Title>
+                            <Text
+                              style={{ fontWeight: "bold", color: textColor }}
+                            >{`${item.vendor} `}</Text>
+                          </ListItem.Title>
+                          <ListItem.Subtitle>
+                            <Text style={{ color: textColor }}>
+                              {`Receipt Total: $${item.total_amount} `}
+                            </Text>
+                          </ListItem.Subtitle>
+                          <ListItem.Subtitle>
+                            <Text
+                              style={{ color: textColor }}
+                            >{`Purchase Date: ${item.receipt_date} `}</Text>
+                          </ListItem.Subtitle>
+                          <ListItem.Subtitle>
+                            <Text
+                              style={{ color: textColor }}
+                            >{`Purchase Category: ${
+                              categories[item.category - 1]?.name
+                            } `}</Text>
+                          </ListItem.Subtitle>
+                        </ListItem.Content>
+                      </TouchableOpacity>
+                    </View>
                     <TouchableOpacity
+                      style={{
+                        marginTop: "5%",
+                        width: "30%",
+                      }}
                       onPress={() => {
                         setActiveReceiptIdx(index);
                         setActiveReceipt(item);
-                        setEditModalReload(!editModaReload);
                         setEditModalOpen(true);
                       }}
                     >
-                      <ListItem.Content>
-                        <ListItem.Title>
-                          <Text
-                            style={{ fontWeight: "bold", color: textColor }}
-                          >{`${item.vendor} `}</Text>
-                        </ListItem.Title>
-                        <ListItem.Subtitle>
-                          <Text style={{ color: textColor }}>
-                            {`Receipt Total: $${item.total_amount} `}
-                          </Text>
-                        </ListItem.Subtitle>
-                        <ListItem.Subtitle>
-                          <Text
-                            style={{ color: textColor }}
-                          >{`Purchase Date: ${item.receipt_date} `}</Text>
-                        </ListItem.Subtitle>
-                        <ListItem.Subtitle>
-                          <Text
-                            style={{ color: textColor }}
-                          >{`Purchase Category: ${
-                            categories[item.category - 1]?.name
-                          } `}</Text>
-                        </ListItem.Subtitle>
-                      </ListItem.Content>
+                      <ListItem.Chevron />
                     </TouchableOpacity>
                   </View>
-                  <TouchableOpacity
+                </ListItem.Swipeable>
+                {isLast ? (
+                  <View
                     style={{
-                      marginTop: "5%",
-                      width: "30%",
-                    }}
-                    onPress={() => {
-                      setActiveReceiptIdx(index);
-                      setActiveReceipt(item);
-                      setEditModalOpen(true);
+                      height: 150,
+                      paddingVertical: 20,
+                      textAlign: "center",
                     }}
                   >
-                    <ListItem.Chevron />
-                  </TouchableOpacity>
-                </View>
-              </ListItem.Swipeable>
+                    <Image
+                      style={{
+                        width: null,
+                        height: "20%",
+                        resizeMode: "contain",
+                        marginTop: "0%",
+                        marginBottom: 20,
+                      }}
+                      source={Logo}
+                    />
+                    <View
+                      style={{
+                        width: "100%",
+                        marginHorizontal: "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          width: "100%",
+                          textAlign: "center",
+                          fontSize: 16,
+                          color: "gray"
+                        }}
+                      >
+                        {`Thats everything for this page!`}
+                      </Text>
+                    </View>
+                  </View>
+                ) : null}
+              </>
             );
           }}
         />

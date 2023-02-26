@@ -7,7 +7,7 @@ Run with expo `expo start`
 
 Build with eas `eas build --profile production --platform ios`
 
-
+Build internally with eas `eas build --profile preview --platform ios`
 ## Submitting
 Using eas `eas submit -p ios`
 

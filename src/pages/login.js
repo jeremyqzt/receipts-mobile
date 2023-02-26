@@ -54,6 +54,7 @@ export const LogIn = ({ navigation }) => {
 
   const loginNow = (useLocal) => {
     setLoading(true);
+
     loginFetch({
       username: useLocal ? username : usernameS,
       password: useLocal ? password : passwordS,
@@ -65,8 +66,8 @@ export const LogIn = ({ navigation }) => {
         return res.json();
       })
       .then(async (res) => {
-        await SecureStore.setItemAsync("username", username);
-        await SecureStore.setItemAsync("password", password);
+        await SecureStore.setItemAsync("username", useLocal ? username : usernameS);
+        await SecureStore.setItemAsync("password", useLocal ? password : passwordS);
         await SecureStore.setItemAsync("access_token", res.access);
         await SecureStore.setItemAsync("refresh_token", res.refresh);
 
@@ -157,7 +158,9 @@ export const LogIn = ({ navigation }) => {
             loading={loading}
             buttonStyle={{ borderRadius: 5 }}
             onPress={() => {
-              LocalAuthentication.authenticateAsync().then((ret) => {
+              // loginNow(false);
+
+              LocalAuthentication.authenticateAsync().then((res) => {
                 if (res.success) {
                   loginNow(false);
                 } else {
