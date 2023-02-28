@@ -63,7 +63,11 @@ export const CategoryTables = () => {
   const width = data[0].map(() => 150);
 
   return (
-    <>
+    <ScrollView
+      style={{
+        backgroundColor: bgColor,
+      }}
+    >
       <Text
         style={{
           fontSize: 32,
@@ -98,7 +102,6 @@ export const CategoryTables = () => {
             onClearSelector={() => {
               setIsOpen(false);
             }}
-
             styleRowList={{ marginVertical: 3 }}
             fontSize={20}
             itemFontSize={20}
@@ -133,7 +136,7 @@ export const CategoryTables = () => {
             styleIndicator={{
               color: textColor,
               backgroundColor: bgColor,
-              height: 30
+              height: 30,
             }}
             styleDropdownMenuSubsection={{
               color: textColor,
@@ -147,9 +150,9 @@ export const CategoryTables = () => {
           />
         </View>
       </View>
-      <View style={{ height: 1000, marginTop: 12 }}>
+      <View style={{ marginTop: 12 }}>
         <ScrollView
-          style={{ height: 700 }}
+          style={{}}
           horizontal={true}
           alwaysBounceHorizontal={false}
           bounces={false}
@@ -176,6 +179,6 @@ export const CategoryTables = () => {
           ) : null}
         </ScrollView>
       </View>
-    </>
+    </ScrollView>
   );
 };
