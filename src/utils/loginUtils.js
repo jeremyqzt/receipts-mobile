@@ -2,7 +2,7 @@ import { domainRoot, userDeleteUrl } from "../constants/constants";
 
 import { postData } from "./mainUtils";
 
-const LOGIN_URL = `${domainRoot}/auth/token/`;
+const LOGIN_URL = `${domainRoot}auth/token/`;
 
 export const loginFetch = ({ username, password }) => {
   const data = { username, password };
@@ -19,7 +19,7 @@ export const loginFetch = ({ username, password }) => {
   });
 };
 
-const SINGUP_URL = `${domainRoot}/user/create/`;
+const SINGUP_URL = `${domainRoot}user/create/`;
 
 export const singupFetch = ({ username, password }) => {
   const data = { username, password };
