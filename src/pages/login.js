@@ -66,8 +66,14 @@ export const LogIn = ({ navigation }) => {
         return res.json();
       })
       .then(async (res) => {
-        await SecureStore.setItemAsync("username", useLocal ? username : usernameS);
-        await SecureStore.setItemAsync("password", useLocal ? password : passwordS);
+        await SecureStore.setItemAsync(
+          "username",
+          useLocal ? username : usernameS
+        );
+        await SecureStore.setItemAsync(
+          "password",
+          useLocal ? password : passwordS
+        );
         await SecureStore.setItemAsync("access_token", res.access);
         await SecureStore.setItemAsync("refresh_token", res.refresh);
 
@@ -90,104 +96,108 @@ export const LogIn = ({ navigation }) => {
   };
 
   return (
-    <View
-      style={{
-        backgroundColor: colorScheme === "dark" ? "black" : "white",
-        height: "100%",
-      }}
-    >
+    <>
       <View
         style={{
-          marginTop: "1%",
-          width: "100%",
-          height: "25%",
-          margin: "auto",
+          backgroundColor: colorScheme === "dark" ? "black" : "white",
+          height: "100%",
         }}
       >
-        <Image
+        <View
           style={{
-            width: null,
-            height: "50%",
-            resizeMode: "contain",
-            marginTop: "10%",
+            marginTop: "1%",
+            width: "100%",
+            height: "25%",
+            margin: "auto",
           }}
-          source={Logo}
-        />
-      </View>
-      <View style={{ paddingHorizontal: "10%" }}>
-        <Input
-          placeholder="Email"
-          leftIcon={{
-            type: "font-awesome",
-            name: "at",
-            color: colorScheme === "dark" ? "grey" : "black",
-          }}
-          onChangeText={(value) => setUsername(value)}
-          style={{
-            color: colorScheme === "dark" ? "grey" : "black",
-          }}
-        />
-        <Input
-          placeholder="Password"
-          secureTextEntry={true}
-          leftIcon={{
-            type: "font-awesome",
-            name: "key",
-            color: colorScheme === "dark" ? "grey" : "black",
-          }}
-          style={{
-            color: colorScheme === "dark" ? "grey" : "black",
-          }}
-          onChangeText={(value) => setPassword(value)}
-        />
-      </View>
-      <View style={{ paddingHorizontal: "10%", marginTop: "5%" }}>
-        <Button
-          title={"Login"}
-          loading={loading}
-          buttonStyle={{ borderRadius: 5 }}
-          onPress={() => {
-            loginNow(true);
-          }}
-        />
-      </View>
-      {usernameS && passwordS && useLocalAuth ? (
+        >
+          <Image
+            style={{
+              width: null,
+              height: "50%",
+              resizeMode: "contain",
+              marginTop: "10%",
+            }}
+            source={Logo}
+          />
+        </View>
+        <View style={{ paddingHorizontal: "10%" }}>
+          <Input
+            placeholder="Email"
+            leftIcon={{
+              type: "font-awesome",
+              name: "at",
+              color: colorScheme === "dark" ? "grey" : "black",
+            }}
+            onChangeText={(value) => setUsername(value)}
+            style={{
+              color: colorScheme === "dark" ? "grey" : "black",
+            }}
+          />
+          <Input
+            placeholder="Password"
+            secureTextEntry={true}
+            leftIcon={{
+              type: "font-awesome",
+              name: "key",
+              color: colorScheme === "dark" ? "grey" : "black",
+            }}
+            style={{
+              color: colorScheme === "dark" ? "grey" : "black",
+            }}
+            onChangeText={(value) => setPassword(value)}
+          />
+        </View>
         <View style={{ paddingHorizontal: "10%", marginTop: "5%" }}>
           <Button
-            title={"Login In With FaceID"}
+            title={"Login"}
             loading={loading}
             buttonStyle={{ borderRadius: 5 }}
             onPress={() => {
-              // loginNow(false);
-
-              LocalAuthentication.authenticateAsync().then((res) => {
-                if (res.success) {
-                  loginNow(false);
-                } else {
-                  Toast.show({
-                    type: "error",
-                    text1: "🛑 Login Failed!",
-                    text2: "FaceID has auth not successful. Please try again!",
-                    position: "bottom",
-                  });
-                }
-              });
+              loginNow(true);
             }}
           />
         </View>
-      ) : null}
-      <View style={{ paddingHorizontal: 15, marginTop: "30%" }}>
-        <Button
-          loading={loading}
-          type="clear"
-          buttonStyle={{ borderRadius: 5 }}
-          title="Signup Here!"
-          titleStyle={{ color: "rgb(0, 99, 191)" }}
-          onPress={() => {
-            navigation.navigate("signup");
-          }}
-        />
+        {usernameS && passwordS && useLocalAuth ? (
+          <View style={{ paddingHorizontal: "10%", marginTop: "5%" }}>
+            <Button
+              title={"Login In With FaceID"}
+              loading={loading}
+              buttonStyle={{ borderRadius: 5 }}
+              onPress={() => {
+                // loginNow(false);
+
+                LocalAuthentication.authenticateAsync().then((res) => {
+                  if (res.success) {
+                    loginNow(false);
+                  } else {
+                    Toast.show({
+                      type: "error",
+                      text1: "🛑 Login Failed!",
+                      text2:
+                        "FaceID has auth not successful. Please try again!",
+                      position: "bottom",
+                    });
+                  }
+                });
+              }}
+            />
+          </View>
+        ) : null}
+        <View style={{ paddingHorizontal: 15, marginTop: "30%" }}>
+          <Button
+            loading={loading}
+            type="clear"
+            buttonStyle={{ borderRadius: 5 }}
+            title="Signup Here!"
+            titleStyle={{ color: "rgb(0, 99, 191)" }}
+            onPress={() => {
+              navigation.navigate("signup");
+            }}
+          />
+        </View>
       </View>
-    </View>
+      <Toast />
+    </>
   );
 };

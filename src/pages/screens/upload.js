@@ -98,6 +98,10 @@ export const UploadScreen = () => {
   };
 
   const pickImage = async () => {
+    // const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    // if (!perm.granted) {
+    //  return;
+    // }
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -120,7 +124,12 @@ export const UploadScreen = () => {
   }
 
   if (!permission.granted) {
-    return null;
+    return (
+      <Text style={{ color: textColor, textAlign: "center", marginTop: "25%" }}>
+        This app requires camera access to upload images! New receipts cannot be
+        uploaded but you can continue to manage your existing entries.
+      </Text>
+    );
   }
 
   return (

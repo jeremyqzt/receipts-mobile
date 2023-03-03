@@ -1,3 +1,7 @@
+import { domainRoot, userDeleteUrl } from "../constants/constants";
+
+import { postData } from "./mainUtils";
+
 const LOGIN_URL = "https://api.ribbonreceipts.com/auth/token/";
 
 export const loginFetch = ({ username, password }) => {
@@ -30,4 +34,10 @@ export const singupFetch = ({ username, password }) => {
     },
     body: JSON.stringify(data),
   });
+};
+
+export const deleteAccount = () => {
+  const data = {};
+  const path = `${domainRoot}${userDeleteUrl}`;
+  return postData(path, data);
 };

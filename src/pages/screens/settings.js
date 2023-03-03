@@ -7,11 +7,11 @@ import { BucketsSelect } from "../../components/settings/buckets";
 import { CreateBucketModal } from "../../components/settings/bucketModal";
 import { DeleteBucketModal } from "../../components/settings/deleteBucketModal";
 import { CreateVendorsModal } from "../../components/settings/vendorsModal";
+import { DeleteAccountModal } from "../../components/settings/deleteAccountModal";
 
 import { useAtom } from "jotai";
 import { bucketAtom } from "../../atom/atom";
 
-import Toast from "react-native-toast-message";
 import { useColorScheme } from "react-native";
 
 export const SettingsScreen = ({ navigation }) => {
@@ -25,6 +25,7 @@ export const SettingsScreen = ({ navigation }) => {
   const [deleteVis, setDeleteVis] = useState(false);
   const [bAtom] = useAtom(bucketAtom);
   const [vendorModalOpen, setVendorModalOpen] = useState(false);
+  const [accountModalOpen, setAccountModalOpen] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -53,6 +54,13 @@ export const SettingsScreen = ({ navigation }) => {
         visible={visible}
         closeModal={() => {
           setVisible(false);
+        }}
+      />
+      <DeleteAccountModal
+        visible={accountModalOpen}
+        navigation={navigation}
+        closeModal={() => {
+          setAccountModalOpen(false);
         }}
       />
       <CreateVendorsModal
@@ -293,6 +301,51 @@ export const SettingsScreen = ({ navigation }) => {
                   index: 0,
                   routes: [{ name: "login" }],
                 });
+              }}
+            />
+          </View>
+          <View
+            style={{
+              width: "100%",
+              marginBottom: 50,
+              backgroundColor: bgColor,
+              color: textColor,
+            }}
+          >
+            <View>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  marginLeft: 10,
+                  marginTop: 10,
+                  color: textColor,
+                }}
+              >
+                Account Deletion
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginLeft: 10,
+                  marginTop: 4,
+                  marginBottom: 8,
+                  color: textColor,
+                }}
+              >
+                Click the Delete Account button to permanently, and
+                irreversibility delete your account and your data.
+              </Text>
+            </View>
+            <Button
+              title={"Delete Account!"}
+              style={{
+                width: "100%",
+                paddingHorizontal: 10,
+                marginVertical: 10,
+              }}
+              onPress={async () => {
+                setAccountModalOpen(true);
               }}
             />
           </View>

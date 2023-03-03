@@ -9,7 +9,7 @@ import { validateEmail } from "../utils/validationUtils";
 import * as SecureStore from "expo-secure-store";
 import { useColorScheme } from "react-native";
 
-export const SignUp = () => {
+export const SignUp = ({ navigation }) => {
   const colorScheme = useColorScheme();
 
   const [loading, setLoading] = useState(false);
@@ -19,18 +19,25 @@ export const SignUp = () => {
   const [password1, setPassword1] = useState();
 
   const singupNow = () => {
-    if (
-      !validateEmail(username) ||
-      password1 !== password2 ||
-      (password1.length ?? 0) <= 8
-    ) {
+    if (!validateEmail(username) || password1.length < 8) {
       Toast.show({
         type: "error",
-        text1: "Input Error!",
+        text1: "🛑 Input Error!",
         text2: "Must provide an valid email and a 8+ length password!",
         position: "bottom",
       });
+      return;
     }
+    if (password1 !== password2) {
+      Toast.show({
+        type: "error",
+        text1: "🛑 Input Error!",
+        text2: "Passwords do not match!",
+        position: "bottom",
+      });
+      return;
+    }
+
     setLoading(true);
     const password = password1;
 
@@ -52,9 +59,6 @@ export const SignUp = () => {
           .then(async (res) => {
             await SecureStore.setItemAsync("access_token", res.access);
             await SecureStore.setItemAsync("refresh_token", res.refresh);
-            await SecureStore.setItemAsync("username", username);
-            await SecureStore.setItemAsync("password", password);
-
             navigation.reset({
               index: 0,
               routes: [{ name: "homepage" }],
@@ -84,95 +88,110 @@ export const SignUp = () => {
   };
 
   return (
-    <View
-      style={{
-        backgroundColor: colorScheme === "dark" ? "black" : "white",
-        height: "100%",
-      }}
-    >
+    <>
       <View
         style={{
-          marginTop: "1%",
-          width: "100%",
-          height: "25%",
-          margin: "auto",
+          backgroundColor: colorScheme === "dark" ? "black" : "white",
+          height: "100%",
         }}
       >
-        <Image
+        <View
           style={{
-            width: null,
-            height: "50%",
-            resizeMode: "contain",
-            marginTop: "10%",
+            marginTop: "1%",
+            width: "100%",
+            height: "25%",
+            margin: "auto",
           }}
-          source={Logo}
-        />
+        >
+          <Image
+            style={{
+              width: null,
+              height: "50%",
+              resizeMode: "contain",
+              marginTop: "10%",
+            }}
+            source={Logo}
+          />
+        </View>
+        <View style={{ paddingHorizontal: "10%" }}>
+          <Input
+            value={username}
+            onChangeText={(e) => setUsername(e)}
+            placeholder="Email"
+            leftIcon={{
+              type: "font-awesome",
+              name: "at",
+              color: colorScheme === "dark" ? "grey" : "black",
+            }}
+            style={{
+              color: colorScheme === "dark" ? "grey" : "black",
+            }}
+          />
+          <Input
+            value={password1}
+            onChangeText={(e) => setPassword1(e)}
+            placeholder="Password"
+            secureTextEntry={true}
+            leftIcon={{
+              type: "font-awesome",
+              name: "key",
+              color: colorScheme === "dark" ? "grey" : "black",
+            }}
+            style={{
+              color: colorScheme === "dark" ? "grey" : "black",
+            }}
+          />
+          <Input
+            value={password2}
+            onChangeText={(e) => setPassword2(e)}
+            placeholder="Confirm Password"
+            secureTextEntry={true}
+            leftIcon={{
+              type: "font-awesome",
+              name: "key",
+              color: colorScheme === "dark" ? "grey" : "black",
+            }}
+            style={{
+              color: colorScheme === "dark" ? "grey" : "black",
+            }}
+          />
+        </View>
+        <View style={{ paddingHorizontal: "10%", marginTop: "2%" }}>
+          <Button
+            title={"Privacy Policy"}
+            buttonStyle={{ borderRadius: 5 }}
+            type="outline"
+            onPress={() => {
+              Linking.openURL("https://static.ribbonreceipts.com/privacy.html");
+            }}
+          />
+        </View>
+        <View style={{ paddingHorizontal: "10%", marginTop: "2%" }}>
+          <Button
+            title={"Terms of Use"}
+            buttonStyle={{ borderRadius: 5 }}
+            type="outline"
+            onPress={() => {
+              Linking.openURL("https://static.ribbonreceipts.com/eula.html");
+            }}
+          />
+        </View>
+        <View style={{ paddingHorizontal: "10%", marginTop: "15%" }}>
+          <Button
+            title={"Sign Up"}
+            buttonStyle={{ borderRadius: 5 }}
+            onPress={singupNow}
+            loading={loading}
+          />
+        </View>
+        <View style={{ paddingHorizontal: "10%", marginTop: "1%" }}>
+          <Text style={{ fontSize: 14, color: "grey", textAlign: "center" }}>
+            Signing up implies agreement to the privacy policy and the terms of
+            use.
+          </Text>
+        </View>
       </View>
-      <View style={{ paddingHorizontal: "10%" }}>
-        <Input
-          value={username}
-          onChangeText={(e) => setUsername(e)}
-          placeholder="Email"
-          leftIcon={{ type: "font-awesome", name: "at", color: colorScheme === "dark" ? "grey" : "black", }}
-          style={{
-            color: colorScheme === "dark" ? "grey" : "black",
-          }}
-        />
-        <Input
-          value={password1}
-          onChangeText={(e) => setPassword1(e)}
-          placeholder="Password"
-          secureTextEntry={true}
-          leftIcon={{ type: "font-awesome", name: "key", color: colorScheme === "dark" ? "grey" : "black", }}
-          style={{
-            color: colorScheme === "dark" ? "grey" : "black",
-          }}
-        />
-        <Input
-          value={password2}
-          onChangeText={(e) => setPassword2(e)}
-          placeholder="Confirm Password"
-          secureTextEntry={true}
-          leftIcon={{ type: "font-awesome", name: "key", color: colorScheme === "dark" ? "grey" : "black", }}
-          style={{
-            color: colorScheme === "dark" ? "grey" : "black",
-          }}
-        />
-      </View>
-      <View style={{ paddingHorizontal: "10%", marginTop: "2%" }}>
-        <Button
-          title={"Privacy Policy"}
-          buttonStyle={{ borderRadius: 5 }}
-          type="outline"
-          onPress={() => {
-            Linking.openURL("https://static.ribbonreceipts.com/privacy.html");
-          }}
-        />
-      </View>
-      <View style={{ paddingHorizontal: "10%", marginTop: "2%" }}>
-        <Button
-          title={"Terms of Use"}
-          buttonStyle={{ borderRadius: 5 }}
-          type="outline"
-          onPress={() => {
-            Linking.openURL("https://static.ribbonreceipts.com/eula.html");
-          }}
-        />
-      </View>
-      <View style={{ paddingHorizontal: "10%", marginTop: "15%" }}>
-        <Button
-          title={"Sign Up"}
-          buttonStyle={{ borderRadius: 5 }}
-          onPress={singupNow}
-          loading={loading}
-        />
-      </View>
-      <View style={{ paddingHorizontal: "10%", marginTop: "1%" }}>
-        <Text style={{ fontSize: 14, color: "grey", textAlign: "center" }}>
-          Signing up implies agreement to the privacy policy and the terms of
-          use.
-        </Text>
-      </View>
-    </View>
+      <Toast />
+    </>
   );
 };

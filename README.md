@@ -5,6 +5,8 @@ This is a react native app to store receipts. It runs using react native
 ## Running
 Run with expo `expo start` 
 
+Run Prebuild: `npx expo prebuild`
+
 Build with eas `eas build --profile production --platform ios`
 
 Build internally with eas `eas build --profile preview --platform ios`

@@ -24,7 +24,13 @@
       "package": "com.digiribbon.receipts"
     },
     "ios": {
-      "bundleIdentifier": "com.digiribbon.receipts"
+      "bundleIdentifier": "com.digiribbon.receipts",
+      "supportsTablet": false,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "This app uses the photo library to upload receipts.",
+        "NSCameraUsageDescription": "This app uses the camera to capture receipts.",
+        "NSFaceIDUsageDescription": "This app can use FaceID to login more easily."
+      }
     },
     "extra": {
       "eas": {
