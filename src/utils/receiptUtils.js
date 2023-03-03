@@ -10,6 +10,7 @@ export const postReceipt = async ({ image, bucket }) => {
   const formData = new FormData();
   formData.append("file", image);
   formData.append("bucket", bucket);
+  formData.append("category", 1);
 
   const crop = { x: null, y: null, width: null, height: null };
   formData.append("crop", JSON.stringify(crop));

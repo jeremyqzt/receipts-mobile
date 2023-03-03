@@ -63,7 +63,8 @@ export const UploadScreen = () => {
 
   const triggerUpload = () => {
     setLoading(true);
-    postReceipt({ image: uploadFile, bucket: activeBucket.uid })
+    console.log(uploadFile);
+    postReceipt({ image: uploadFile, bucket: activeBucket.id })
       .then(() => {
         Toast.show({
           type: "success",
@@ -98,10 +99,10 @@ export const UploadScreen = () => {
   };
 
   const pickImage = async () => {
-    // const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    // if (!perm.granted) {
-    //  return;
-    // }
+    const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!perm.granted) {
+      return;
+    }
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -127,7 +128,8 @@ export const UploadScreen = () => {
     return (
       <Text style={{ color: textColor, textAlign: "center", marginTop: "25%" }}>
         This app requires camera access to upload images! New receipts cannot be
-        uploaded but you can continue to manage your existing entries.
+        uploaded without this permission but you can continue to manage your
+        existing entries.
       </Text>
     );
   }
