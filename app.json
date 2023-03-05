@@ -2,7 +2,7 @@
   "expo": {
     "name": "Ribbon Receipts",
     "slug": "receipts-mobile",
-    "version": "1.2.2",
+    "version": "1.2.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",

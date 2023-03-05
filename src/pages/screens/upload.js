@@ -99,10 +99,10 @@ export const UploadScreen = () => {
   };
 
   const pickImage = async () => {
-    const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!perm.granted) {
-      return;
-    }
+    //const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    // if (!perm.granted) {
+    //  return;
+    // }
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,

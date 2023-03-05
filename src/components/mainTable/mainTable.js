@@ -177,7 +177,7 @@ export const MainTable = (props) => {
                           </ListItem.Title>
                           <ListItem.Subtitle>
                             <Text style={{ color: textColor }}>
-                              {`Receipt Total: $${item.total_amount} `}
+                              {`Receipt Total: $${item.total_amount ?? 0} `}
                             </Text>
                           </ListItem.Subtitle>
                           <ListItem.Subtitle>
@@ -240,7 +240,7 @@ export const MainTable = (props) => {
                           width: "100%",
                           textAlign: "center",
                           fontSize: 16,
-                          color: "gray"
+                          color: "gray",
                         }}
                       >
                         {`Thats everything for this page!`}
