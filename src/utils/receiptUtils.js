@@ -8,7 +8,9 @@ import { postData, postFormData, getData } from "./mainUtils";
 
 export const postReceipt = async ({ image, bucket }) => {
   const formData = new FormData();
-  formData.append("file", image);
+  if (image) {
+    formData.append("file", image);
+  }
   formData.append("bucket", bucket);
   formData.append("category", 1);
 

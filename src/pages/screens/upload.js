@@ -63,7 +63,6 @@ export const UploadScreen = () => {
 
   const triggerUpload = () => {
     setLoading(true);
-    console.log(uploadFile);
     postReceipt({ image: uploadFile, bucket: activeBucket.id })
       .then(() => {
         Toast.show({

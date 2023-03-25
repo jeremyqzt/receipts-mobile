@@ -1,29 +1,43 @@
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { getReceipts } from "../../utils/fetchUtils";
-import { deactivateReceipt } from "../../utils/receiptUtils";
+
+import { deactivateReceipt, postReceipt } from "../../utils/receiptUtils";
 import { MainTable } from "../../components/mainTable/mainTable";
 import { useAtom } from "jotai";
-import { receiptAtom } from "../../atom/atom";
+import { receiptAtom, bucketAtom } from "../../atom/atom";
 import Toast from "react-native-toast-message";
 import { PageModal } from "../../components/mainTable/pageModal";
 import { useColorScheme } from "react-native";
+import { getActiveBucket } from "../../utils/bucketUtils";
 
 export const HomeScreen = ({
   settingsModalOpen,
   setSettingsModalOpen,
   navigation,
+  creating,
+  setCreating,
 }) => {
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
   const bgColor = colorScheme === "dark" ? "black" : "white";
-  const [loading, setLoading] = useState(true);
+  const [aLoading, setLoading] = useState(true);
+  const [Bloading, setBLoading] = useState(true);
+
   const [refetch, setReFetch] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [pageMeta, setPageMeta] = useState({ offset: 0, limit: 20 });
-
   const [rAtom] = useAtom(receiptAtom);
+
+  const [bAtom] = useAtom(bucketAtom);
   const [receipts, setReceipts] = useState([]);
+  const [activeBucket, setActiveBucket] = useState({});
+  useEffect(() => {
+    if (creating) {
+      createLocalReceipt();
+    }
+    setCreating(false);
+  }, [creating]);
 
   useEffect(() => {
     setReceipts([]);
@@ -73,6 +87,55 @@ export const HomeScreen = ({
     setReceipts(newReceipts);
   };
 
+  useEffect(() => {
+    setBLoading(true);
+
+    getActiveBucket()
+      .then((res) => {
+        setActiveBucket(res);
+      })
+      .catch(() => {
+        Toast.show({
+          type: "error",
+          text1: "🛑 Error!",
+          text2:
+            "Sorry! Our servers aren't responding right now, please try again in a minute.",
+          position: "bottom",
+        });
+      })
+      .finally(() => setBLoading(false));
+  }, [bAtom]);
+
+  const createLocalReceipt = () => {
+    if (!activeBucket) {
+      return;
+    }
+
+    postReceipt({ bucket: activeBucket.id })
+      .then((res) => {
+        Toast.show({
+          type: "success",
+          text1: "✅ Success!",
+          text2: "Quick entry created!",
+          position: "bottom",
+        });
+        const newReceipt = res?.receipt;
+        if (newReceipt) {
+          const newReceipts = [{...newReceipt}, ...receipts];
+          setReceipts(newReceipts);
+        }
+      })
+      .catch(() => {
+        Toast.show({
+          type: "error",
+          text1: "🛑 Error!",
+          text2: "Quick entry creation failed, please try again!",
+          position: "bottom",
+        });
+      })
+      .finally(() => setLoading(false));
+  };
+
   const deleteReceipt = (idx) => {
     deactivateReceipt(receipts[idx].pk).then(() => {
       const newReceipts = [...receipts];
@@ -81,6 +144,8 @@ export const HomeScreen = ({
       setTotalCount(() => totalCount - 1);
     });
   };
+
+  const loading = aLoading || Bloading;
 
   return (
     <>
@@ -109,7 +174,6 @@ export const HomeScreen = ({
           deleteReceipt={deleteReceipt}
           updateLocalReceipt={updateLocalReceipt}
           openPageModal={() => setSettingsModalOpen(true)}
-
           refetch={() => {
             setReFetch(!refetch);
             setReceipts([]);

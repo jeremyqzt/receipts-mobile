@@ -17,6 +17,7 @@ export const Home = () => {
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [chartSelection, setChartSelection] = useState(VALID_CHARTS[0]);
   const colorScheme = useColorScheme();
+  const [creating, setCreating] = useState(false);
 
   const textColor = colorScheme === "dark" ? "white" : "black";
   const bgColor = colorScheme === "dark" ? "black" : "white";
@@ -84,7 +85,7 @@ export const Home = () => {
                       >
                         <TouchableOpacity
                           onPress={() => {
-                            setSettingsModalOpen(true);
+                            setCreating(true)
                           }}
                         >
                           <Icon
@@ -111,6 +112,8 @@ export const Home = () => {
           }}
           children={({ navigation }) => (
             <HomeScreen
+              creating={creating}
+              setCreating={(e) => setCreating(e)}
               settingsModalOpen={settingsModalOpen}
               setSettingsModalOpen={(e) => setSettingsModalOpen(e)}
               navigation={navigation}
