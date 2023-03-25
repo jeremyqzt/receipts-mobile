@@ -71,25 +71,36 @@ export const Home = () => {
                         Receipts
                       </Text>
                     </View>
-                    <View>
-                      <TouchableOpacity
-                        onPress={() => {
-                          setSettingsModalOpen(true);
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <View
+                        style={{
+                          marginRight: 5,
                         }}
                       >
-                        <Icon
-                          name="cog"
-                          type="font-awesome-5"
-                          color={textColor}
-                        />
-                      </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            setSettingsModalOpen(true);
+                          }}
+                        >
+                          <Icon
+                            name="plus"
+                            type="font-awesome-5"
+                            color={textColor}
+                          />
+                        </TouchableOpacity>
+                      </View>
                     </View>
                   </View>
                 </View>
               );
             },
-            tabBarLabel: ({focused, color}) => (
-              <Text style={{color: focused ? color : textColor}}>Home</Text>
+            tabBarLabel: ({ focused, color }) => (
+              <Text style={{ color: focused ? color : textColor }}>Home</Text>
             ),
             tabBarIcon: ({ focused, color }) => {
               const realColor = focused ? color : textColor;
@@ -142,8 +153,8 @@ export const Home = () => {
                 </View>
               );
             },
-            tabBarLabel: ({focused, color}) => (
-              <Text style={{color: focused ? color : textColor}}>Upload</Text>
+            tabBarLabel: ({ focused, color }) => (
+              <Text style={{ color: focused ? color : textColor }}>Upload</Text>
             ),
             tabBarIcon: ({ color, focused }) => {
               const realColor = focused ? color : textColor;
@@ -210,8 +221,10 @@ export const Home = () => {
                 </View>
               );
             },
-            tabBarLabel: ({focused, color}) => (
-              <Text style={{color: focused ? color : textColor}}>Analytics</Text>
+            tabBarLabel: ({ focused, color }) => (
+              <Text style={{ color: focused ? color : textColor }}>
+                Analytics
+              </Text>
             ),
             tabBarIcon: ({ color, focused }) => {
               const realColor = focused ? color : textColor;
@@ -269,8 +282,10 @@ export const Home = () => {
                 </View>
               );
             },
-            tabBarLabel: ({focused, color}) => (
-              <Text style={{color: focused ? color : textColor}}>Settings</Text>
+            tabBarLabel: ({ focused, color }) => (
+              <Text style={{ color: focused ? color : textColor }}>
+                Settings
+              </Text>
             ),
             tabBarIcon: ({ color, focused }) => {
               const realColor = focused ? color : textColor;

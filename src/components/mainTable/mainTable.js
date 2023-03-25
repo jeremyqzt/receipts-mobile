@@ -29,6 +29,7 @@ export const MainTable = (props) => {
     deleteReceipt,
     refetch,
     navigation,
+    openPageModal,
   } = props;
   const colorScheme = useColorScheme();
 
@@ -211,42 +212,63 @@ export const MainTable = (props) => {
                   </View>
                 </ListItem.Swipeable>
                 {isLast ? (
-                  <View
-                    style={{
-                      height: 150,
-                      paddingVertical: 20,
-                      textAlign: "center",
-                    }}
-                  >
-                    <Image
-                      style={{
-                        width: null,
-                        height: "20%",
-                        resizeMode: "contain",
-                        marginTop: "0%",
-                        marginBottom: 20,
-                      }}
-                      source={Logo}
-                    />
+                  <TouchableOpacity onPress={openPageModal}>
                     <View
                       style={{
-                        width: "100%",
-                        marginHorizontal: "auto",
-                        justifyContent: "center",
+                        height: 150,
+                        paddingVertical: 20,
+                        textAlign: "center",
                       }}
                     >
-                      <Text
+                      <Image
+                        style={{
+                          width: null,
+                          height: "20%",
+                          resizeMode: "contain",
+                          marginTop: "0%",
+                          marginBottom: 20,
+                        }}
+                        source={Logo}
+                      />
+                      <View
                         style={{
                           width: "100%",
-                          textAlign: "center",
-                          fontSize: 16,
-                          color: "gray",
+                          marginHorizontal: "auto",
+                          justifyContent: "center",
                         }}
                       >
-                        {`Thats everything for this page!`}
-                      </Text>
+                        <Text
+                          style={{
+                            width: "100%",
+                            textAlign: "center",
+                            fontSize: 16,
+                            color: "gray",
+                          }}
+                        >
+                          {`Thats everything for this page!`}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          width: "100%",
+                          marginHorizontal: "auto",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            width: "100%",
+                            textAlign: "center",
+                            fontSize: 16,
+                            marginTop: 5,
+                            color: "gray",
+                          }}
+                        >
+                          {`Click me to view more pages`}
+                        </Text>
+                      </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 ) : null}
               </>
             );
