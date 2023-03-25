@@ -10,7 +10,11 @@ export const postReceipt = async ({ image, bucket }) => {
   const formData = new FormData();
   if (image) {
     formData.append("file", image);
+  } else {
+    formData.append("vendor", "Quick Entry");
+    formData.append("description", "Edit Me!");
   }
+
   formData.append("bucket", bucket);
   formData.append("category", 1);
 

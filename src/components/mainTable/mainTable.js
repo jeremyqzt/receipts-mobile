@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/logoDark.png";
+import ImagePlaceHolder from "../../../assets/logo-placeholder.png";
 
 import { ListItem, Avatar, Button } from "@rneui/themed";
 import {
@@ -20,6 +21,7 @@ import { EmptyState } from "./emptyState";
 import { vendorAtom } from "../../atom/atom";
 import { useAtom } from "jotai";
 import { useColorScheme } from "react-native";
+import { Dimensions } from "react-native";
 
 export const MainTable = (props) => {
   const {
@@ -32,7 +34,7 @@ export const MainTable = (props) => {
     openPageModal,
   } = props;
   const colorScheme = useColorScheme();
-
+  const windowWidth = Dimensions.get("window").width;
   const [modalOpen, setModalOpen] = useState(false);
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -107,6 +109,8 @@ export const MainTable = (props) => {
                     setScrollEnabled(false);
                     setTimeout(() => setScrollEnabled(true), 2000);
                   }}
+                  rightWidth={windowWidth / 6}
+                  leftWidth={0}
                   onSwipeEnd={() => setScrollEnabled(true)}
                   closeOnScroll={false}
                   style={{
@@ -117,7 +121,6 @@ export const MainTable = (props) => {
                   }}
                   rightContent={(reset) => (
                     <Button
-                      title="Delete"
                       onPress={() => {
                         reset();
                         deleteReceipt(index);
@@ -154,12 +157,19 @@ export const MainTable = (props) => {
                         onPress={() => {
                           setActiveReceipt(item);
                           setEditModalReload(!editModaReload);
-                          setModalOpen(true);
+                          if (item.image_url) {
+                            setModalOpen(true);
+                          }
                         }}
                       >
                         <Avatar
-                          title={item.alive}
-                          source={item.image_url && { uri: item.image_url }}
+                          title={"Quick"}
+                          icon={{ name: "user", type: "font-awesome" }}
+                          source={
+                            item.image_url
+                              ? { uri: item.image_url }
+                              : ImagePlaceHolder
+                          }
                         />
                       </TouchableOpacity>
                       <TouchableOpacity
