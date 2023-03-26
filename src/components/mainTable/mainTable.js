@@ -150,6 +150,7 @@ export const MainTable = (props) => {
                       }}
                     >
                       <TouchableOpacity
+                        disabled={!item.image_url}
                         style={{
                           marginRight: 10,
                           marginVertical: "5%",

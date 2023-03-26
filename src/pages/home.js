@@ -21,6 +21,7 @@ export const Home = () => {
 
   const textColor = colorScheme === "dark" ? "white" : "black";
   const bgColor = colorScheme === "dark" ? "black" : "white";
+
   return (
     <>
       <Tab.Navigator
@@ -84,8 +85,9 @@ export const Home = () => {
                         }}
                       >
                         <TouchableOpacity
+                          disabled={creating}
                           onPress={() => {
-                            setCreating(true)
+                            setCreating(true);
                           }}
                         >
                           <Icon
