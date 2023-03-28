@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/logoDark.png";
-import ImagePlaceHolder from "../../../assets/logo-placeholder.png";
+import ImagePlaceHolder from "../../../assets/quick.png";
 
 import { ListItem, Avatar, Button } from "@rneui/themed";
 import {
