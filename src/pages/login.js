@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Input, Button } from "@rneui/themed";
+import { Input, Button, Icon } from "@rneui/themed";
 import { View, Image } from "react-native";
 import Logo from "../../assets/logoDark.png";
 import { loginFetch } from "../utils/loginUtils";
@@ -9,6 +9,7 @@ import Toast from "react-native-toast-message";
 import { parseJwt } from "../utils/tools";
 import { useColorScheme } from "react-native";
 import * as LocalAuthentication from "expo-local-authentication";
+import * as Linking from 'expo-linking';
 
 export const LogIn = ({ navigation }) => {
   const colorScheme = useColorScheme();
@@ -159,7 +160,7 @@ export const LogIn = ({ navigation }) => {
           />
         </View>
         {usernameS && passwordS && useLocalAuth ? (
-          <View style={{ paddingHorizontal: "10%", marginTop: "5%" }}>
+          <View style={{ paddingHorizontal: "10%", marginTop: "3%" }}>
             <Button
               title={"Login In With FaceID"}
               loading={loading}
@@ -184,7 +185,20 @@ export const LogIn = ({ navigation }) => {
             />
           </View>
         ) : null}
-        <View style={{ paddingHorizontal: 15, marginTop: "30%" }}>
+        <View style={{ paddingHorizontal: "10%", marginTop: "7%" }}>
+          <Button
+            type="outline"
+            loading={loading}
+            buttonStyle={{ borderRadius: 5 }}
+            onPress={() => {
+              Linking.openURL('https://ui.ribbonreceipts.com/forgotPasswordForm');
+            }}
+          >
+            {"Reset Password   "}
+            <Icon name="link" color={colorScheme === "dark" ? "black" : "rgb(220, 53, 69)"} />
+          </Button>
+        </View>
+        <View style={{ paddingHorizontal: 15, marginTop: "20%" }}>
           <Button
             loading={loading}
             type="clear"
