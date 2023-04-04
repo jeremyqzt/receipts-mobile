@@ -195,7 +195,7 @@ export const LogIn = ({ navigation }) => {
             }}
           >
             {"Reset Password   "}
-            <Icon name="link" color={colorScheme === "dark" ? "black" : "rgb(220, 53, 69)"} />
+            <Icon name="link" color="rgb(220, 53, 69)" />
           </Button>
         </View>
         <View style={{ paddingHorizontal: 15, marginTop: "20%" }}>
