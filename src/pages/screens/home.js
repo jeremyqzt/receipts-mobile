@@ -121,7 +121,7 @@ export const HomeScreen = ({
         });
         const newReceipt = res?.receipt;
         if (newReceipt) {
-          const newReceipts = [{...newReceipt}, ...receipts];
+          const newReceipts = [{ ...newReceipt }, ...receipts];
           setReceipts(newReceipts);
         }
       })
@@ -143,6 +143,10 @@ export const HomeScreen = ({
       setReceipts(newReceipts);
       setTotalCount(() => totalCount - 1);
     });
+  };
+
+  const resetPaging = () => {
+    setPageMeta({ offset: pageMeta.offset, limit: pageMeta.limit });
   };
 
   const loading = aLoading || Bloading;
@@ -174,6 +178,7 @@ export const HomeScreen = ({
           deleteReceipt={deleteReceipt}
           updateLocalReceipt={updateLocalReceipt}
           openPageModal={() => setSettingsModalOpen(true)}
+          resetPaging={() => resetPaging()}
           refetch={() => {
             setReFetch(!refetch);
             setReceipts([]);
