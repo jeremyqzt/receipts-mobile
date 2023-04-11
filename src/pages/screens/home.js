@@ -179,6 +179,7 @@ export const HomeScreen = ({
           updateLocalReceipt={updateLocalReceipt}
           openPageModal={() => setSettingsModalOpen(true)}
           resetPaging={() => resetPaging()}
+          pageMeta={pageMeta}
           refetch={() => {
             setReFetch(!refetch);
             setReceipts([]);

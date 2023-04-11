@@ -32,6 +32,8 @@ export const MainTable = (props) => {
     refetch,
     navigation,
     openPageModal,
+    pageMeta,
+    resetPaging,
   } = props;
   const colorScheme = useColorScheme();
   const windowWidth = Dimensions.get("window").width;
@@ -231,6 +233,7 @@ export const MainTable = (props) => {
                         textAlign: "center",
                       }}
                     >
+                      {pageMeta.searchTerm ? <></> : null}
                       <Image
                         style={{
                           width: null,
