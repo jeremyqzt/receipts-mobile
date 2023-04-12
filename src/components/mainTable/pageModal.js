@@ -162,6 +162,8 @@ export const PageModal = (props) => {
                   offset: page - 1,
                   limit: countPer,
                 });
+
+                setSearchTerm("");
                 close();
               }}
             />
