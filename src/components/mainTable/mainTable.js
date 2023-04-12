@@ -225,64 +225,87 @@ export const MainTable = (props) => {
                   </View>
                 </ListItem.Swipeable>
                 {isLast ? (
-                  <TouchableOpacity onPress={openPageModal}>
-                    <View
-                      style={{
-                        height: 150,
-                        paddingVertical: 20,
-                        textAlign: "center",
-                      }}
-                    >
-                      {pageMeta.searchTerm ? <></> : null}
-                      <Image
-                        style={{
-                          width: null,
-                          height: "20%",
-                          resizeMode: "contain",
-                          marginTop: "0%",
-                          marginBottom: 20,
-                        }}
-                        source={Logo}
-                      />
+                  <>
+                    {pageMeta?.searchTerm ? (
                       <View
                         style={{
-                          width: "100%",
-                          marginHorizontal: "auto",
-                          justifyContent: "center",
+                          paddingVertical: 20,
+                          textAlign: "center",
+                          display: "flex",
                         }}
                       >
-                        <Text
-                          style={{
-                            width: "100%",
-                            textAlign: "center",
-                            fontSize: 16,
-                            color: "gray",
+                        <Button
+                          title={`Search Term: ${pageMeta.searchTerm}  ❌`}
+                          type="outline"
+                          onPress={() => {
+                            resetPaging();
                           }}
-                        >
-                          {`Thats everything for this page!`}
-                        </Text>
+                          buttonStyle={{
+                            borderRadius: 25,
+                            width: "50%",
+                            marginHorizontal: "25%",
+                          }}
+                        />
                       </View>
+                    ) : null}
+                    <TouchableOpacity onPress={openPageModal}>
                       <View
                         style={{
-                          width: "100%",
-                          marginHorizontal: "auto",
-                          justifyContent: "center",
+                          height: 150,
+                          paddingVertical: 20,
+                          textAlign: "center",
                         }}
                       >
-                        <Text
+                        <Image
+                          style={{
+                            width: null,
+                            height: "20%",
+                            resizeMode: "contain",
+                            marginTop: "0%",
+                            marginBottom: 20,
+                          }}
+                          source={Logo}
+                        />
+                        <View
                           style={{
                             width: "100%",
-                            textAlign: "center",
-                            fontSize: 16,
-                            marginTop: 5,
-                            color: "gray",
+                            marginHorizontal: "auto",
+                            justifyContent: "center",
                           }}
                         >
-                          {`Click me to view more pages`}
-                        </Text>
+                          <Text
+                            style={{
+                              width: "100%",
+                              textAlign: "center",
+                              fontSize: 16,
+                              color: "gray",
+                            }}
+                          >
+                            {`Thats everything for this page!`}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            width: "100%",
+                            marginHorizontal: "auto",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              width: "100%",
+                              textAlign: "center",
+                              fontSize: 16,
+                              marginTop: 5,
+                              color: "gray",
+                            }}
+                          >
+                            {`Click me to view more pages`}
+                          </Text>
+                        </View>
                       </View>
-                    </View>
-                  </TouchableOpacity>
+                    </TouchableOpacity>
+                  </>
                 ) : null}
               </>
             );
