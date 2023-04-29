@@ -108,13 +108,12 @@ export const UploadScreen = () => {
       quality: 0,
     });
 
-    if (!result.cancelled) {
-      const fileName = result.uri.split("/").pop();
+    if (!result.canceled) {
+      const fileName = result.assets[0].uri.split("/").pop();
       const match = /\.(\w+)$/.exec(fileName);
       const type = match ? `image/${match[1]}` : `image`;
-      const file = { uri: result.uri, name: fileName, type };
-
-      setImage(result.uri);
+      const file = { uri: result.assets[0].uri, name: fileName, type };
+      setImage(result.assets[0].uri);
       setUploadFile(file);
     }
   };
