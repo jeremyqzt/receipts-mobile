@@ -15,6 +15,8 @@ const CELLPHONE_INTERNET = 14;
 const NON_GROCERY_FOOD = 15;
 const DISCRETIONARY = 16;
 const GIFTS = 17;
+const MISC = 18;
+const TRAVEL = 19;
 
 export const categories = [
   {
@@ -84,5 +86,13 @@ export const categories = [
   {
     name: "Gifts",
     value: GIFTS,
+  },
+  {
+    name: "Misc.",
+    value: MISC,
+  },
+  {
+    name: "Travel",
+    value: TRAVEL,
   },
 ];
