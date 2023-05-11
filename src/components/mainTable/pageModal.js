@@ -136,9 +136,12 @@ export const PageModal = (props) => {
           </View>
         </View>
 
+        <Text style={{ marginTop: 16, color: textColor }}>
+          {`Storage capacity remaining: ${1000 - totalCount}`}
+        </Text>
         <View
           style={{
-            marginTop: 24,
+            marginTop: 16,
             display: "flex",
             justifyContent: "space-between",
             flexDirection: "row",
