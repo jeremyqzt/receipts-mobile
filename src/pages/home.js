@@ -69,7 +69,7 @@ export const Home = () => {
                     }}
                   >
                     <View>
-                      <Text h4 style={{ color: textColor }}>
+                      <Text h4 style={{ color: textColor, marginTop: 10 }}>
                         Receipts
                       </Text>
                     </View>
@@ -79,6 +79,28 @@ export const Home = () => {
                         flexDirection: "row",
                       }}
                     >
+                      <View
+                        style={{
+                          marginRight: 35,
+                        }}
+                      >
+                        <TouchableOpacity
+                          disabled={creating}
+                          onPress={() => {
+                            setSettingsModalOpen(true);
+                          }}
+                        >
+                          <Icon
+                            name="search"
+                            type="font-awesome-5"
+                            color={textColor}
+                          />
+                        </TouchableOpacity>
+                        <Text style={{
+                          fontSize: 8,
+                          marginTop: 4
+                        }}>Search</Text>
+                      </View>
                       <View
                         style={{
                           marginRight: 5,
@@ -96,6 +118,10 @@ export const Home = () => {
                             color={textColor}
                           />
                         </TouchableOpacity>
+                        <Text style={{
+                          fontSize: 8,
+                          marginTop: 4
+                        }}>Create</Text>
                       </View>
                     </View>
                   </View>
