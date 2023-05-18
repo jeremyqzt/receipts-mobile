@@ -103,7 +103,7 @@ export const Home = () => {
                       </View>
                       <View
                         style={{
-                          marginRight: 5,
+                          marginRight: 10,
                         }}
                       >
                         <TouchableOpacity
