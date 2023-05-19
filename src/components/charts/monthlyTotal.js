@@ -2,7 +2,7 @@ import React from "react";
 import { getTotalCosts } from "../../utils/chartUtils";
 import { useFetch } from "../../hooks/index";
 import { monthName } from "../../constants/chartConstants";
-import { Text, View, Dimensions } from "react-native";
+import { Text, View, Dimensions, ActivityIndicator } from "react-native";
 import { BarChart } from "react-native-chart-kit";
 import { useColorScheme } from "react-native";
 
@@ -42,6 +42,11 @@ export const MonthlyTotal = () => {
     ],
     legend: ["Total Cost ($)"], // optional
   };
+
+  if(loading){
+    return <ActivityIndicator size="large" style={{marginTop: "20%"}} />
+  }
+
 
   return (
     <>

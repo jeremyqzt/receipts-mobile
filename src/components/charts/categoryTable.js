@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { getTotalMonthlyCosts } from "../../utils/chartUtils";
 import { useFetch } from "../../hooks/index";
 import { monthName } from "../../constants/chartConstants";
-import { Text, View, Dimensions, ScrollView } from "react-native";
+import { Text, View, Dimensions, ScrollView, ActivityIndicator } from "react-native";
 import { categories } from "../../constants/categoryConstants";
 import { Table, Row } from "react-native-table-component";
 import MultiSelect from "react-native-multiple-select";
 import { useColorScheme } from "react-native";
 
 export const CategoryTables = () => {
-  const { response: chartResp } = useFetch(getTotalMonthlyCosts);
+  const { response: chartResp, loading } = useFetch(getTotalMonthlyCosts);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const colorScheme = useColorScheme();
@@ -44,7 +44,7 @@ export const CategoryTables = () => {
   const field = selectedItems;
   const data = [
     [
-      "Categories",
+      "",
       ...(field.length > 0 ? field : categories.map((c) => c.value)).map(
         (v) => categories[Number(v) - 1]?.name
       ),
@@ -61,6 +61,10 @@ export const CategoryTables = () => {
   ];
 
   const width = data[0].map(() => 150);
+
+  if(loading){
+    return <ActivityIndicator size="large" style={{marginTop: "20%"}} />
+  }
 
   return (
     <ScrollView

@@ -2,12 +2,12 @@ import React from "react";
 import { getReceiptCategoryCount } from "../../utils/chartUtils";
 import { useFetch } from "../../hooks/index";
 import { categories } from "../../constants/categoryConstants";
-import { Text, View, Dimensions } from "react-native";
+import { Text, View, Dimensions, ActivityIndicator } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import { useColorScheme } from "react-native";
 
 export const CategoryFreq = () => {
-  const { response: categoryDataRaw } = useFetch(getReceiptCategoryCount);
+  const { response: categoryDataRaw, loading } = useFetch(getReceiptCategoryCount);
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
   const randomColor = () =>
@@ -15,6 +15,11 @@ export const CategoryFreq = () => {
       0,
       7
     );
+
+    if(loading){
+      return <ActivityIndicator size="large" style={{marginTop: "20%"}} />
+    }
+
 
   const pieData = (categoryDataRaw || [])
     .filter((value) => value.total > 0)
