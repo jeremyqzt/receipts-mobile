@@ -248,7 +248,7 @@ export const MainTable = (props) => {
                         />
                       </View>
                     ) : null}
-                    <TouchableOpacity onPress={openPageModal}>
+                    <TouchableOpacity onPress={() => {}}>
                       <View
                         style={{
                           height: 150,
@@ -282,25 +282,6 @@ export const MainTable = (props) => {
                             }}
                           >
                             {`Thats everything for this page!`}
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            width: "100%",
-                            marginHorizontal: "auto",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Text
-                            style={{
-                              width: "100%",
-                              textAlign: "center",
-                              fontSize: 16,
-                              marginTop: 5,
-                              color: "gray",
-                            }}
-                          >
-                            {`Click me to view more pages`}
                           </Text>
                         </View>
                       </View>
