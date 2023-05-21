@@ -7,7 +7,7 @@ import { BarChart } from "react-native-chart-kit";
 import { useColorScheme } from "react-native";
 
 export const MonthlyTotal = () => {
-  const { response: chartResp } = useFetch(getTotalCosts);
+  const { response: chartResp, loading } = useFetch(getTotalCosts);
   const colorScheme = useColorScheme();
 
   const textColor = colorScheme === "dark" ? "white" : "black";
