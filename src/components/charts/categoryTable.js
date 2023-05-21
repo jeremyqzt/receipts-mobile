@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import { getTotalMonthlyCosts } from "../../utils/chartUtils";
 import { useFetch } from "../../hooks/index";
 import { monthName } from "../../constants/chartConstants";
-import { Text, View, Dimensions, ScrollView, ActivityIndicator } from "react-native";
+import {
+  Text,
+  View,
+  Dimensions,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import { categories } from "../../constants/categoryConstants";
 import { Table, Row } from "react-native-table-component";
 import MultiSelect from "react-native-multiple-select";
@@ -45,6 +51,7 @@ export const CategoryTables = () => {
   const data = [
     [
       "",
+      "Total",
       ...(field.length > 0 ? field : categories.map((c) => c.value)).map(
         (v) => categories[Number(v) - 1]?.name
       ),
@@ -52,6 +59,14 @@ export const CategoryTables = () => {
     ...monthArr.map((m) => {
       return [
         `${m.monthName}, ${m.year}`,
+        ...(field.length > 0 ? field : categories.map((c) => c.value)).reduce(
+          (accumulator, c) => {
+            accumulator += Number(
+              transformedCategories[`${m.year}-${m.monthNum}-${c}`] ?? 0
+            );
+          },
+          0
+        ),
         ...(field.length > 0 ? field : categories.map((c) => c.value)).map(
           (c) =>
             `$${transformedCategories[`${m.year}-${m.monthNum}-${c}`] ?? 0}`
@@ -62,8 +77,8 @@ export const CategoryTables = () => {
 
   const width = data[0].map(() => 150);
 
-  if(loading){
-    return <ActivityIndicator size="large" style={{marginTop: "20%"}} />
+  if (loading) {
+    return <ActivityIndicator size="large" style={{ marginTop: "20%" }} />;
   }
 
   return (
