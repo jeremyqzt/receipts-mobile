@@ -13,17 +13,23 @@ import { categories } from "../../constants/categoryConstants";
 import { Table, Row } from "react-native-table-component";
 import MultiSelect from "react-native-multiple-select";
 import { useColorScheme } from "react-native";
+import { CheckBox } from "@rneui/themed";
 
 export const CategoryTables = () => {
   const { response: chartResp, loading } = useFetch(getTotalMonthlyCosts);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [checked, setChecked] = useState(false);
   const colorScheme = useColorScheme();
 
   const textColor = colorScheme === "dark" ? "white" : "black";
   const bgColor = colorScheme === "dark" ? "black" : "white";
   const middleColor = colorScheme === "dark" ? "grey" : "#DCDCDC";
   const transformedCategories = {};
+
+  if (loading) {
+    return <ActivityIndicator size="large" style={{ marginTop: "20%" }} />;
+  }
 
   (chartResp || []).forEach((item) => {
     transformedCategories[`${item.year}-${item.month}-${item.category}`] =
@@ -51,22 +57,27 @@ export const CategoryTables = () => {
   const data = [
     [
       "",
-      "Total",
+      ...(checked ? ["Total"] : []),
       ...(field.length > 0 ? field : categories.map((c) => c.value)).map(
         (v) => categories[Number(v) - 1]?.name
       ),
     ],
     ...monthArr.map((m) => {
       return [
-        `${m.monthName}, ${m.year}`,
-        ...(field.length > 0 ? field : categories.map((c) => c.value)).reduce(
-          (accumulator, c) => {
-            accumulator += Number(
-              transformedCategories[`${m.year}-${m.monthNum}-${c}`] ?? 0
-            );
-          },
-          0
-        ),
+        `${m?.monthName}, ${m?.year}`,
+        ...checked
+          ? [
+              "$" +
+                (field.length > 0 ? field : categories.map((c) => c.value))
+                  .reduce((accumulator, c) => {
+                    accumulator += Number(
+                      transformedCategories[`${m.year}-${m.monthNum}-${c}`] ?? 0
+                    );
+                    return accumulator;
+                  }, 0)
+                  .toFixed(2),
+            ]
+          : [],
         ...(field.length > 0 ? field : categories.map((c) => c.value)).map(
           (c) =>
             `$${transformedCategories[`${m.year}-${m.monthNum}-${c}`] ?? 0}`
@@ -76,10 +87,6 @@ export const CategoryTables = () => {
   ];
 
   const width = data[0].map(() => 150);
-
-  if (loading) {
-    return <ActivityIndicator size="large" style={{ marginTop: "20%" }} />;
-  }
 
   return (
     <ScrollView
@@ -188,15 +195,35 @@ export const CategoryTables = () => {
                     { height: 30 },
                   ]}
                   widthArr={width}
-                  textStyle={[
-                    { fontSize: 18, textAlign: "center", color: textColor },
-                    index === 0 && { fontWeight: "bold" },
-                  ]}
+                  textStyle={{
+                    ...{
+                      fontSize: 18,
+                      textAlign: "center",
+                      color: textColor,
+                      fontWeight: "bold",
+                    },
+                    ...(index === 0 ? { fontWeight: "bold" } : {}),
+                  }}
                 />
               ))}
             </Table>
           ) : null}
         </ScrollView>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            width: "100%",
+          }}
+        >
+          <CheckBox
+            right
+            title="Show Totals"
+            checked={checked}
+            onPress={() => setChecked(!checked)}
+          />
+        </View>
       </View>
     </ScrollView>
   );
