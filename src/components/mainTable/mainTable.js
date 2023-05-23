@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/logoDark.png";
-import ImagePlaceHolder from "../../../assets/quick.png";
+import ImagePlaceHolderLight from "../../../assets/quick.png";
+import ImagePlaceHolderDark from "../../../assets/quick_dark.png";
 
 import { ListItem, Avatar, Button } from "@rneui/themed";
 import {
@@ -60,6 +61,8 @@ export const MainTable = (props) => {
   const loading = topLoading || loadingVendors;
 
   const textColor = colorScheme === "dark" ? "white" : "black";
+
+  const ImagePlaceHolder = colorScheme === "dark" ? ImagePlaceHolderDark : ImagePlaceHolderLight;
   return (
     <View
       style={{

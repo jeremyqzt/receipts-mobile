@@ -220,6 +220,9 @@ export const CategoryTables = () => {
           <CheckBox
             right
             title="Show Totals"
+            textStyle={{
+              color: textColor
+            }}
             checked={checked}
             onPress={() => setChecked(!checked)}
           />
