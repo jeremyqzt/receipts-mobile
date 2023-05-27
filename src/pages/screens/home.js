@@ -113,7 +113,6 @@ export const HomeScreen = ({
 
     postReceipt({ bucket: activeBucket.id })
       .then((res) => {
-        console.log(res);
         Toast.show({
           type: "success",
           text1: "✅ Success!",
