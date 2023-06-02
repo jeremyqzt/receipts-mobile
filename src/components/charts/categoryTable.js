@@ -19,7 +19,7 @@ export const CategoryTables = () => {
   const { response: chartResp, loading } = useFetch(getTotalMonthlyCosts);
   const [selectedItems, setSelectedItems] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
   const colorScheme = useColorScheme();
 
   const textColor = colorScheme === "dark" ? "white" : "black";
