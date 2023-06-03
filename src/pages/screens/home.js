@@ -91,7 +91,6 @@ export const HomeScreen = ({
         ...update,
       };
     }
-
     setReceipts(newReceipts);
   };
 
@@ -230,6 +229,7 @@ export const HomeScreen = ({
           navigation={navigation}
           changeImage={changeImage}
           loading={loading}
+          isUploadLoading={isUploadLoading}
           receipts={receipts}
           deleteReceipt={deleteReceipt}
           updateLocalReceipt={updateLocalReceipt}

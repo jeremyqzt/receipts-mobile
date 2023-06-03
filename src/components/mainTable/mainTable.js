@@ -36,7 +36,8 @@ export const MainTable = (props) => {
     resetPaging,
     changeImage,
     modalOpen,
-    setModalOpen
+    setModalOpen,
+    isUploadLoading,
   } = props;
   const colorScheme = useColorScheme();
   const windowWidth = Dimensions.get("window").width;
@@ -47,7 +48,6 @@ export const MainTable = (props) => {
 
   const [activeReceipt, setActiveReceipt] = useState();
   const [activeReceiptIdx, setActiveReceiptIdx] = useState();
-
 
   const [vAtom] = useAtom(vendorAtom);
 
@@ -65,7 +65,8 @@ export const MainTable = (props) => {
 
   const textColor = colorScheme === "dark" ? "white" : "black";
 
-  const ImagePlaceHolder = colorScheme === "dark" ? ImagePlaceHolderDark : ImagePlaceHolderLight;
+  const ImagePlaceHolder =
+    colorScheme === "dark" ? ImagePlaceHolderDark : ImagePlaceHolderLight;
   return (
     <View
       style={{
@@ -158,7 +159,6 @@ export const MainTable = (props) => {
                       }}
                     >
                       <TouchableOpacity
-                        disabled={!item.image_url}
                         style={{
                           marginRight: 10,
                           marginVertical: "5%",
@@ -166,9 +166,8 @@ export const MainTable = (props) => {
                         onPress={() => {
                           setActiveReceipt(item);
                           setEditModalReload(!editModaReload);
-                          if (item.image_url) {
-                            setModalOpen(true);
-                          }
+                          setModalOpen(true);
+                          setActiveReceiptIdx(index);
                         }}
                       >
                         <Avatar
@@ -304,6 +303,7 @@ export const MainTable = (props) => {
         receipt={activeReceipt}
         onChangeImage={changeImage}
         arrayIdx={activeReceiptIdx}
+        isUploadLoading={isUploadLoading}
         close={() => {
           setModalOpen(false);
         }}

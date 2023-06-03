@@ -4,21 +4,32 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
 
 export const ImageModal = (props) => {
-  const { receipt = {}, visible, close, onChangeImage, arrayIdx } = props;
+  const {
+    receipt = {},
+    visible,
+    close,
+    onChangeImage,
+    arrayIdx,
+    isUploadLoading,
+  } = props;
   const { image_url, pk } = receipt;
   return (
     <Modal isVisible={visible} onBackdropPress={close}>
       <View style={styles.dialog}>
-        <Image
-          source={{ uri: image_url }}
-          style={{
-            height: "90%",
-            aspectRatio: 1,
-            width: undefined,
-            resizeMode: "contain",
-          }}
-          PlaceholderContent={<ActivityIndicator />}
-        />
+        {image_url ? (
+          <Image
+            source={{ uri: image_url }}
+            style={{
+              height: "90%",
+              aspectRatio: 1,
+              width: undefined,
+              resizeMode: "contain",
+            }}
+            PlaceholderContent={<ActivityIndicator />}
+          />
+        ) : (
+          <></>
+        )}
         <View
           style={{
             display: "flex",
@@ -27,10 +38,19 @@ export const ImageModal = (props) => {
           }}
         >
           <View style={{ marginTop: 24, width: "45%" }}>
-            <Button title="Update Image" onPress={() => onChangeImage(pk, arrayIdx)} />
+            <Button
+              title={image_url ? "Update Image" : "Attach Image"}
+              onPress={() => onChangeImage(pk, arrayIdx)}
+              loading={isUploadLoading}
+            />
           </View>
           <View style={{ marginTop: 24, width: "45%" }}>
-            <Button title="Done" onPress={close} color="#cccccc" />
+            <Button
+              title="Done"
+              onPress={close}
+              color="#cccccc"
+              loading={isUploadLoading}
+            />
           </View>
         </View>
       </View>
