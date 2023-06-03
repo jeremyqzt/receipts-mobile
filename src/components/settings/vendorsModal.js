@@ -95,6 +95,7 @@ export const CreateVendorsModal = (props) => {
                   return (
                     <View>
                       <Chip
+                        id={r.id}
                         title={r.name}
                         type="outline"
                         icon={{

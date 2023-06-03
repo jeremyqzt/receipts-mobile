@@ -96,10 +96,15 @@ export const Home = () => {
                             color={textColor}
                           />
                         </TouchableOpacity>
-                        <Text style={{
-                          fontSize: 8,
-                          marginTop: 4
-                        }}>Search</Text>
+                        <Text
+                          style={{
+                            fontSize: 8,
+                            marginTop: 4,
+                            color: textColor,
+                          }}
+                        >
+                          Search
+                        </Text>
                       </View>
                       <View
                         style={{
@@ -118,10 +123,15 @@ export const Home = () => {
                             color={textColor}
                           />
                         </TouchableOpacity>
-                        <Text style={{
-                          fontSize: 8,
-                          marginTop: 4
-                        }}>Create</Text>
+                        <Text
+                          style={{
+                            fontSize: 8,
+                            marginTop: 4,
+                            color: textColor,
+                          }}
+                        >
+                          Create
+                        </Text>
                       </View>
                     </View>
                   </View>
