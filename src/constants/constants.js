@@ -10,6 +10,8 @@ export const bucketsUrl = "api/bucket/";
 export const activeBucketsUrl = "api/active/";
 export const receiptCreateUrl = "api/receipt/";
 export const receiptUpdateUrl = "api/receipt/update/";
+export const receiptImageEditUrl = "api/receipt/updateImage/";
+
 export const totalCostsUrl = "api/charts/total_costs/";
 export const totalMonthlyCostsUrl = "api/charts/receipt_category_totals/";
 

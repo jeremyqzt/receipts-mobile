@@ -3,6 +3,7 @@ import {
   receiptCreateUrl,
   receiptUpdateUrl,
   vendorUrl,
+  receiptImageEditUrl,
 } from "../constants/constants";
 import { postData, postFormData, getData } from "./mainUtils";
 
@@ -91,6 +92,20 @@ export const deleteVendor = async (uid) => {
   const path = `${domainRoot}${vendorUrl}delete/`;
 
   return postData(path, data, true).then((res) => {
+    if (!res.ok) {
+      throw new Error();
+    }
+    return res.json();
+  });
+};
+
+export const postReceiptImageUpdate = async (image, uid) => {
+  const formData = new FormData();
+  formData.append("file", image);
+  formData.append("uid", uid);
+
+  const path = `${domainRoot}${receiptImageEditUrl}`;
+  return postFormData(path, formData, true).then((res) => {
     if (!res.ok) {
       throw new Error();
     }

@@ -4,7 +4,7 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
 
 export const ImageModal = (props) => {
-  const { receipt = {}, visible, close, onChangeImage } = props;
+  const { receipt = {}, visible, close, onChangeImage, arrayIdx } = props;
   const { image_url, pk } = receipt;
   return (
     <Modal isVisible={visible} onBackdropPress={close}>
@@ -27,7 +27,7 @@ export const ImageModal = (props) => {
           }}
         >
           <View style={{ marginTop: 24, width: "45%" }}>
-            <Button title="Update Image" onPress={() => onChangeImage(pk)} />
+            <Button title="Update Image" onPress={() => onChangeImage(pk, arrayIdx)} />
           </View>
           <View style={{ marginTop: 24, width: "45%" }}>
             <Button title="Done" onPress={close} color="#cccccc" />

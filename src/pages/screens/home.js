@@ -3,7 +3,11 @@ import { View } from "react-native";
 import { getReceipts } from "../../utils/fetchUtils";
 import * as ImagePicker from "expo-image-picker";
 
-import { deactivateReceipt, postReceipt } from "../../utils/receiptUtils";
+import {
+  deactivateReceipt,
+  postReceipt,
+  postReceiptImageUpdate,
+} from "../../utils/receiptUtils";
 import { MainTable } from "../../components/mainTable/mainTable";
 import { useAtom } from "jotai";
 import { receiptAtom, bucketAtom } from "../../atom/atom";
@@ -24,14 +28,15 @@ export const HomeScreen = ({
   const bgColor = colorScheme === "dark" ? "black" : "white";
   const [aLoading, setLoading] = useState(true);
   const [Bloading, setBLoading] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [refetch, setReFetch] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [pageMeta, setPageMeta] = useState({ offset: 0, limit: 20 });
   const [rAtom] = useAtom(receiptAtom);
-  const [image, setImage] = useState(null);
+  const [_, setImage] = useState(null);
   const [uploadFile, setUploadFile] = useState({});
-
+  const [isUploadLoading, setIsUploadLoading] = useState(false);
   const [bAtom] = useAtom(bucketAtom);
   const [receipts, setReceipts] = useState([]);
   const [activeBucket, setActiveBucket] = useState({});
@@ -152,7 +157,7 @@ export const HomeScreen = ({
     setPageMeta({ offset: pageMeta.offset, limit: pageMeta.limit });
   };
 
-  const pickImage = async () => {
+  const pickImage = async (uid, arrayIdx) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -160,20 +165,42 @@ export const HomeScreen = ({
     });
 
     if (!result.canceled) {
+      setIsUploadLoading(true);
       const fileName = result.assets[0].uri.split("/").pop();
       const match = /\.(\w+)$/.exec(fileName);
       const type = match ? `image/${match[1]}` : `image`;
       const file = { uri: result.assets[0].uri, name: fileName, type };
       setImage(result.assets[0].uri);
       setUploadFile(file);
+      postReceiptImageUpdate(file, uid)
+        .then((res) => {
+          const { image_url, thumbnail } = res;
+          Toast.show({
+            type: "success",
+            text1: "✅ Success!",
+            text2: "Image Updated!",
+            position: "bottom",
+          });
+          updateLocalReceipt({ image_url, thumbnail }, arrayIdx);
+        })
+        .catch(() => {
+          Toast.show({
+            type: "error",
+            text1: "🛑 Error!",
+            text2: "Image could not be edited, please try again!",
+            position: "bottom",
+          });
+        })
+        .finally(() => {
+          setIsUploadLoading(false);
+          setModalOpen(false);
+        });
     }
   };
 
-
-  const changeImage= (uid) => {
-    console.log(uid)
-    pickImage();
-  }
+  const changeImage = (uid, arrayIdx) => {
+    pickImage(uid, arrayIdx);
+  };
 
   const loading = aLoading || Bloading;
 
@@ -198,6 +225,8 @@ export const HomeScreen = ({
         }}
       >
         <MainTable
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
           navigation={navigation}
           changeImage={changeImage}
           loading={loading}

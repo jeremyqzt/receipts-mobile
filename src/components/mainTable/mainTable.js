@@ -35,10 +35,11 @@ export const MainTable = (props) => {
     pageMeta,
     resetPaging,
     changeImage,
+    modalOpen,
+    setModalOpen
   } = props;
   const colorScheme = useColorScheme();
   const windowWidth = Dimensions.get("window").width;
-  const [modalOpen, setModalOpen] = useState(false);
   const [scrollEnabled, setScrollEnabled] = useState(true);
   const [editModalOpen, setEditModalOpen] = useState(false);
 
@@ -302,6 +303,7 @@ export const MainTable = (props) => {
         visible={modalOpen}
         receipt={activeReceipt}
         onChangeImage={changeImage}
+        arrayIdx={activeReceiptIdx}
         close={() => {
           setModalOpen(false);
         }}
