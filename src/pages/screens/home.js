@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { getReceipts } from "../../utils/fetchUtils";
+import * as ImagePicker from "expo-image-picker";
 
 import { deactivateReceipt, postReceipt } from "../../utils/receiptUtils";
 import { MainTable } from "../../components/mainTable/mainTable";
@@ -28,6 +29,8 @@ export const HomeScreen = ({
   const [totalCount, setTotalCount] = useState(0);
   const [pageMeta, setPageMeta] = useState({ offset: 0, limit: 20 });
   const [rAtom] = useAtom(receiptAtom);
+  const [image, setImage] = useState(null);
+  const [uploadFile, setUploadFile] = useState({});
 
   const [bAtom] = useAtom(bucketAtom);
   const [receipts, setReceipts] = useState([]);
@@ -149,6 +152,29 @@ export const HomeScreen = ({
     setPageMeta({ offset: pageMeta.offset, limit: pageMeta.limit });
   };
 
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 0,
+    });
+
+    if (!result.canceled) {
+      const fileName = result.assets[0].uri.split("/").pop();
+      const match = /\.(\w+)$/.exec(fileName);
+      const type = match ? `image/${match[1]}` : `image`;
+      const file = { uri: result.assets[0].uri, name: fileName, type };
+      setImage(result.assets[0].uri);
+      setUploadFile(file);
+    }
+  };
+
+
+  const changeImage= (uid) => {
+    console.log(uid)
+    pickImage();
+  }
+
   const loading = aLoading || Bloading;
 
   return (
@@ -173,6 +199,7 @@ export const HomeScreen = ({
       >
         <MainTable
           navigation={navigation}
+          changeImage={changeImage}
           loading={loading}
           receipts={receipts}
           deleteReceipt={deleteReceipt}

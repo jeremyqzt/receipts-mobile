@@ -32,9 +32,9 @@ export const MainTable = (props) => {
     deleteReceipt,
     refetch,
     navigation,
-    openPageModal,
     pageMeta,
     resetPaging,
+    changeImage,
   } = props;
   const colorScheme = useColorScheme();
   const windowWidth = Dimensions.get("window").width;
@@ -46,6 +46,8 @@ export const MainTable = (props) => {
 
   const [activeReceipt, setActiveReceipt] = useState();
   const [activeReceiptIdx, setActiveReceiptIdx] = useState();
+
+
   const [vAtom] = useAtom(vendorAtom);
 
   const {
@@ -299,6 +301,7 @@ export const MainTable = (props) => {
       <ImageModal
         visible={modalOpen}
         receipt={activeReceipt}
+        onChangeImage={changeImage}
         close={() => {
           setModalOpen(false);
         }}
