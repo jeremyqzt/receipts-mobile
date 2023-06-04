@@ -1,9 +1,12 @@
 import React from "react";
 import { Button } from "@rneui/themed";
 import ReactNativeZoomableView from "@openspacelabs/react-native-zoomable-view/src/ReactNativeZoomableView";
-import { ActivityIndicator, StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import Modal from "react-native-modal";
 import { useColorScheme } from "react-native";
+import * as FileSystem from "expo-file-system";
+import * as MediaLibrary from "expo-media-library";
+import Toast from "react-native-toast-message";
 
 export const ImageModal = (props) => {
   const {
@@ -18,6 +21,47 @@ export const ImageModal = (props) => {
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
   const bgColor = colorScheme === "dark" ? "#202020" : "white";
+
+  const downloadPhoto = async () => {
+    const res = await MediaLibrary.requestPermissionsAsync();
+
+    if (!res.granted || !image_url) {
+      Toast.show({
+        type: "error",
+        text1: "🛑 Error!",
+        text2: "Photo permissions not granted, cannot save!",
+        position: "bottom",
+      });
+    }
+
+    try {
+      const fileName = image_url.replace(/^.*[\\\/]/, "").split("?")[0];
+
+      Toast.show({
+        type: "success",
+        text1: "✅ Success!",
+        text2: "Starting to download and save the photo!",
+        position: "bottom",
+      });
+
+      let imageFullPathInLocalStorage = FileSystem.documentDirectory + fileName;
+      return new Promise(async (resolve) => {
+        FileSystem.downloadAsync(image_url, imageFullPathInLocalStorage).then(
+          async ({ uri }) => {
+            MediaLibrary.saveToLibraryAsync(imageFullPathInLocalStorage);
+            return resolve(imageFullPathInLocalStorage);
+          }
+        );
+      });
+    } catch {
+      Toast.show({
+        type: "error",
+        text1: "🛑 Error!",
+        text2: "Something wrong happened while saving, please try again!",
+        position: "bottom",
+      });
+    }
+  };
 
   return (
     <Modal isVisible={visible} onBackdropPress={close}>
@@ -47,16 +91,23 @@ export const ImageModal = (props) => {
                 />
               </ReactNativeZoomableView>
             </View>
+
             <View
-            style={{
-              marginLeft: 12,
-              display: "flex",
-              justifyContent: "center",
-              width: "100%",
-            }}
-          >
-            <Text style={{ color: textColor }}>Hint - Pinch to Zoom In or Out!</Text>
-          </View>
+              style={{
+                marginLeft: 0,
+                display: "flex",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              <Button
+                type="clear"
+                onPress={() => {
+                  downloadPhoto();
+                }}
+                title={"Download Image"}
+              />
+            </View>
           </>
         ) : (
           <View
@@ -72,6 +123,7 @@ export const ImageModal = (props) => {
         )}
         <View
           style={{
+            marginTop: "5%",
             display: "flex",
             justifyContent: "space-evenly",
             flexDirection: "row",

@@ -17,6 +17,13 @@
         {
           "photosPermission": "The app accesses your photos in order to upload receipts."
         }
+      ],
+      [
+        "expo-media-library",
+        {
+          "savePhotosPermission": "The app accesses your saves receipt photos.",
+          "isAccessMediaLocationEnabled": true
+        }
       ]
     ],
     "android": {
