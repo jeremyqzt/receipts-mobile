@@ -1,6 +1,6 @@
 {
   "name": "ribbon-receipts",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",
@@ -11,6 +11,7 @@
     "@expo/config-plugins": "~6.0.0",
     "@expo/metro-config": "^0.7.1",
     "@expo/prebuild-config": "~6.0.0",
+    "@openspacelabs/react-native-zoomable-view": "^2.1.1",
     "@react-native-community/datetimepicker": "6.7.3",
     "@react-navigation/bottom-tabs": "^6.3.3",
     "@react-navigation/native": "^6.0.12",
