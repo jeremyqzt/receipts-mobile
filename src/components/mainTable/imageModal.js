@@ -40,9 +40,10 @@ export const ImageModal = (props) => {
       Toast.show({
         type: "success",
         text1: "✅ Success!",
-        text2: "Starting to download and save the photo!",
+        text2: "Downloading and saving the entry!",
         position: "bottom",
       });
+      close();
 
       let imageFullPathInLocalStorage = FileSystem.documentDirectory + fileName;
       return new Promise(async (resolve) => {
@@ -60,6 +61,7 @@ export const ImageModal = (props) => {
         text2: "Something wrong happened while saving, please try again!",
         position: "bottom",
       });
+      close();
     }
   };
 
@@ -75,7 +77,7 @@ export const ImageModal = (props) => {
               }}
             >
               <ReactNativeZoomableView
-                maxZoom={1.5}
+                maxZoom={5}
                 minZoom={0.5}
                 zoomStep={0.5}
                 initialZoom={1}

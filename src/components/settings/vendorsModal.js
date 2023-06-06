@@ -14,7 +14,7 @@ export const CreateVendorsModal = (props) => {
   const { visible, closeModal } = props;
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
-  const bgColor = colorScheme === "dark" ? '#202020' : "white";
+  const bgColor = colorScheme === "dark" ? "#202020" : "white";
   const [vAtom, setVendorAtom] = useAtom(vendorAtom);
 
   const [vendorName, setVendorName] = useState("");
@@ -33,20 +33,28 @@ export const CreateVendorsModal = (props) => {
   return (
     <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
       <Toast />
-      <View style={[styles.dialog, {backgroundColor:bgColor , borderRadius: 25}]}>
-        <View style={[styles.header, {color: textColor}]}>
-          <Text h2 style={{color: textColor}}>Create Vendors</Text>
+      <View
+        style={[styles.dialog, { backgroundColor: bgColor, borderRadius: 25 }]}
+      >
+        <View style={[styles.header, { color: textColor }]}>
+          <Text h2 style={{ color: textColor }}>
+            Create Vendors
+          </Text>
         </View>
         <View>
           <View style={styles.inputContainer}>
-            <Text style={[styles.inputIcon, {color: textColor}]}>Name: </Text>
+            <Text style={[styles.inputIcon, { color: textColor }]}>Name: </Text>
             <Input
               returnKeyType="done"
-              containerStyle={{ width: "50%", color: textColor, borderBottomColor: textColor }}
-              inputContainerStyle={{borderBottomColor: textColor}}
+              containerStyle={{
+                width: "50%",
+                color: textColor,
+                borderBottomColor: textColor,
+              }}
+              inputContainerStyle={{ borderBottomColor: textColor }}
               placeholder={"Vendor Name"}
               value={vendorName}
-              style={[styles.input, {color: textColor}]}
+              style={[styles.input, { color: textColor }]}
               onChangeText={(value) => setVendorName(value)}
             />
             <View style={{ width: "20%", marginLeft: "10%" }}>
@@ -93,9 +101,9 @@ export const CreateVendorsModal = (props) => {
               <View>
                 {(vendors || []).map((r) => {
                   return (
-                    <View>
+                    <View key={r.id}>
                       <Chip
-                        id={r.id}
+                        key={r.id}
                         title={r.name}
                         type="outline"
                         icon={{
