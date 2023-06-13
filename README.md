@@ -14,10 +14,10 @@ Build internally with eas `eas build --profile preview --platform ios`
 Using eas `eas submit -p ios`
 
 ## Images
-<img src="images/IMG_0789.PNG" alt= “” width="20%">
+<img src="images/image1.png" alt= “” width="20%">
 <img src="images/IMG_0790.PNG" alt= “” width="20%">
 <img src="images/IMG_0791.PNG" alt= “” width="20%">
-<img src="images/IMG_0792.PNG" alt= “” width="20%">
+<img src="images/image0.png" alt= “” width="20%">
 
 
 ## Promo Text
