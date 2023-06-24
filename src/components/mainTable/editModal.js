@@ -1,5 +1,5 @@
 import { Button, Input, Text } from "@rneui/themed";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Platform, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import React, { useState, useEffect } from "react";
 import { Dropdown } from "react-native-element-dropdown";
@@ -7,7 +7,75 @@ import { categories } from "../../constants/categoryConstants";
 import { updateReceipts } from "../../utils/receiptUtils";
 import Toast from "react-native-toast-message";
 import { useColorScheme } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker, {
+  DateTimePickerAndroid,
+} from "@react-native-community/datetimepicker";
+
+const AndroidPicker = (props) => {
+  const colorScheme = useColorScheme();
+  const bgColor = colorScheme === "dark" ? "#202020" : "white";
+  const [show, setShow] = useState(false);
+  let d;
+  const textColor = colorScheme === "dark" ? "white" : "black";
+
+  try {
+    if (!(props?.date instanceof Date)) {
+      const dateTime = props.date
+        ? new Date(`${props.date}T00:00:00`)
+        : new Date();
+      d = dateTime;
+    } else {
+      d = props.date;
+    }
+  } catch {
+    d = new Date();
+  }
+
+  return (
+    <View style={{ width: "60%", marginBottom: 16 }}>
+      <TouchableOpacity
+        style={{ marginLeft: 8 }}
+        onPress={() => {
+          setShow(true);
+        }}
+      >
+        <View style={{ height: 48 }}>
+          <Text
+            style={{
+              lineHeight: 48,
+              color: textColor,
+              backgroundColor: "#DCDCDC",
+              borderRadius: 16,
+              paddingLeft: 8,
+            }}
+          >
+            {d.toISOString().split("T")[0]}
+          </Text>
+        </View>
+      </TouchableOpacity>
+      {show ? (
+        <DateTimePicker
+          value={d}
+          mode={"date"}
+          display="calendar"
+          maximumDate={new Date(2100, 1, 1)}
+          minimumDate={new Date(1900, 1, 1)}
+          onChange={(_, d) => {
+            setShow(false);
+            props.setDate(d.toISOString().split("T")[0]);
+          }}
+          style={{
+            width: "60%",
+            marginVertical: 8,
+            backgroundColor: bgColor,
+            height: 36,
+          }}
+          placeholder="Effective Date"
+        />
+      ) : null}
+    </View>
+  );
+};
 
 const DatePickerLocal = (props) => {
   const colorScheme = useColorScheme();
@@ -289,7 +357,11 @@ export const EditModal = (props) => {
           <View style={styles.inputContainer}>
             <Text style={[styles.inputIcon, { color: textColor }]}>Date: </Text>
 
-            <DatePickerLocal date={lDate} setDate={setDate} />
+            {Platform.OS == "ios" ? (
+              <DatePickerLocal date={lDate} setDate={setDate} />
+            ) : (
+              <AndroidPicker date={lDate} setDate={setDate} />
+            )}
           </View>
 
           <DropdownComponent
