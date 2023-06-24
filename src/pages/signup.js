@@ -99,7 +99,7 @@ export const SignUp = ({ navigation }) => {
           style={{
             marginTop: "1%",
             width: "100%",
-            height: "25%",
+            height: "20%",
             margin: "auto",
           }}
         >
@@ -176,7 +176,7 @@ export const SignUp = ({ navigation }) => {
             }}
           />
         </View>
-        <View style={{ paddingHorizontal: "10%", marginTop: "15%" }}>
+        <View style={{ paddingHorizontal: "10%", marginTop: "5%" }}>
           <Button
             title={"Sign Up"}
             buttonStyle={{ borderRadius: 5 }}
@@ -190,6 +190,22 @@ export const SignUp = ({ navigation }) => {
             use.
           </Text>
         </View>
+
+        <View style={{ paddingTop: "7%", marginTop: "1%" }}>
+          <Text style={{ fontSize: 14, color: "grey", textAlign: "center" }}>
+            Already Have an account?
+          </Text>
+        </View>
+        <Button
+            loading={loading}
+            type="clear"
+            buttonStyle={{ borderRadius: 5 }}
+            title="Sign In Here!"
+            titleStyle={{ color: "rgb(0, 99, 191)" }}
+            onPress={() => {
+              navigation.navigate("login");
+            }}
+          />
       </View>
       <Toast />
     </>

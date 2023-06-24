@@ -33,7 +33,7 @@ const App = () => {
   const bgColor = colorScheme === "dark" ? "#202020" : "white";
 
   return (
-    <ThemeProvider theme={theme} >
+    <ThemeProvider theme={theme}>
       <Toast />
       <StatusBar backgroundColor={bgColor} translucent />
       <NavigationContainer theme={theme}>
@@ -46,13 +46,19 @@ const App = () => {
           <Stack.Screen
             name="login"
             component={LogIn}
-            options={{ title: "Login" }}
+            options={{
+              title: "Login",
+              backgroundColor: bgColor,
+              headerShown: false,
+            }}
           />
           <Stack.Screen
             name="signup"
             component={SignUp}
             options={{
               title: "Sign Up",
+              headerShown: false,
+              backgroundColor: bgColor,
             }}
           />
           <Stack.Screen

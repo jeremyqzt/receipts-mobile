@@ -108,7 +108,7 @@ export const LogIn = ({ navigation }) => {
           style={{
             marginTop: "1%",
             width: "100%",
-            height: "25%",
+            height: "20%",
             margin: "auto",
           }}
         >
