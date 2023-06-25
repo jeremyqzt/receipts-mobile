@@ -8,6 +8,7 @@ import {
   Dimensions,
   ScrollView,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import { categories } from "../../constants/categoryConstants";
 import { Table, Row } from "react-native-table-component";
@@ -65,7 +66,7 @@ export const CategoryTables = () => {
     ...monthArr.map((m) => {
       return [
         `${m?.monthName}, ${m?.year}`,
-        ...checked
+        ...(checked
           ? [
               "$" +
                 (field.length > 0 ? field : categories.map((c) => c.value))
@@ -77,7 +78,7 @@ export const CategoryTables = () => {
                   }, 0)
                   .toFixed(2),
             ]
-          : [],
+          : []),
         ...(field.length > 0 ? field : categories.map((c) => c.value)).map(
           (c) =>
             `$${transformedCategories[`${m.year}-${m.monthNum}-${c}`] ?? 0}`
@@ -129,8 +130,8 @@ export const CategoryTables = () => {
               setIsOpen(false);
             }}
             styleRowList={{ marginVertical: 3 }}
-            fontSize={20}
-            itemFontSize={20}
+            fontSize={Platform.os === "ios" ? 20 : 14}
+            itemFontSize={Platform.os === "ios" ? 20 : 14}
             selectedItems={selectedItems}
             selectText=" Pick Categories"
             tagRemoveIconColor="#CCC"
@@ -221,7 +222,7 @@ export const CategoryTables = () => {
             right
             title="Show Totals"
             textStyle={{
-              color: textColor
+              color: textColor,
             }}
             checked={checked}
             onPress={() => setChecked(!checked)}

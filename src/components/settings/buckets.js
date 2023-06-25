@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Platform } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { setActiveBucket } from "../../utils/bucketUtils";
 import Toast from "react-native-toast-message";
@@ -20,7 +20,15 @@ const BucketDropdown = (props) => {
     <View
       style={[styles.container, { backgroundColor: bgColor, color: textColor }]}
     >
-      <Text style={styles.inputIcon}>🪣</Text>
+      <Text
+        style={
+          Platform.os == "ios"
+            ? { marginTop: 5, fontSize: 35 }
+            : { marginTop: 5, fontSize: 25, marginRight: 12 }
+        }
+      >
+        🪣
+      </Text>
       <Dropdown
         style={[styles.dropdown, { color: textColor }]}
         placeholderStyle={[styles.placeholderStyle, { color: textColor }]}
@@ -87,10 +95,6 @@ export const BucketsSelect = (props) => {
 };
 
 const styles = StyleSheet.create({
-  inputIcon: {
-    marginTop: 5,
-    fontSize: 35,
-  },
   header: {
     marginHorizontal: 15,
     marginBottom: 20,
