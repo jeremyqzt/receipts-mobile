@@ -9,6 +9,8 @@ Run Prebuild: `npx expo prebuild`
 
 Build with eas `eas build --profile production --platform ios`
 
+Build with eas `eas build --profile production --platform android`
+
 Build internally with eas `eas build --profile preview --platform ios`
 ## Submitting
 Using eas `eas submit -p ios`
