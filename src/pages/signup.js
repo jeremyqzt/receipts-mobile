@@ -97,7 +97,7 @@ export const SignUp = ({ navigation }) => {
       >
         <View
           style={{
-            marginTop: "1%",
+            marginTop: "10%",
             width: "100%",
             height: "20%",
             margin: "auto",

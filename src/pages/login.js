@@ -106,7 +106,7 @@ export const LogIn = ({ navigation }) => {
       >
         <View
           style={{
-            marginTop: "1%",
+            marginTop: "15%",
             width: "100%",
             height: "20%",
             margin: "auto",
