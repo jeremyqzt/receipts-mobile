@@ -15,6 +15,8 @@ Build internally with eas `eas build --profile preview --platform ios`
 ## Submitting
 Using eas `eas submit -p ios`
 
+or on android `eas submit --platform android `
+
 ## Images
 <img src="images/image1.png" alt= “” width="20%">
 <img src="images/IMG_0790.PNG" alt= “” width="20%">
