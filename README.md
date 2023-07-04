@@ -29,6 +29,11 @@ or on android `eas submit --platform android `
 Say goodbye to the hassle of paper receipts and hello to effortless organization with Ribbon Receipts!
 ```
 
+## Promo Android
+```
+Say goodbye to the hassle of paper receipts and hello to effortless organization with Ribbon Receipts!
+```
+
 ## Description
 ```
 Welcome to our online receipt storage platform! With our app, you can easily store and organize all of your receipts in one convenient place. No more lost receipts or cluttered filing cabinets - simply snap a photo of your receipt and upload it to our app. Our platform uses advanced technology to extract key information from your receipts, such as the date, vendor, and total amount, making it easy to search and filter your receipts by these criteria.
