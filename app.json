@@ -27,8 +27,8 @@
       ]
     ],
     "android": {
-      "permissions": ["android.permission.RECORD_AUDIO"],
-      "package": "com.digiribbon.receipts",
+      "permissions": [ "CAMERA", "WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE", "CAMERA_ROLL" ],
+      "package": "com.digiribbon.receipts"
     },
     "ios": {
       "bundleIdentifier": "com.digiribbon.receipts",
@@ -58,13 +58,6 @@
     },
     "config": {
       "usesNonExemptEncryption": false
-    }
-  },
-  "android": {
-    "permissions": [ "CAMERA", "WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE", "CAMERA_ROLL" ],
-    "adaptiveIcon": {
-      "foregroundImage": "./assets/adaptive-icon.png",
-      "backgroundColor": "#FFFFFF"
     }
   },
   "web": {
