@@ -11,14 +11,17 @@
         "credentialsSource": "local"
       }
     },
+
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
     },
     "production": {}
   },
   "submit": {
     "production": {
-      "autoIncrement": true,
       "ios": {
         "ascAppId": "1662296584",
         "appleTeamId": "4T378897WN",
