@@ -8,8 +8,9 @@ Run with expo `expo start`
 Run Prebuild: `npx expo prebuild`
 
 Build with eas `eas build --profile production --platform ios`
-
 Build with eas `eas build --profile production --platform android`
+
+Build Internall for android eas `eas build -p android --profile preview`
 
 Build internally with eas `eas build --profile preview --platform ios`
 ## Submitting
