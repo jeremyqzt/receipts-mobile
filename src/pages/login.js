@@ -162,7 +162,7 @@ export const LogIn = ({ navigation }) => {
         {usernameS && passwordS && useLocalAuth ? (
           <View style={{ paddingHorizontal: "10%", marginTop: "3%" }}>
             <Button
-              title={"Login In With FaceID"}
+              title={"Login In With Biometrics"}
               loading={loading}
               buttonStyle={{ borderRadius: 5 }}
               onPress={() => {
