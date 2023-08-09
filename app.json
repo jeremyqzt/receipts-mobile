@@ -27,8 +27,14 @@
       ]
     ],
     "android": {
-      "permissions": [ "CAMERA", "WRITE_EXTERNAL_STORAGE", "READ_EXTERNAL_STORAGE", "CAMERA_ROLL" ],
-      "package": "com.digiribbon.receipts"
+      "permissions": [
+        "CAMERA",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE",
+        "CAMERA_ROLL"
+      ],
+      "package": "com.digiribbon.receipts",
+      "versionCode": 2
     },
     "ios": {
       "bundleIdentifier": "com.digiribbon.receipts",
