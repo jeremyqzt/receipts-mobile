@@ -194,7 +194,7 @@ export const LogIn = ({ navigation }) => {
               Linking.openURL('https://ui.ribbonreceipts.com/forgotPasswordForm');
             }}
           >
-            {"Reset Password   "}
+            {"Reset Password"}
             <Icon name="link" color="rgb(220, 53, 69)" />
           </Button>
         </View>

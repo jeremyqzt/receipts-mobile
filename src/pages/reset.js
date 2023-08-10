@@ -9,7 +9,7 @@ import { validateEmail } from "../utils/validationUtils";
 import * as SecureStore from "expo-secure-store";
 import { useColorScheme } from "react-native";
 
-export const SignUp = ({ navigation }) => {
+export const ResetPassword = ({ navigation }) => {
   const colorScheme = useColorScheme();
 
   const [loading, setLoading] = useState(false);
@@ -130,7 +130,7 @@ export const SignUp = ({ navigation }) => {
           <Input
             value={password1}
             onChangeText={(e) => setPassword1(e)}
-            placeholder="Password"
+            placeholder="New Password"
             secureTextEntry={true}
             leftIcon={{
               type: "font-awesome",
@@ -144,7 +144,7 @@ export const SignUp = ({ navigation }) => {
           <Input
             value={password2}
             onChangeText={(e) => setPassword2(e)}
-            placeholder="Confirm Password"
+            placeholder="Confirm New Password"
             secureTextEntry={true}
             leftIcon={{
               type: "font-awesome",
@@ -156,44 +156,18 @@ export const SignUp = ({ navigation }) => {
             }}
           />
         </View>
-        <View style={{ paddingHorizontal: "10%", marginTop: "2%" }}>
-          <Button
-            title={"Privacy Policy"}
-            buttonStyle={{ borderRadius: 5 }}
-            type="outline"
-            onPress={() => {
-              Linking.openURL("https://static.ribbonreceipts.com/privacy.html");
-            }}
-          />
-        </View>
-        <View style={{ paddingHorizontal: "10%", marginTop: "2%" }}>
-          <Button
-            title={"Terms of Use"}
-            buttonStyle={{ borderRadius: 5 }}
-            type="outline"
-            onPress={() => {
-              Linking.openURL("https://static.ribbonreceipts.com/eula.html");
-            }}
-          />
-        </View>
         <View style={{ paddingHorizontal: "10%", marginTop: "5%" }}>
           <Button
-            title={"Sign Up"}
+            title={"Reset"}
             buttonStyle={{ borderRadius: 5 }}
             onPress={singupNow}
             loading={loading}
           />
         </View>
-        <View style={{ paddingHorizontal: "10%", marginTop: "1%" }}>
-          <Text style={{ fontSize: 14, color: "grey", textAlign: "center" }}>
-            Signing up implies agreement to the privacy policy and the terms of
-            use.
-          </Text>
-        </View>
 
         <View style={{ paddingTop: "7%", marginTop: "1%" }}>
           <Text style={{ fontSize: 14, color: "grey", textAlign: "center" }}>
-            Already Have an account?
+            Don't need to reset your password?
           </Text>
         </View>
         <Button
