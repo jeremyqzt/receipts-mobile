@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Input, Button, Icon } from "@rneui/themed";
+import { Input, Button, Icon, Text } from "@rneui/themed";
 import { View, Image } from "react-native";
 import Logo from "../../assets/logoDark.png";
 import { loginFetch } from "../utils/loginUtils";
@@ -9,7 +9,7 @@ import Toast from "react-native-toast-message";
 import { parseJwt } from "../utils/tools";
 import { useColorScheme } from "react-native";
 import * as LocalAuthentication from "expo-local-authentication";
-import * as Linking from 'expo-linking';
+import * as Linking from "expo-linking";
 
 export const LogIn = ({ navigation }) => {
   const colorScheme = useColorScheme();
@@ -191,7 +191,9 @@ export const LogIn = ({ navigation }) => {
             loading={loading}
             buttonStyle={{ borderRadius: 5 }}
             onPress={() => {
-              Linking.openURL('https://ui.ribbonreceipts.com/forgotPasswordForm');
+              Linking.openURL(
+                "https://ui.ribbonreceipts.com/forgotPasswordForm"
+              );
             }}
           >
             {"Reset Password"}
@@ -207,6 +209,23 @@ export const LogIn = ({ navigation }) => {
             titleStyle={{ color: "rgb(0, 99, 191)" }}
             onPress={() => {
               navigation.navigate("signup");
+            }}
+          />
+        </View>
+        <View style={{ paddingTop: "7%", marginTop: "1%" }}>
+          <Text style={{ fontSize: 14, color: "grey", textAlign: "center" }}>
+            Forgot your password?
+          </Text>
+        </View>
+        <View style={{ paddingHorizontal: 15, marginTop: "1%" }}>
+          <Button
+            loading={loading}
+            type="clear"
+            buttonStyle={{ borderRadius: 5 }}
+            title="Reset it here"
+            titleStyle={{ color: "rgb(0, 99, 191)" }}
+            onPress={() => {
+              navigation.navigate("recovery");
             }}
           />
         </View>
