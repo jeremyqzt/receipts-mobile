@@ -1,4 +1,10 @@
-import { domainRoot, userDeleteUrl } from "../constants/constants";
+import {
+  domainRoot,
+  userDeleteUrl,
+  resetPasswordUrl,
+  resetPasswordForm,
+  forgotPasswordUrl,
+} from "../constants/constants";
 
 import { postData } from "./mainUtils";
 
@@ -39,5 +45,23 @@ export const singupFetch = ({ username, password }) => {
 export const deleteAccount = () => {
   const data = {};
   const path = `${domainRoot}${userDeleteUrl}`;
+  return postData(path, data);
+};
+
+export const requestReset = async (username) => {
+  const data = { username };
+  const path = `${domainRoot}${resetPasswordUrl}`;
+  return postData(path, data);
+};
+
+export const resetForm = async (username, description) => {
+  const data = { username, description };
+  const path = `${domainRoot}${resetPasswordForm}`;
+  return postData(path, data);
+};
+
+export const forgotPassword = async (username, token, newPassword) => {
+  const data = { username, token, newPassword };
+  const path = `${domainRoot}${forgotPasswordUrl}`;
   return postData(path, data);
 };

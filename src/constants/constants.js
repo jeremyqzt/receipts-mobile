@@ -3,6 +3,9 @@ export const domainRoot = "https://api.ribbonreceipts.com/";
 export const authUrl = "auth/token/";
 export const userCreateUrl = "user/create/";
 export const userDeleteUrl = "user/delete/";
+export const forgotPasswordUrl = "user/forgotPassword/";
+export const resetPasswordUrl = "user/resetPassword/";
+export const resetPasswordForm = "user/resetPasswordForm/";
 
 export const vendorUrl = "api/vendor/";
 
