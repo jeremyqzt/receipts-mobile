@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Input, Button } from "@rneui/themed";
-import { View, Image, Text, Linking } from "react-native";
+import { View, Image, Text } from "react-native";
 import Logo from "../../assets/logoDark.png";
 import Toast from "react-native-toast-message";
 import { loginFetch, singupFetch } from "../utils/loginUtils";
