@@ -185,9 +185,40 @@ export const ResetPassword = ({ navigation }) => {
             buttonStyle={{ borderRadius: 5 }}
             onPress={
               resetCode
-                ? () => {}
+                ? () => {
+                    if (
+                      password1 !== password2 ||
+                      (password1 || "").length < 8
+                    ) {
+                      Toast.show({
+                        type: "error",
+                        text1: "🛑 Error!",
+                        text2:
+                          "Your password is too short or they dont match.",
+                        position: "bottom",
+                      });
+                      return;
+                    }
+                    forgotPassword(username, resetCode, password1).then(() => {
+                      Toast.show({
+                        type: "success",
+                        text1: "✅ Success!",
+                        text2: "Your password has been reset!",
+                        position: "bottom",
+                      });
+                    });
+                  }
                 : () => {
-                    setEmailSent(true);
+                    resetForm(username).then(() => {
+                      Toast.show({
+                        type: "success",
+                        text1: "✅ Success!",
+                        text2:
+                          "Your request has been processed, please check your email!",
+                        position: "bottom",
+                      });
+                      setEmailSent(true);
+                    });
                   }
             }
             loading={loading}
