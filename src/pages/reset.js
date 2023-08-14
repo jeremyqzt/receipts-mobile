@@ -13,10 +13,12 @@ export const ResetPassword = ({ navigation }) => {
   const colorScheme = useColorScheme();
 
   const [loading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
   const [username, setUsername] = useState();
   const [password2, setPassword2] = useState();
   const [password1, setPassword1] = useState();
+  const [resetCode, setResetCode] = useState();
 
   const singupNow = () => {
     if (!validateEmail(username) || password1.length < 8) {
@@ -127,43 +129,99 @@ export const ResetPassword = ({ navigation }) => {
               color: colorScheme === "dark" ? "grey" : "black",
             }}
           />
-          <Input
-            value={password1}
-            onChangeText={(e) => setPassword1(e)}
-            placeholder="New Password"
-            secureTextEntry={true}
-            leftIcon={{
-              type: "font-awesome",
-              name: "key",
-              color: colorScheme === "dark" ? "grey" : "black",
-            }}
-            style={{
-              color: colorScheme === "dark" ? "grey" : "black",
-            }}
-          />
-          <Input
-            value={password2}
-            onChangeText={(e) => setPassword2(e)}
-            placeholder="Confirm New Password"
-            secureTextEntry={true}
-            leftIcon={{
-              type: "font-awesome",
-              name: "key",
-              color: colorScheme === "dark" ? "grey" : "black",
-            }}
-            style={{
-              color: colorScheme === "dark" ? "grey" : "black",
-            }}
-          />
+          {!!emailSent && (
+            <Input
+              value={resetCode}
+              onChangeText={(e) => setResetCode(e)}
+              placeholder="Reset Code"
+              leftIcon={{
+                type: "font-awesome",
+                name: "key",
+                color: colorScheme === "dark" ? "grey" : "black",
+              }}
+              style={{
+                color: colorScheme === "dark" ? "grey" : "black",
+              }}
+            />
+          )}
+          {!!resetCode && (
+            <Input
+              value={password1}
+              onChangeText={(e) => setPassword1(e)}
+              placeholder="New Password"
+              secureTextEntry={true}
+              disabled={!!resetCode}
+              leftIcon={{
+                type: "font-awesome",
+                name: "key",
+                color: colorScheme === "dark" ? "grey" : "black",
+              }}
+              style={{
+                color: colorScheme === "dark" ? "grey" : "black",
+              }}
+            />
+          )}
+          {!!resetCode && (
+            <Input
+              value={password2}
+              onChangeText={(e) => setPassword2(e)}
+              placeholder="Confirm New Password"
+              disabled={!!resetCode}
+              secureTextEntry={true}
+              leftIcon={{
+                type: "font-awesome",
+                name: "key",
+                color: colorScheme === "dark" ? "grey" : "black",
+              }}
+              style={{
+                color: colorScheme === "dark" ? "grey" : "black",
+              }}
+            />
+          )}
         </View>
         <View style={{ paddingHorizontal: "10%", marginTop: "5%" }}>
           <Button
-            title={"Reset"}
+            title={resetCode ? "Reset" : "Send Reocvery Email"}
             buttonStyle={{ borderRadius: 5 }}
-            onPress={singupNow}
+            onPress={
+              resetCode
+                ? () => {}
+                : () => {
+                    setEmailSent(true);
+                  }
+            }
             loading={loading}
           />
         </View>
+
+        {!!emailSent && (
+          <>
+            <View style={{ paddingTop: "7%", marginTop: "1%" }}>
+              <Text
+                style={{ fontSize: 14, color: "grey", textAlign: "center" }}
+              >
+                Enter the reset code from the email.
+              </Text>
+            </View>
+            <View style={{ paddingTop: "3%", marginTop: "1%" }}>
+              <Text
+                style={{ fontSize: 14, color: "grey", textAlign: "center" }}
+              >
+                Didn't receive a email?
+              </Text>
+            </View>
+            <Button
+              loading={loading}
+              type="clear"
+              buttonStyle={{ borderRadius: 5 }}
+              title="Resend it Here!"
+              titleStyle={{ color: "rgb(0, 99, 191)" }}
+              onPress={() => {
+                navigation.navigate("login");
+              }}
+            />
+          </>
+        )}
 
         <View style={{ paddingTop: "7%", marginTop: "1%" }}>
           <Text style={{ fontSize: 14, color: "grey", textAlign: "center" }}>
@@ -171,15 +229,15 @@ export const ResetPassword = ({ navigation }) => {
           </Text>
         </View>
         <Button
-            loading={loading}
-            type="clear"
-            buttonStyle={{ borderRadius: 5 }}
-            title="Sign In Here!"
-            titleStyle={{ color: "rgb(0, 99, 191)" }}
-            onPress={() => {
-              navigation.navigate("login");
-            }}
-          />
+          loading={loading}
+          type="clear"
+          buttonStyle={{ borderRadius: 5 }}
+          title="Sign In Here!"
+          titleStyle={{ color: "rgb(0, 99, 191)" }}
+          onPress={() => {
+            navigation.navigate("login");
+          }}
+        />
       </View>
       <Toast />
     </>

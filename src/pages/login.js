@@ -191,9 +191,11 @@ export const LogIn = ({ navigation }) => {
             loading={loading}
             buttonStyle={{ borderRadius: 5 }}
             onPress={() => {
-              Linking.openURL(
-                "https://ui.ribbonreceipts.com/forgotPasswordForm"
-              );
+              navigation.navigate("recovery");
+
+              //Linking.openURL(
+              //</View>"https://ui.ribbonreceipts.com/forgotPasswordForm"
+              //);
             }}
           >
             {"Reset Password"}
@@ -209,23 +211,6 @@ export const LogIn = ({ navigation }) => {
             titleStyle={{ color: "rgb(0, 99, 191)" }}
             onPress={() => {
               navigation.navigate("signup");
-            }}
-          />
-        </View>
-        <View style={{ paddingTop: "7%", marginTop: "1%" }}>
-          <Text style={{ fontSize: 14, color: "grey", textAlign: "center" }}>
-            Forgot your password?
-          </Text>
-        </View>
-        <View style={{ paddingHorizontal: 15, marginTop: "1%" }}>
-          <Button
-            loading={loading}
-            type="clear"
-            buttonStyle={{ borderRadius: 5 }}
-            title="Reset it here"
-            titleStyle={{ color: "rgb(0, 99, 191)" }}
-            onPress={() => {
-              navigation.navigate("recovery");
             }}
           />
         </View>
