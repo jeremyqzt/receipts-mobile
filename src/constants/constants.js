@@ -1,5 +1,5 @@
 export const domainRoot = "https://api.ribbonreceipts.com/";
-// export const domainRoot = "http://192.168.68.124:8000/";
+//export const domainRoot = "http://192.168.68.121:8000/";
 export const authUrl = "auth/token/";
 export const userCreateUrl = "user/create/";
 export const userDeleteUrl = "user/delete/";

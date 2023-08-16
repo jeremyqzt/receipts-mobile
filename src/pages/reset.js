@@ -8,6 +8,7 @@ import { loginFetch, singupFetch } from "../utils/loginUtils";
 import { validateEmail } from "../utils/validationUtils";
 import * as SecureStore from "expo-secure-store";
 import { useColorScheme } from "react-native";
+import { resetForm, forgotPassword } from "../utils/loginUtils";
 
 export const ResetPassword = ({ navigation }) => {
   const colorScheme = useColorScheme();
@@ -193,32 +194,42 @@ export const ResetPassword = ({ navigation }) => {
                       Toast.show({
                         type: "error",
                         text1: "🛑 Error!",
-                        text2:
-                          "Your password is too short or they dont match.",
+                        text2: "Your password is too short or they dont match.",
                         position: "bottom",
                       });
                       return;
                     }
-                    forgotPassword(username, resetCode, password1).then(() => {
-                      Toast.show({
-                        type: "success",
-                        text1: "✅ Success!",
-                        text2: "Your password has been reset!",
-                        position: "bottom",
+                    setLoading(true);
+                    forgotPassword(username, resetCode, password1)
+                      .then(() => {
+                        Toast.show({
+                          type: "success",
+                          text1: "✅ Success!",
+                          text2: "Your password has been reset!",
+                          position: "bottom",
+                        });
+                      })
+                      .finally(() => {
+                        setLoading(false);
                       });
-                    });
                   }
                 : () => {
-                    resetForm(username).then(() => {
-                      Toast.show({
-                        type: "success",
-                        text1: "✅ Success!",
-                        text2:
-                          "Your request has been processed, please check your email!",
-                        position: "bottom",
+                    setLoading(true);
+
+                    resetForm(`${username}`.toLowerCase())
+                      .then(() => {
+                        Toast.show({
+                          type: "success",
+                          text1: "✅ Success!",
+                          text2:
+                            "Your request has been processed, please check your email!",
+                          position: "bottom",
+                        });
+                        setEmailSent(true);
+                      })
+                      .finally(() => {
+                        setLoading(false);
                       });
-                      setEmailSent(true);
-                    });
                   }
             }
             loading={loading}

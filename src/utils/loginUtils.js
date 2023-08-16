@@ -54,7 +54,7 @@ export const requestReset = async (username) => {
   return postData(path, data);
 };
 
-export const resetForm = async (username, description) => {
+export const resetForm = async (username, description = "") => {
   const data = { username, description };
   const path = `${domainRoot}${resetPasswordForm}`;
   return postData(path, data);
