@@ -51,17 +51,33 @@ export const deleteAccount = () => {
 export const requestReset = async (username) => {
   const data = { username };
   const path = `${domainRoot}${resetPasswordUrl}`;
-  return postData(path, data);
+  return postData(path, data).then((res) => {
+    if (!res.ok) {
+      throw new Error();
+    }
+    return res.json();
+    
+  });
 };
 
 export const resetForm = async (username, description = "") => {
   const data = { username, description };
   const path = `${domainRoot}${resetPasswordForm}`;
-  return postData(path, data);
+  return postData(path, data).then((res) => {
+    if (!res.ok) {
+      throw new Error();
+    }
+    return res.json();
+  });
 };
 
 export const forgotPassword = async (username, token, newPassword) => {
   const data = { username, token, newPassword };
   const path = `${domainRoot}${forgotPasswordUrl}`;
-  return postData(path, data);
+  return postData(path, data).then((res) => {
+    if (!res.ok) {
+      throw new Error();
+    }
+    return res.json();
+  });
 };
