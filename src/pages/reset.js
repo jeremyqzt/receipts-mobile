@@ -151,7 +151,6 @@ export const ResetPassword = ({ navigation }) => {
               onChangeText={(e) => setPassword1(e)}
               placeholder="New Password"
               secureTextEntry={true}
-              disabled={!!resetCode}
               leftIcon={{
                 type: "font-awesome",
                 name: "key",
@@ -167,7 +166,6 @@ export const ResetPassword = ({ navigation }) => {
               value={password2}
               onChangeText={(e) => setPassword2(e)}
               placeholder="Confirm New Password"
-              disabled={!!resetCode}
               secureTextEntry={true}
               leftIcon={{
                 type: "font-awesome",
@@ -209,6 +207,15 @@ export const ResetPassword = ({ navigation }) => {
                           position: "bottom",
                         });
                       })
+                      .catch(() => {
+                        Toast.show({
+                          type: "error",
+                          text1: "🛑 Error!",
+                          text2:
+                            "The request to reset has failed, please try again.",
+                          position: "bottom",
+                        });
+                      })
                       .finally(() => {
                         setLoading(false);
                       });
@@ -226,6 +233,15 @@ export const ResetPassword = ({ navigation }) => {
                           position: "bottom",
                         });
                         setEmailSent(true);
+                      })
+                      .catch(() => {
+                        Toast.show({
+                          type: "error",
+                          text1: "🛑 Error!",
+                          text2:
+                            "The request to reset has failed, please try again.",
+                          position: "bottom",
+                        });
                       })
                       .finally(() => {
                         setLoading(false);

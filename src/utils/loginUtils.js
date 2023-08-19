@@ -56,7 +56,7 @@ export const requestReset = async (username) => {
       throw new Error();
     }
     return res.json();
-    
+
   });
 };
 
