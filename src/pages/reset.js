@@ -198,7 +198,7 @@ export const ResetPassword = ({ navigation }) => {
                       return;
                     }
                     setLoading(true);
-                    forgotPassword(username, resetCode, password1)
+                    forgotPassword(username.toLowerCase(), resetCode, password1)
                       .then(() => {
                         Toast.show({
                           type: "success",

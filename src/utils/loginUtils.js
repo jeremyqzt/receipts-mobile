@@ -74,7 +74,9 @@ export const resetForm = async (username, description = "") => {
 export const forgotPassword = async (username, token, newPassword) => {
   const data = { username, token, newPassword };
   const path = `${domainRoot}${forgotPasswordUrl}`;
+  console.log(data)
   return postData(path, data).then((res) => {
+    console.log(res);
     if (!res.ok) {
       throw new Error();
     }
