@@ -1,7 +1,7 @@
 import { View, Image, Text, TouchableOpacity } from "react-native";
 import Logo from "../../../assets/logoDark.png";
 
-export const EmptyState = ({ navigation, onRefresh }) => {
+export const EmptyState = ({ navigation, onRefresh, resetPaging, searchTerm }) => {
   return (
     <View
       style={{
@@ -46,7 +46,7 @@ export const EmptyState = ({ navigation, onRefresh }) => {
         >
           No Receipts found here!
         </Text>
-        <TouchableOpacity
+        {searchTerm ? <TouchableOpacity
           onPress={() => {
             navigation.navigate("Upload");
           }}
@@ -61,12 +61,13 @@ export const EmptyState = ({ navigation, onRefresh }) => {
               color: "#dc3545",
             }}
           >
-            📷 Click me to upload your first receipt.
+            ❌ Search Term: ${searchTerm}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity>:null}
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Settings");
+            resetPaging();
+            //navigation.navigate("Settings");
           }}
         >
           <Text

@@ -84,6 +84,8 @@ export const MainTable = (props) => {
       ) : null}
       {!loading && (receipts.length ?? []) === 0 ? (
         <EmptyState
+          searchTerm={pageMeta.searchTerm}
+          resetPaging={resetPaging}
           navigation={navigation}
           onRefresh={() => {
             refetch();
