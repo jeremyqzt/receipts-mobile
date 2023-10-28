@@ -11,7 +11,7 @@ import { useColorScheme } from "react-native";
 import * as LocalAuthentication from "expo-local-authentication";
 import * as Linking from "expo-linking";
 
-export const LogIn = ({ navigation }) => {
+export const MfaLogIn = ({ navigation }) => {
   const colorScheme = useColorScheme();
 
   const [loading, setLoading] = useState(false);

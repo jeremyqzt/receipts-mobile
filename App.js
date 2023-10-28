@@ -64,6 +64,15 @@ const App = () => {
             }}
           />
           <Stack.Screen
+            name="mfa"
+            component={MfaLogIn}
+            options={{
+              title: "Multi Factor Auth",
+              headerShown: false,
+              backgroundColor: bgColor,
+            }}
+          />
+          <Stack.Screen
             name="recovery"
             component={ResetPassword}
             options={{
