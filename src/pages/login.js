@@ -78,10 +78,18 @@ export const LogIn = ({ navigation }) => {
         await SecureStore.setItemAsync("access_token", res.access);
         await SecureStore.setItemAsync("refresh_token", res.refresh);
 
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "homepage" }],
-        });
+        if (res.mfaRequired) {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "mfa" }],
+          });
+        } else {
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "homepage" }],
+          });
+        }
+
       })
       .catch(() => {
         Toast.show({
