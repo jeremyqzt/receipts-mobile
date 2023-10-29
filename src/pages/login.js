@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Input, Button, Icon, Text } from "@rneui/themed";
+import { Input, Button, Icon } from "@rneui/themed";
 import { View, Image } from "react-native";
 import Logo from "../../assets/logoDark.png";
 import { loginFetch } from "../utils/loginUtils";
@@ -9,7 +9,6 @@ import Toast from "react-native-toast-message";
 import { parseJwt } from "../utils/tools";
 import { useColorScheme } from "react-native";
 import * as LocalAuthentication from "expo-local-authentication";
-import * as Linking from "expo-linking";
 
 export const LogIn = ({ navigation }) => {
   const colorScheme = useColorScheme();
