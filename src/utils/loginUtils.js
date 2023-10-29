@@ -4,6 +4,10 @@ import {
   resetPasswordUrl,
   resetPasswordForm,
   forgotPasswordUrl,
+  mfaUrl,
+  mfaVerifyUrl,
+  mfaLogin,
+  mfaDisable,
 } from "../constants/constants";
 
 import { postData } from "./mainUtils";
@@ -82,4 +86,72 @@ export const forgotPassword = async (username, token, newPassword) => {
     }
     return res.json();
   });
+};
+
+export const createMfa = async () => {
+  const data = {};
+  const path = `${domainRoot}${mfaUrl}`;
+  return postData(path, data, true).then((res) => {
+    if (!res.ok) {
+      throw new Error();
+    }
+    return res.json();
+  });
+};
+
+export const isMfaEnabled = async () => {
+  const data = {};
+  const path = `${domainRoot}${mfaUrl}`;
+  return getData(path, data, true).then((res) => {
+    if (!res.ok) {
+      throw new Error();
+    }
+    return res.json();
+  });
+};
+
+export const verifyMfa = async (code) => {
+  const data = { token: code };
+  const path = `${domainRoot}${mfaVerifyUrl}`;
+  return postData(path, data, true).then((res) => {
+    if (!res.ok) {
+      throw new Error();
+    }
+    return res.json();
+  });
+};
+
+
+export const disableMfa = async (code) => {
+  const data = { token: code };
+  const path = `${domainRoot}${mfaDisable}`;
+  return postData(path, data, true).then((res) => {
+    if (!res.ok) {
+      throw new Error();
+    }
+    return res.json();
+  });
+};
+
+
+export const logInMfa = async (code) => {
+  const data = { token: code };
+  const path = `${domainRoot}${mfaLogin}`;
+  return postData(path, data, true)
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error();
+      }
+      return res;
+    })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.access && res.refresh) {
+        setCookie("access_token", res.access, 5 * 24);
+        setCookie("refresh_token", res.refresh, 5 * 24);
+        window.location.href = "/main";
+      } else {
+        throw new Error("Incorrect MFA Token");
+      }
+    });
 };

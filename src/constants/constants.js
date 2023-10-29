@@ -1,5 +1,12 @@
 export const domainRoot = "https://api.ribbonreceipts.com/";
 //export const domainRoot = "http://192.168.68.121:8000/";
+
+
+export const mfaUrl = "user/mfaCreate/";
+export const mfaVerifyUrl = "user/mfaVerify/";
+export const mfaLogin = "user/mfaLogin/";
+export const mfaDisable = "user/mfaDisable/";
+
 export const authUrl = "auth/token/";
 export const userCreateUrl = "user/create/";
 export const userDeleteUrl = "user/delete/";
