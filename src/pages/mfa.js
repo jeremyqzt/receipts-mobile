@@ -16,32 +16,11 @@ export const MfaLogIn = ({ navigation }) => {
 
   const [loading, setLoading] = useState(false);
 
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
-
-  const [usernameS, setUsernameS] = useState();
-  const [passwordS, setPasswordS] = useState();
-  const [useLocalAuth, setUseLocalAuth] = useState(false);
-
-
-  useEffect(() => {
-    SecureStore.getItemAsync("access_token").then((token) => {
-      const decodedJwt = parseJwt(token);
-      if (decodedJwt.exp * 1000 > Date.now()) {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "homepage" }],
-        });
-      }
-    });
-  });
-
   const tryMfa = () => {
     setLoading(true);
 
-    loginFetch({
-      username: useLocal ? username : usernameS,
-      password: useLocal ? password : passwordS,
+    logInMfa({
+      token,
     })
       .then((res) => {
         if (res.status >= 400) {
@@ -50,14 +29,6 @@ export const MfaLogIn = ({ navigation }) => {
         return res.json();
       })
       .then(async (res) => {
-        await SecureStore.setItemAsync(
-          "username",
-          useLocal ? username : usernameS
-        );
-        await SecureStore.setItemAsync(
-          "password",
-          useLocal ? password : passwordS
-        );
         await SecureStore.setItemAsync("access_token", res.access);
         await SecureStore.setItemAsync("refresh_token", res.refresh);
 
@@ -69,8 +40,8 @@ export const MfaLogIn = ({ navigation }) => {
       .catch(() => {
         Toast.show({
           type: "error",
-          text1: "🛑 Login Failed!",
-          text2: "Incorrect E-mail and password pair. Please try again!",
+          text1: "🛑 Token Verification Failed!",
+          text2: "Incorrect Multi Factor Token. Please try again!",
           position: "bottom",
         });
       })
@@ -125,7 +96,7 @@ export const MfaLogIn = ({ navigation }) => {
             loading={loading}
             buttonStyle={{ borderRadius: 5 }}
             onPress={() => {
-              loginNow(true);
+              tryMfa();
             }}
           />
         </View>
