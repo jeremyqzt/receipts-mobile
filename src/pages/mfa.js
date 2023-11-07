@@ -81,9 +81,10 @@ export const MfaLogIn = ({ navigation }) => {
             placeholder="Multi Factor Token"
             leftIcon={{
               type: "font-awesome",
-              name: "at",
+              name: "lock",
               color: colorScheme === "dark" ? "grey" : "black",
             }}
+            keyboardType={"numeric"}
             onChangeText={(value) => setToken(value)}
             style={{
               color: colorScheme === "dark" ? "grey" : "black",
@@ -92,7 +93,7 @@ export const MfaLogIn = ({ navigation }) => {
         </View>
         <View style={{ paddingHorizontal: "10%", marginTop: "5%" }}>
           <Button
-            title={"Login"}
+            title={"Verify"}
             loading={loading}
             buttonStyle={{ borderRadius: 5 }}
             onPress={() => {
@@ -109,8 +110,8 @@ export const MfaLogIn = ({ navigation }) => {
               navigation.navigate("login");
             }}
           >
-            {"Go Back"}
-            <Icon name="link" color="rgb(220, 53, 69)" />
+            <Icon type="font-awesome" name="backward" color="rgb(220, 53, 69)" />
+            {" Go Back"}
           </Button>
         </View>
       </View>
