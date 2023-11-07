@@ -5,8 +5,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { LogIn } from "./src/pages/login";
 import { SignUp } from "./src/pages/signup";
 import { Home } from "./src/pages/home";
+import { MfaLogIn } from "./src/pages/mfa";
 import { ResetPassword } from "./src/pages/reset";
-
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Toast from "react-native-toast-message";
 import { useColorScheme } from "react-native";
@@ -47,7 +47,7 @@ const App = () => {
         >
           <Stack.Screen
             name="login"
-            component={LogIn}
+            component={MfaLogIn}
             options={{
               title: "Login",
               backgroundColor: bgColor,
