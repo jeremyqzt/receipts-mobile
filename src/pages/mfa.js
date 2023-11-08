@@ -3,18 +3,35 @@ import React, { useEffect, useState } from "react";
 import { Input, Button, Icon, Text } from "@rneui/themed";
 import { View, Image } from "react-native";
 import Logo from "../../assets/logoDark.png";
-import { loginFetch } from "../utils/loginUtils";
 import * as SecureStore from "expo-secure-store";
 import Toast from "react-native-toast-message";
-import { parseJwt } from "../utils/tools";
 import { useColorScheme } from "react-native";
-import * as LocalAuthentication from "expo-local-authentication";
 
 export const MfaLogIn = ({ navigation }) => {
   const colorScheme = useColorScheme();
   const [token, setToken] = useState("");
+  const [remain, setRemain] = useState(45);
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setRemain((o) => o - 1);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    if (remain <= 0) {
+      Promise.all([
+        SecureStore.deleteItemAsync("access_token"),
+        SecureStore.deleteItemAsync("refresh_token"),
+      ]).then(() => {
+        navigation.navigate("login");
+      });
+    }
+  }, [remain]);
 
   const tryMfa = () => {
     setLoading(true);
@@ -76,6 +93,11 @@ export const MfaLogIn = ({ navigation }) => {
             source={Logo}
           />
         </View>
+        <View style={{ paddingHorizontal: "12%", paddingVertical: "5%" }}>
+          <Text>
+            {`You have enabled 2-factor authentication on your account. You're current session will expire in ${remain} seconds. Please provide the 2-factor code to continue your session.`}
+          </Text>
+        </View>
         <View style={{ paddingHorizontal: "10%" }}>
           <Input
             placeholder="Multi Factor Token"
@@ -101,7 +123,7 @@ export const MfaLogIn = ({ navigation }) => {
             }}
           />
         </View>
-          <View style={{ paddingHorizontal: "10%", marginTop: "7%" }}>
+        <View style={{ paddingHorizontal: "10%", marginTop: "7%" }}>
           <Button
             type="outline"
             loading={loading}
@@ -110,7 +132,11 @@ export const MfaLogIn = ({ navigation }) => {
               navigation.navigate("login");
             }}
           >
-            <Icon type="font-awesome" name="backward" color="rgb(220, 53, 69)" />
+            <Icon
+              type="font-awesome"
+              name="backward"
+              color="rgb(220, 53, 69)"
+            />
             {" Go Back"}
           </Button>
         </View>
