@@ -31,7 +31,6 @@ const theme = createTheme({
 
 const App = () => {
   const colorScheme = useColorScheme();
-  const textColor = colorScheme === "dark" ? "white" : "black";
   const bgColor = colorScheme === "dark" ? "#202020" : "white";
 
   return (
@@ -47,7 +46,7 @@ const App = () => {
         >
           <Stack.Screen
             name="login"
-            component={MfaLogIn}
+            component={LogIn}
             options={{
               title: "Login",
               backgroundColor: bgColor,
