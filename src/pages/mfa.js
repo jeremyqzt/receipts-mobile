@@ -41,7 +41,7 @@ export const MfaLogIn = ({ navigation }) => {
     })
       .then((res) => {
         if (res.status >= 400) {
-          throw "Login error";
+          throw "Verification error";
         }
         return res.json();
       })
