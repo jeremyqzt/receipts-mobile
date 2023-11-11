@@ -14,9 +14,11 @@ import { postData } from "./mainUtils";
 
 const LOGIN_URL = `${domainRoot}auth/token/`;
 
+const LOGIN_V2_URL = `${domainRoot}v2/auth/token/`
+
 export const loginFetch = ({ username, password }) => {
   const data = { username, password };
-  return fetch(LOGIN_URL, {
+  return fetch(LOGIN_V2_URL, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",
@@ -78,7 +80,6 @@ export const resetForm = async (username, description = "") => {
 export const forgotPassword = async (username, token, newPassword) => {
   const data = { username, token, newPassword };
   const path = `${domainRoot}${forgotPasswordUrl}`;
-  console.log(data)
   return postData(path, data).then((res) => {
     console.log(res);
     if (!res.ok) {
