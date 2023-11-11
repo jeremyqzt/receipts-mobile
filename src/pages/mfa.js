@@ -129,7 +129,12 @@ export const MfaLogIn = ({ navigation }) => {
             loading={loading}
             buttonStyle={{ borderRadius: 5 }}
             onPress={() => {
-              navigation.navigate("login");
+              Promise.all([
+                SecureStore.deleteItemAsync("access_token"),
+                SecureStore.deleteItemAsync("refresh_token"),
+              ]).then(() => {
+                navigation.navigate("login");
+              });
             }}
           >
             <Icon
