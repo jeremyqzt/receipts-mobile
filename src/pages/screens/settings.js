@@ -257,6 +257,50 @@ export const SettingsScreen = ({ navigation }) => {
           <View
             style={{
               width: "100%",
+              marginBottom: 50,
+              backgroundColor: bgColor,
+              color: textColor,
+            }}
+          >
+            <View>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  marginLeft: 10,
+                  marginTop: 24,
+                  color: textColor,
+                }}
+              >
+                Multifactor Setup
+              </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  marginLeft: 10,
+                  marginTop: 4,
+                  marginBottom: 8,
+                  color: textColor,
+                }}
+              >
+                {`Setup your Multifactor auth. This will help to protect your account's security. The current status is: MFA Activated`}
+              </Text>
+            </View>
+            <Button
+              title={"Delete Account!"}
+              style={{
+                width: "100%",
+                paddingHorizontal: 10,
+                marginVertical: 10,
+              }}
+              onPress={async () => {
+                setAccountModalOpen(true);
+              }}
+            />
+          </View>
+          <View
+            style={{
+              width: "100%",
               backgroundColor: bgColor,
               color: textColor,
             }}
