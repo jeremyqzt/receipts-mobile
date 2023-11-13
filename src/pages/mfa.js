@@ -6,7 +6,7 @@ import Logo from "../../assets/logoDark.png";
 import * as SecureStore from "expo-secure-store";
 import Toast from "react-native-toast-message";
 import { useColorScheme } from "react-native";
-import {logInMfa} from "../utils/loginUtils";
+import { logInMfa } from "../utils/loginUtils";
 
 export const MfaLogIn = ({ navigation }) => {
   const colorScheme = useColorScheme();
@@ -37,10 +37,9 @@ export const MfaLogIn = ({ navigation }) => {
   const tryMfa = () => {
     setLoading(true);
 
-    logInMfa({
-      token,
-    })
+    logInMfa(token)
       .then((res) => {
+        console.log(res.status);
         if (res.status >= 400) {
           throw "Verification error";
         }
