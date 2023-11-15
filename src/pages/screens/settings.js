@@ -8,7 +8,7 @@ import { CreateBucketModal } from "../../components/settings/bucketModal";
 import { DeleteBucketModal } from "../../components/settings/deleteBucketModal";
 import { CreateVendorsModal } from "../../components/settings/vendorsModal";
 import { DeleteAccountModal } from "../../components/settings/deleteAccountModal";
-
+import { MfaModal } from '../../components/settings/mfaModal';
 import { useAtom } from "jotai";
 import { bucketAtom } from "../../atom/atom";
 
@@ -26,6 +26,7 @@ export const SettingsScreen = ({ navigation }) => {
   const [bAtom] = useAtom(bucketAtom);
   const [vendorModalOpen, setVendorModalOpen] = useState(false);
   const [accountModalOpen, setAccountModalOpen] = useState(false);
+  const [mfaModalOpen, setMfaModalOpen] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -61,6 +62,13 @@ export const SettingsScreen = ({ navigation }) => {
         navigation={navigation}
         closeModal={() => {
           setAccountModalOpen(false);
+        }}
+      />
+      <MfaModal 
+        visible={mfaModalOpen}
+        navigation={navigation}
+        closeModal={() => {
+          setMfaModalOpen(false);
         }}
       />
       <CreateVendorsModal
@@ -287,14 +295,14 @@ export const SettingsScreen = ({ navigation }) => {
               </Text>
             </View>
             <Button
-              title={"Delete Account!"}
+              title={"Setup Now!"}
               style={{
                 width: "100%",
                 paddingHorizontal: 10,
                 marginVertical: 10,
               }}
               onPress={async () => {
-                setAccountModalOpen(true);
+                setMfaModalOpen(true);
               }}
             />
           </View>
