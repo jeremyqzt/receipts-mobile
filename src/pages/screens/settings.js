@@ -2,13 +2,14 @@ import { Button } from "@rneui/themed";
 import * as SecureStore from "expo-secure-store";
 import { View, Text, ScrollView } from "react-native";
 import { listBuckets, getActiveBucket } from "../../utils/bucketUtils";
+import { isMfaEnabled } from "../../utils/loginUtils";
 import { useEffect, useState } from "react";
 import { BucketsSelect } from "../../components/settings/buckets";
 import { CreateBucketModal } from "../../components/settings/bucketModal";
 import { DeleteBucketModal } from "../../components/settings/deleteBucketModal";
 import { CreateVendorsModal } from "../../components/settings/vendorsModal";
 import { DeleteAccountModal } from "../../components/settings/deleteAccountModal";
-import { MfaModal } from '../../components/settings/mfaModal';
+import { MfaModal } from "../../components/settings/mfaModal";
 import { useAtom } from "jotai";
 import { bucketAtom } from "../../atom/atom";
 
@@ -27,12 +28,23 @@ export const SettingsScreen = ({ navigation }) => {
   const [vendorModalOpen, setVendorModalOpen] = useState(false);
   const [accountModalOpen, setAccountModalOpen] = useState(false);
   const [mfaModalOpen, setMfaModalOpen] = useState(false);
+  const [mfaEnabled, setIsMfaEnabled] = useState(false);
+  const [mfaLoading, setMfaLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
+    setMfaLoading(true);
     listBuckets().then((res) => {
       setBuckets(res);
     });
+
+    isMfaEnabled()
+      .then((res) => {
+        setIsMfaEnabled(Boolean(res));
+      })
+      .finally(() => {
+        setMfaLoading(mfaLoading);
+      });
 
     getActiveBucket()
       .then((res) => {
@@ -64,7 +76,7 @@ export const SettingsScreen = ({ navigation }) => {
           setAccountModalOpen(false);
         }}
       />
-      <MfaModal 
+      <MfaModal
         visible={mfaModalOpen}
         navigation={navigation}
         closeModal={() => {

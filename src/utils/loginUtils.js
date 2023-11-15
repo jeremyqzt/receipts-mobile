@@ -10,7 +10,7 @@ import {
   mfaDisable,
 } from "../constants/constants";
 
-import { postData } from "./mainUtils";
+import { postData, getData } from "./mainUtils";
 
 const LOGIN_URL = `${domainRoot}auth/token/`;
 
