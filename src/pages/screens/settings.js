@@ -303,7 +303,13 @@ export const SettingsScreen = ({ navigation }) => {
                   color: textColor,
                 }}
               >
-                {`Setup your Multifactor auth. This will help to protect your account's security. The current status is: MFA Activated`}
+                {`Setup your Multifactor auth. This will help to protect your account's security. The current status is: ${
+                  !mfaLoading
+                    ? mfaEnabled
+                      ? "✅ Activated"
+                      : "❌ Not Setup"
+                    : "⏳ Loading..."
+                }`}
               </Text>
             </View>
             <Button
