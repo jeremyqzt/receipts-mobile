@@ -314,6 +314,7 @@ export const SettingsScreen = ({ navigation }) => {
             </View>
             <Button
               title={"Setup Now!"}
+              disabled={loading || mfaEnabled}
               style={{
                 width: "100%",
                 paddingHorizontal: 10,
