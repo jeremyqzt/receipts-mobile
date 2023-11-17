@@ -43,7 +43,7 @@ export const SettingsScreen = ({ navigation }) => {
         setIsMfaEnabled(Boolean(res));
       })
       .finally(() => {
-        setMfaLoading(mfaLoading);
+        setMfaLoading(false);
       });
 
     getActiveBucket()
@@ -313,8 +313,8 @@ export const SettingsScreen = ({ navigation }) => {
               </Text>
             </View>
             <Button
-              title={"Setup Now!"}
-              disabled={loading || mfaEnabled}
+              title={mfaEnabled ? "Deactivate" : "Setup Now!"}
+              loading={loading || mfaLoading}
               style={{
                 width: "100%",
                 paddingHorizontal: 10,
