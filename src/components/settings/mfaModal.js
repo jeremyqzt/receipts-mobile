@@ -1,11 +1,12 @@
 import { Button, Text, Input } from "@rneui/themed";
 import { StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Toast from "react-native-toast-message";
 import { useColorScheme } from "react-native";
 import { deleteAccount } from "../../utils/loginUtils";
 import * as SecureStore from "expo-secure-store";
+import { createMfa } from "../../utils/loginUtils";
 
 export const MfaModal = (props) => {
   const { visible, closeModal, navigation } = props;
@@ -14,6 +15,15 @@ export const MfaModal = (props) => {
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
   const bgColor = colorScheme === "dark" ? "#202020" : "white";
+  const [mfa, setMfa] = useEffect(null);
+
+  useEffect(() => {
+    createMfa().then((res) => {
+      console.log(res);
+      setMfa(mfa);
+    });
+  });
+
   return (
     <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
       <View
