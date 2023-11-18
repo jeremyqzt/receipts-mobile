@@ -11,7 +11,7 @@ import { createMfa } from "../../utils/loginUtils";
 export const MfaModal = (props) => {
   const { visible, closeModal, navigation } = props;
   const [loading, setLoading] = useState(false);
-  const [deleteConfirm, setDeleteConfirm] = useState();
+  const [mfaCode, setMfaCode] = useState();
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
   const bgColor = colorScheme === "dark" ? "#202020" : "white";
@@ -36,9 +36,8 @@ export const MfaModal = (props) => {
         </View>
         <View style={[styles.header, { color: textColor }]}>
           <Text style={{ color: textColor }}>
-            Please confirm that you wish to delete your account by entering the
-            term "Delete Account" in the following input. This check is not case
-            sensitive.
+            Copy this code into your 2 factor token generator and then input the
+            code to verify.
           </Text>
         </View>
         <View>
@@ -46,14 +45,14 @@ export const MfaModal = (props) => {
             <Input
               returnKeyType="done"
               containerStyle={{ width: "100%" }}
-              placeholder={"Delete Account"}
-              value={deleteConfirm}
+              placeholder={"Enter MFA Code"}
+              value={mfaCode}
               inputContainerStyle={{
                 borderBottomColor: textColor,
                 color: textColor,
               }}
               style={[styles.input, { color: textColor }]}
-              onChangeText={(value) => setDeleteConfirm(value)}
+              onChangeText={(value) => setMfaCode(value)}
             />
           </View>
         </View>
@@ -86,36 +85,21 @@ export const MfaModal = (props) => {
                 setLoading(true);
                 deleteAccount()
                   .then(async () => {
-                    try {
-                      await SecureStore.deleteItemAsync("access_token");
-                      await SecureStore.deleteItemAsync("refresh_token");
-                      await SecureStore.deleteItemAsync("username");
-                      await SecureStore.deleteItemAsync("password");
-                    } catch (error) {}
-
                     closeModal();
                     setLoading(false);
 
                     Toast.show({
                       type: "success",
                       text1: "✅ Success!",
-                      text2:
-                        "Your account has been deleted, exiting in 5 seconds!",
+                      text2: "MFA successfully setup!",
                       position: "bottom",
                     });
-
-                    setTimeout(() => {
-                      navigation.reset({
-                        index: 0,
-                        routes: [{ name: "login" }],
-                      });
-                    }, 5000);
                   })
                   .catch(() => {
                     Toast.show({
                       type: "error",
                       text1: "🛑 Error!",
-                      text2: "Account could not be deleted, please try again!",
+                      text2: "MFA could not be activated, please try again!",
                       position: "bottom",
                     });
                   });
