@@ -76,11 +76,8 @@ export const MfaModal = (props) => {
             <Button
               style={{ width: "100%" }}
               loading={loading}
-              title="Delete"
-              disabled={
-                (deleteConfirm ?? "").toLowerCase() !== "delete account"
-                //false
-              }
+              title="Verify"
+              disabled={false}
               onPress={() => {
                 setLoading(true);
                 deleteAccount()
