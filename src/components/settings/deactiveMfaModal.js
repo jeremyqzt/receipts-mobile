@@ -7,20 +7,13 @@ import { useColorScheme } from "react-native";
 import { deleteAccount } from "../../utils/loginUtils";
 import { createMfa } from "../../utils/loginUtils";
 
-export const MfaModal = (props) => {
+export const DeactivateMfaModal = (props) => {
   const { visible, closeModal, navigation } = props;
   const [loading, setLoading] = useState(false);
   const [mfaCode, setMfaCode] = useState();
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
   const bgColor = colorScheme === "dark" ? "#202020" : "white";
-  const [mfa, setMfa] = useState(null);
-
-  useEffect(() => {
-    createMfa().then(() => {
-      setMfa(mfa);
-    });
-  });
 
   return (
     <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
@@ -29,13 +22,19 @@ export const MfaModal = (props) => {
       >
         <View style={[styles.header, { color: textColor }]}>
           <Text h2 style={{ color: textColor }}>
-            Setup Mfa
+            Deactivate Multifactor Auth
           </Text>
         </View>
         <View style={[styles.header, { color: textColor }]}>
           <Text style={{ color: textColor }}>
-            Copy this code into your 2 factor token generator and then input the
-            code to verify.
+            Deactivate Multifactor Authentication, please provide the code in
+            your authenticator app to complete this action.
+          </Text>
+        </View>
+        <View style={[styles.header, { color: textColor }]}>
+          <Text style={{ color: textColor }}>
+            If you don't have access to this code, you can reset your password -
+            This will also reset your Multifactor Authentication.
           </Text>
         </View>
         <View>
@@ -74,7 +73,7 @@ export const MfaModal = (props) => {
             <Button
               style={{ width: "100%" }}
               loading={loading}
-              title="Verify"
+              title="Deactivate"
               disabled={false}
               onPress={() => {
                 setLoading(true);

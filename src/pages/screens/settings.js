@@ -12,7 +12,7 @@ import { DeleteAccountModal } from "../../components/settings/deleteAccountModal
 import { MfaModal } from "../../components/settings/mfaModal";
 import { useAtom } from "jotai";
 import { bucketAtom } from "../../atom/atom";
-
+import { DeactivateMfaModal } from "../../components/settings/deactiveMfaModal";
 import { useColorScheme } from "react-native";
 
 export const SettingsScreen = ({ navigation }) => {
@@ -28,6 +28,8 @@ export const SettingsScreen = ({ navigation }) => {
   const [vendorModalOpen, setVendorModalOpen] = useState(false);
   const [accountModalOpen, setAccountModalOpen] = useState(false);
   const [mfaModalOpen, setMfaModalOpen] = useState(false);
+  const [mfaDisableModalOpen, setMfaDisableModalOpen] = useState(false);
+
   const [mfaEnabled, setIsMfaEnabled] = useState(false);
   const [mfaLoading, setMfaLoading] = useState(true);
 
@@ -81,6 +83,13 @@ export const SettingsScreen = ({ navigation }) => {
         navigation={navigation}
         closeModal={() => {
           setMfaModalOpen(false);
+        }}
+      />
+      <DeactivateMfaModal
+        visible={mfaDisableModalOpen}
+        navigation={navigation}
+        closeModal={() => {
+          setMfaDisableModalOpen(false);
         }}
       />
       <CreateVendorsModal
@@ -321,7 +330,9 @@ export const SettingsScreen = ({ navigation }) => {
                 marginVertical: 10,
               }}
               onPress={async () => {
-                setMfaModalOpen(true);
+                mfaEnabled
+                  ? setMfaDisableModalOpen(true)
+                  : setMfaModalOpen(true);
               }}
             />
           </View>
