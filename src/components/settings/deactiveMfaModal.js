@@ -5,10 +5,10 @@ import React, { useState, useEffect } from "react";
 import Toast from "react-native-toast-message";
 import { useColorScheme } from "react-native";
 import { deleteAccount } from "../../utils/loginUtils";
-import { createMfa } from "../../utils/loginUtils";
+import { disableMfa } from "../../utils/loginUtils";
 
 export const DeactivateMfaModal = (props) => {
-  const { visible, closeModal, navigation } = props;
+  const { visible, closeModal, reloadMfa } = props;
   const [loading, setLoading] = useState(false);
   const [mfaCode, setMfaCode] = useState();
   const colorScheme = useColorScheme();
@@ -77,7 +77,7 @@ export const DeactivateMfaModal = (props) => {
               disabled={false}
               onPress={() => {
                 setLoading(true);
-                deleteAccount()
+                disableMfa(mfaCode)
                   .then(async () => {
                     closeModal();
                     setLoading(false);
@@ -85,15 +85,16 @@ export const DeactivateMfaModal = (props) => {
                     Toast.show({
                       type: "success",
                       text1: "✅ Success!",
-                      text2: "MFA successfully setup!",
+                      text2: "MFA successfully removed!",
                       position: "bottom",
                     });
+                    reloadMfa();
                   })
                   .catch(() => {
                     Toast.show({
                       type: "error",
                       text1: "🛑 Error!",
-                      text2: "MFA could not be activated, please try again!",
+                      text2: "MFA could not be deactivated, please try again!",
                       position: "bottom",
                     });
                   });
