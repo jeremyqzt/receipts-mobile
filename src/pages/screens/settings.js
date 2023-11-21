@@ -32,6 +32,7 @@ export const SettingsScreen = ({ navigation }) => {
 
   const [mfaEnabled, setIsMfaEnabled] = useState(false);
   const [mfaLoading, setMfaLoading] = useState(true);
+  const [redoMfa, setRedoMfa] = useState(true);
 
   useEffect(() => {
     setLoading(true);
@@ -40,6 +41,14 @@ export const SettingsScreen = ({ navigation }) => {
       setBuckets(res);
     });
 
+    getActiveBucket()
+      .then((res) => {
+        setActiveBucket(res);
+      })
+      .finally(() => setLoading(false));
+  }, [setActiveBucket, setBuckets, setLoading, bAtom]);
+
+  useEffect(() => {
     isMfaEnabled()
       .then((res) => {
         setIsMfaEnabled(Boolean(res));
@@ -47,13 +56,7 @@ export const SettingsScreen = ({ navigation }) => {
       .finally(() => {
         setMfaLoading(false);
       });
-
-    getActiveBucket()
-      .then((res) => {
-        setActiveBucket(res);
-      })
-      .finally(() => setLoading(false));
-  }, [setActiveBucket, setBuckets, setLoading, bAtom]);
+  }, [redoMfa]);
 
   return (
     <>
@@ -88,6 +91,9 @@ export const SettingsScreen = ({ navigation }) => {
       <DeactivateMfaModal
         visible={mfaDisableModalOpen}
         navigation={navigation}
+        reloadMfa={() => {
+          setRedoMfa(!redoMfa);
+        }}
         closeModal={() => {
           setMfaDisableModalOpen(false);
         }}

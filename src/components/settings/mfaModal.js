@@ -1,11 +1,12 @@
 import { Button, Text, Input } from "@rneui/themed";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import React, { useState, useEffect } from "react";
 import Toast from "react-native-toast-message";
 import { useColorScheme } from "react-native";
 import { deleteAccount } from "../../utils/loginUtils";
 import { createMfa } from "../../utils/loginUtils";
+import * as Clipboard from "expo-clipboard";
 
 export const MfaModal = (props) => {
   const { visible, closeModal, navigation } = props;
@@ -16,14 +17,20 @@ export const MfaModal = (props) => {
   const bgColor = colorScheme === "dark" ? "#202020" : "white";
   const [mfa, setMfa] = useState(null);
 
+  const copyToClipboard = async (val) => {
+    await Clipboard.setStringAsync(val);
+  };
+
   useEffect(() => {
-    createMfa().then(() => {
-      setMfa(mfa);
+    createMfa().then((res) => {
+      const secret = res.split("secret=")[1].split("&")[0];
+      setMfa(secret);
     });
   });
 
   return (
     <Modal avoidKeyboard isVisible={visible} onBackdropPress={closeModal}>
+      <Toast />
       <View
         style={[styles.dialog, { backgroundColor: bgColor, borderRadius: 25 }]}
       >
@@ -37,6 +44,30 @@ export const MfaModal = (props) => {
             Copy this code into your 2 factor token generator and then input the
             code to verify.
           </Text>
+        </View>
+        <View style={[styles.header, { color: textColor }]}>
+          <TouchableOpacity
+            onPress={() => {
+              copyToClipboard(mfa).then(() => {
+                Toast.show({
+                  type: "success",
+                  text1: "✅ Success!",
+                  text2: "Text Copied!",
+                  position: "bottom",
+                });
+              });
+            }}
+          >
+            <Text
+              style={{
+                color: textColor,
+                borderColor: textColor,
+                borderWidth: 1,
+                padding: 8,
+                backgroundColor: "#F5F5F5"
+              }}
+            >{`${mfa} 📎`}</Text>
+          </TouchableOpacity>
         </View>
         <View>
           <View style={styles.inputContainer}>
