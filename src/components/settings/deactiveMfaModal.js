@@ -88,7 +88,6 @@ export const DeactivateMfaModal = (props) => {
                       text2: "MFA successfully removed!",
                       position: "bottom",
                     });
-                    reloadMfa();
                   })
                   .catch(() => {
                     Toast.show({
@@ -97,6 +96,9 @@ export const DeactivateMfaModal = (props) => {
                       text2: "MFA could not be deactivated, please try again!",
                       position: "bottom",
                     });
+                  }).finally(() => {
+                    reloadMfa();
+                    setLoading(false);
                   });
               }}
             />

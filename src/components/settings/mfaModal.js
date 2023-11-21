@@ -4,12 +4,12 @@ import Modal from "react-native-modal";
 import React, { useState, useEffect } from "react";
 import Toast from "react-native-toast-message";
 import { useColorScheme } from "react-native";
-import { deleteAccount } from "../../utils/loginUtils";
+import { verifyMfa } from "../../utils/loginUtils";
 import { createMfa } from "../../utils/loginUtils";
 import * as Clipboard from "expo-clipboard";
 
 export const MfaModal = (props) => {
-  const { visible, closeModal, navigation } = props;
+  const { visible, closeModal, reloadMfa } = props;
   const [loading, setLoading] = useState(false);
   const [mfaCode, setMfaCode] = useState();
   const colorScheme = useColorScheme();
@@ -109,8 +109,9 @@ export const MfaModal = (props) => {
               disabled={false}
               onPress={() => {
                 setLoading(true);
-                deleteAccount()
-                  .then(async () => {
+                verifyMfa(mfaCode)
+                  .then(async (res) => {
+                    console.log(res)
                     closeModal();
                     setLoading(false);
 
@@ -122,12 +123,16 @@ export const MfaModal = (props) => {
                     });
                   })
                   .catch(() => {
+                    
                     Toast.show({
                       type: "error",
                       text1: "🛑 Error!",
                       text2: "MFA could not be activated, please try again!",
                       position: "bottom",
                     });
+                  }).finally(() => {
+                    reloadMfa();
+                    setLoading(false);
                   });
               }}
             />

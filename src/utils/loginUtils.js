@@ -81,7 +81,6 @@ export const forgotPassword = async (username, token, newPassword) => {
   const data = { username, token, newPassword };
   const path = `${domainRoot}${forgotPasswordUrl}`;
   return postData(path, data).then((res) => {
-    console.log(res);
     if (!res.ok) {
       throw new Error();
     }

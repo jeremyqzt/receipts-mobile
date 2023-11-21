@@ -87,6 +87,9 @@ export const SettingsScreen = ({ navigation }) => {
         closeModal={() => {
           setMfaModalOpen(false);
         }}
+        reloadMfa={() => {
+          setRedoMfa(!redoMfa);
+        }}
       />
       <DeactivateMfaModal
         visible={mfaDisableModalOpen}
