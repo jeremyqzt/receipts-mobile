@@ -39,7 +39,6 @@ export const MfaLogIn = ({ navigation }) => {
 
     logInMfa(token)
       .then((res) => {
-        console.log(res.status);
         if (res.status >= 400) {
           throw "Verification error";
         }

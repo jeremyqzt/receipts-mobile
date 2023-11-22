@@ -76,7 +76,6 @@ export const LogIn = ({ navigation }) => {
         );
         await SecureStore.setItemAsync("access_token", res.access);
         await SecureStore.setItemAsync("refresh_token", res.refresh);
-        console.log(res)
         if (res.mfaRequired) {
           navigation.reset({
             index: 0,
