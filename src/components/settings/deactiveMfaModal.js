@@ -4,7 +4,6 @@ import Modal from "react-native-modal";
 import React, { useState, useEffect } from "react";
 import Toast from "react-native-toast-message";
 import { useColorScheme } from "react-native";
-import { deleteAccount } from "../../utils/loginUtils";
 import { disableMfa } from "../../utils/loginUtils";
 
 export const DeactivateMfaModal = (props) => {
@@ -48,6 +47,7 @@ export const DeactivateMfaModal = (props) => {
                 borderBottomColor: textColor,
                 color: textColor,
               }}
+              keyboardType={"numeric"}
               style={[styles.input, { color: textColor }]}
               onChangeText={(value) => setMfaCode(value)}
             />

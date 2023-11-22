@@ -76,6 +76,7 @@ export const MfaModal = (props) => {
               containerStyle={{ width: "100%" }}
               placeholder={"Enter MFA Code"}
               value={mfaCode}
+              keyboardType={"numeric"}
               inputContainerStyle={{
                 borderBottomColor: textColor,
                 color: textColor,
