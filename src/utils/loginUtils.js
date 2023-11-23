@@ -12,8 +12,6 @@ import {
 
 import { postData, getData } from "./mainUtils";
 
-const LOGIN_URL = `${domainRoot}auth/token/`;
-
 const LOGIN_V2_URL = `${domainRoot}v2/auth/token/`
 
 export const loginFetch = ({ username, password }) => {

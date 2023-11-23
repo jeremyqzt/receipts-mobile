@@ -66,6 +66,10 @@ export const LogIn = ({ navigation }) => {
         return res.json();
       })
       .then(async (res) => {
+        if (!res.access || !res.refresh) {
+          throw "Login error";
+        }
+
         await SecureStore.setItemAsync(
           "username",
           useLocal ? username : usernameS
