@@ -24,7 +24,8 @@
           "savePhotosPermission": "The app accesses your photos in order to upload or download receipts.",
           "isAccessMediaLocationEnabled": true
         }
-      ]
+      ],
+      "expo-build-properties"
     ],
     "android": {
       "permissions": [
@@ -54,7 +55,9 @@
   "updates": {
     "fallbackToCacheTimeout": 0
   },
-  "assetBundlePatterns": ["**/*"],
+  "assetBundlePatterns": [
+    "**/*"
+  ],
   "ios": {
     "supportsTablet": false,
     "infoPlist": {
