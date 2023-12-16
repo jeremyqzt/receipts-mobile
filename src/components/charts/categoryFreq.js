@@ -10,6 +10,8 @@ export const CategoryFreq = () => {
   const { response: categoryDataRaw, loading } = useFetch(getReceiptCategoryCount);
   const colorScheme = useColorScheme();
   const textColor = colorScheme === "dark" ? "white" : "black";
+  const bgColor = colorScheme === "dark" ? "black" : "white";
+
   const randomColor = () =>
     ("#" + ((Math.random() * 0xffffff) << 0).toString(16) + "000000").slice(
       0,
@@ -46,19 +48,17 @@ export const CategoryFreq = () => {
       >
         Category Frequency
       </Text>
-      <View style={{ height: 200 }}>
+      <View style={{ height: 200, backgroundColor: bgColor }}>
         <PieChart
           data={pieData}
           width={Dimensions.get("window").width}
           height={200}
+          backgroundColor={bgColor}
           chartConfig={{
-            backgroundGradientFrom: "#1E2923",
-            backgroundGradientFromOpacity: 0,
-            backgroundGradientTo: "#08130D",
-            backgroundGradientToOpacity: 0.5,
-            color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-            barPercentage: 0.5,
-            useShadowColorFromDataset: false, // optional
+            backgroundGradientFrom: bgColor,
+            backgroundGradientTo: bgColor,
+            color: () => textColor,
+            barPercentage: 0.75,
           }}
           accessor={"value"}
           paddingLeft={"0"}
