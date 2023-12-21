@@ -1,5 +1,9 @@
 import * as SecureStore from "expo-secure-store";
 
+export const postDataRefresh = async (url = "", data = {}, auth = false) => {
+  return serverCommContent(url, data, auth, "POST", "application/json", true);
+};
+
 export const postData = async (url = "", data = {}) => {
   return serverCommContent(url, data, "POST", "application/json");
 };
@@ -16,10 +20,13 @@ export const serverCommContent = async (
   url = "",
   data = {},
   method = "POST",
-  contentType = "application/json"
+  contentType = "application/json",
+  isRefresh = false
 ) => {
   const authParam = {
-    Authorization: `Bearer ${await SecureStore.getItemAsync("access_token")}`,
+    Authorization: `Bearer ${await (isRefresh
+      ? SecureStore.getItemAsync("refresh_token")
+      : SecureStore.getItemAsync("access_token"))}`,
   };
   const body =
     method === "POST"
