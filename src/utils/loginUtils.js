@@ -14,6 +14,22 @@ import { postData, getData } from "./mainUtils";
 
 const LOGIN_V2_URL = `${domainRoot}v2/auth/token/`
 
+export const refreshToken = async () => {
+  const data = {
+    refresh: getCookie("refresh_token"),
+  }
+  const path = `${domainRoot}auth/token/refresh/`;
+  return postDataRefresh(path, data)
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.access && res.refresh) {
+        setCookie("access_token", res.access, 5 * 24);
+      } else {
+        throw new Error("Incorrect Refresh? something happened");
+      }
+    });
+};
+
 export const loginFetch = ({ username, password }) => {
   const data = { username, password };
   return fetch(LOGIN_V2_URL, {
