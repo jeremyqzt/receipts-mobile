@@ -22,8 +22,8 @@ export const refreshToken = async () => {
   return postDataRefresh(path, data)
     .then((res) => res.json())
     .then((res) => {
-      if (res.access && res.refresh) {
-        setCookie("access_token", res.access, 5 * 24);
+      if (res.access) {
+        return SecureStore.setItemAsync("access_token", res.access);
       } else {
         throw new Error("Incorrect Refresh? something happened");
       }
