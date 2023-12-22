@@ -2,7 +2,7 @@
   "expo": {
     "name": "Ribbon Receipts",
     "slug": "receipts-mobile",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -47,7 +47,7 @@
         "CAMERA_ROLL"
       ],
       "package": "com.digiribbon.receipts",
-      "versionCode": 4
+      "versionCode": 5
     },
     "ios": {
       "bundleIdentifier": "com.digiribbon.receipts",
